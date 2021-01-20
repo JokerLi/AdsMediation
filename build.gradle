@@ -1,0 +1,35 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+//每次修改版本号都在这里修改
+def getVerName (){
+    return "V4.1.0";
+}
+
+def getAARDesfolder(){
+    return "../bin/";
+}
+
+def clearRelease(){
+    def releaseDir = file('../bin/')
+    if (releaseDir.exists()) {
+        releaseDir.deleteDir();
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/new_bottom_layout"
+    android:background="#39373D"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#39373D"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="45dp">
+
+
+            <Button
+                android:id="@+id/btn_load"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="click"
+                android:background="@drawable/btn_blue_request"
+                android:text="LoadAd" />
+
+            <Button
+                android:id="@+id/btn_preload"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="click"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/btn_blue_request"
+                android:text="preLoad" />
+
+            <Button
+                android:id="@+id/btn_show"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="click"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/btn_blue_request"
+                android:text="showAd" />
+
+            <CheckBox
+                android:id="@+id/btn_bind_ListView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/btn_blue_request"
+                android:text=" bind ListView"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/btn_open_priority"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/btn_blue_request"
+                android:text="抢量"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+        <!--normal view-->
+        <RelativeLayout
+            android:id="@+id/rl_ad_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"
+            android:padding="2dp" >
+        </RelativeLayout>
+
+        <!--listview -->
+        <ListView
+            android:id="@+id/lv_video_container"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="@null"
+            android:divider="#ffffff"
+            android:dividerHeight="1dp"
+            android:fadingEdge="none"
+            android:listSelector="@null"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            android:headerDividersEnabled="false"/>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/result_small_vast"
+        android:layout_width="160dp"
+        android:layout_height="93dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true">
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+
+<html><head></head><body><script>
+var curVpaidFrame;
+var lastLoopStart = -1;
+var loopTimer = null;
+var minGap = 3000;
+var pixelURL = "http://notify.nuviad.com/conversion/{{CLICK_ID}}"; 
+var tagid = 8343;
+var retries = 2;
+var retry_counter = 0;
+function startLkqd() 
+{
+loopTimer = null;
+   var tagqa = '';
+   var playerId = '';
+   var playerContainerId = 'ad' + Math.round(Math.random()*1000000000).toString();
+   var playerWidth = '300';
+   var playerHeight = '250';
+   var appname = '{{APP_NAME}}';
+   var appversion = '';
+   var bundleid = '{{APP_BUNDLE}}';
+   var appstoreurl = '{{APP_STOREURL}}';
+   var dnt = '1';
+   var aid = '{{USER_ID}}';
+   var idfa = '{{USER_ID}}';
+   var latitude = '{{USER_GEO_LAT}}';
+   var longitude = '{{USER_GEO_LNG}}';
+   var tracki = '';
+   var trackc = '';
+   var custom1 = 'MP_Agressive_RON';
+   var custom2 = '';
+   var custom3 = '';
+   var videourl = '';
+   var viewMode = 'normal';
+   var companionId = '';
+   var pubMacros = '';
+
+   var lkqdVPAID;
+   var lkqdId = new Date().getTime().toString() + Math.round(Math.random()*1000000000).toString();
+   var environmentVars = { slot: document.getElementById(playerContainerId), videoSlot: document.getElementById(playerId), videoSlotCanAutoPlay: true };
+   var creativeData = '';
+   retry_counter++;
+   document.write('<div id=' + playerContainerId + '></div>'); 
+
+   function onVPAIDLoad()
+   {
+        lkqdVPAID.subscribe(function() { lkqdVPAID.startAd(); }, 'AdLoaded');
+lkqdVPAID.subscribe(onLkqdAdStart, 'AdStarted');
+        lkqdVPAID.subscribe(onLkqdAdEnd, 'AdStopped');
+   }
+
+   curVpaidFrame = document.createElement('iframe');
+   curVpaidFrame.id = lkqdId;
+   curVpaidFrame.name = lkqdId;
+   curVpaidFrame.style.display = 'none';
+   curVpaidFrame.onload = function() {
+        vpaidLoader = curVpaidFrame.contentWindow.document.createElement('script');
+        vpaidLoader.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//ad.lkqd.net/serve/pure.js?format=1&vpaid=true&apt=auto&ear=0&env=1&pid=69&sid=' +tagid+ '&tagqa=' + tagqa + '&elementid=' + encodeURIComponent(playerId) + '&containerid=' + encodeURIComponent(playerContainerId) + '&width=' + playerWidth + '&height=' + playerHeight + '&mode=' + viewMode + '&companionid=' + encodeURIComponent(companionId) + '&tracki=' + encodeURIComponent(tracki) + '&trackc=' + encodeURIComponent(trackc) + '&c1=' + encodeURIComponent(custom1) + '&c2=' + encodeURIComponent(custom2) + '&c3=' + encodeURIComponent(custom3) + '&videourl=' + encodeURIComponent(videourl) + '&rnd=' + Math.floor(Math.random() * 100000000) + '&appname=' + encodeURIComponent(appname) + '&appversion=' + encodeURIComponent(appversion) + '&bundleid=' + encodeURIComponent(bundleid) + '&appstoreurl=' + encodeURIComponent(appstoreurl) + '&dnt=' + dnt + '&aid=' + encodeURIComponent(aid) + '&idfa=' + encodeURIComponent(idfa) + '&loclat=' + latitude + '&loclong=' + longitude + '&m=' + encodeURIComponent(pubMacros);
+        vpaidLoader.onload = function() {
+              lkqdVPAID = curVpaidFrame.contentWindow.getVPAIDAd();
+              lkqdVPAID.handshakeVersion('2.0');
+              onVPAIDLoad();
+              lkqdVPAID.initAd(playerWidth, playerHeight, viewMode, 600, creativeData, environmentVars);
+        };
+        curVpaidFrame.contentWindow.document.body.appendChild(vpaidLoader);
+   };
+   document.body.appendChild(curVpaidFrame);
+}
+startLkqd();
+function onLkqdAdEnd()
+{
+console.log("LKQD End");
+if (curVpaidFrame)
+{
+console.log("LKQD Remove iframe");
+document.body.removeChild(curVpaidFrame);
+curVpaidFrame = null;
+console.log("LKQD iframe removed");
+}
+if (loopTimer)
+{
+console.log("LKQD Loop timer exists");
+return;
+}
+var now = new Date().getTime();
+if (lastLoopStart < 0 || now - lastLoopStart > minGap)
+{
+console.log("LKQD restart!");
+lastLoopStart = now;
+if(retry_counter < retries){
+startLkqd();
+}
+}
+else
+{
+console.log("LKQD sleep");
+loopTimer = setTimeout(loopRetry, minGap);
+}
+}
+
+function loopRetry()
+{
+console.log("LKQD retry");
+loopTimer = null;
+onLkqdAdEnd();
+}
+
+function onLkqdAdStart()
+{
+if (pixelURL)
+(new Image()).src = pixelURL;
+}
+</script></body></html>

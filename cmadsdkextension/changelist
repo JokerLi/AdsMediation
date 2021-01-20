@@ -1,0 +1,100 @@
+copy files:
+
+com.cmcm.adsdk.banner:
+    CMBannerAdSize
+com.cmcm.adsdk.base:
+    CMBaseNativeAd
+com.cmcm.adsdk.interstitial:
+    InterstitialAdCallBack
+com.cmcm.adsdk.utils:
+    PerferenceUtil, ReportProxy
+com.cmcm.adsdk:
+    CMAdError, CMAdManager, CMBaseFactory, Const, GifStreamListener, ImageDownloadListener, BitmapListener, InternalAdError
+com.cmcm.baseapi.ads:
+    INativeAd, IVideoAdapter
+com.cmcm.picks.internal:
+    ReceiverUtils, AdWebViewUtils
+com.cmcm.picks.internal.loader:
+    MarketConfig
+com.cmcm.util package except:
+    UniReport, AspBase64, Reporter
+res/drawable:
+    ico_cm.png, interstitial_ad_body_bg.xml
+
+move files:
+
+com.cmcm.adsdk.adapter:
+    PicksNativeAdapter, NativeloaderAdapter
+com.cmcm.adsdk.banner:
+    CMNativeBannerView
+com.cmcm.adsdk.config:
+    RequestUFS, RequestConfig
+com.cmcm.adsdk.interstitial:
+    InterstitialAdManager
+com.cmcm.adsdk.nativead:
+    CMNativeAd, NativeAdManagerMini, CMNativeAdLoader
+com.cmcm.adsdk.splashad:
+    SplashBaseAdapter
+com.cmcm.adsdk:
+    CMRequestParams
+com.cmcm.baseapi.ads:
+    INativeAdLoaderListener
+com.cmcm.picks:
+    CMSplashAdView
+com.cmcm.utils:
+    UniReport, AspBase64, Reporter
+/res/anim/advertisement.xml
+/res/layout/cm_splash_time.xml
+
+fixme list:
+1. FIXME: 2016/7/11: Orion Ad Series ImageLoaderListener
+2. FIXME: 2016/7/12:
+    1. CMAdManager in Picks: ReportPV
+    2. CMAdManager in Juhe: init Picks method
+    3. CMBaseNativeAd, INativeAd: MPA
+    4. CMNativeAd: MPA , DownLoadCheckDialog, Report "insertview" and "view" define
+    5. CMNativeAdLoader: Report "click" define
+    6. CMNativeBannerView, Commons: OrionNativeAd
+    7. InterstitialAdManager: PicksInterstitialActivity
+    8. PicksBannerAdapter, PicksInterstatialAdapter, PicksNativeAdapter, PicksSplashAdapter: OrionNativeAd
+    9. ReceiverUtils: PicksViewCheckHelper
+    国内picks必须接，RCV上报，统一埋点国内不支持
+    10. Reporter, RequestConfig: Picks Sdk Version
+    11. SplashBaseAdapter, UniReport:RCV
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

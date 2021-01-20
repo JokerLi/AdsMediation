@@ -1,0 +1,78 @@
+{
+    "poslist": [
+        {
+            "adtype": 1,
+            "placeid": 1096101,
+            "info": [
+                {
+                    "name": "fb",
+                    "parameter": "1096101",
+                    "weight": 1
+                },
+                {
+                    "name": "admob",
+                    "parameter": "2007962",
+                    "weight": 5
+                },
+                {
+                    "name": "inmobi",
+                    "parameter": "1103498166_4000307655866441",
+                    "weight": 4
+                }
+            ]
+        },
+        {
+            "adtype": 1,
+            "placeid": 1096102,
+            "info": [
+                {
+                    "name": "fb",
+                    "parameter": "1096102",
+                    "weight": 1
+                },
+                {
+                    "name": "admob",
+                    "parameter": "2361367",
+                    "weight": 0
+                },
+                {
+                    "name": "inmobi",
+                    "parameter": "1103498166_4070601744345019",
+                    "weight": 0
+                }
+            ]
+        },
+        {
+            "adtype": 2,
+            "placeid": 1096100,
+            "info": [
+                {
+                    "name": "fb",
+                    "parameter": "1096100",
+                    "weight": 5
+                },
+                {
+                    "name": "fb-h",
+                    "parameter": "2007961",
+                    "weight": 2
+                }
+            ]
+        },
+        {
+            "adtype": 1,
+            "placeid": 10000100,
+            "info": [
+                {
+                    "name": "fb",
+                    "parameter": "1501691280131268_1596601087306953",
+                    "weight": 4
+                },
+                {
+                    "name": "cm",
+                    "parameter": "128103",
+                    "weight": 5
+                }
+            ]
+        }
+    ]
+}

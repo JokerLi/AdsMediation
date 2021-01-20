@@ -1,0 +1,41 @@
+{
+    "ads":[{
+        "des": "this is des",
+        "title": "this is title",
+        "img_url": "http://orionimg.com/liehu/1461835109m8ryi.png",
+        ...
+    }],
+
+    "net":[{
+        "groups": [
+            {
+                "1":[
+                {
+                    "name": "gdt",
+                    "ctime", 1800,
+                    "parameter": "1103498166_4000307655866441"
+                },
+                {
+                    "name": "baidu",
+                    "ctime", 3600,
+                    "parameter": "1103498166_4000307655866441"
+                },
+                {
+                    "name": "cm",
+                    "ctime", 1800,
+                    "parameter": "106448"
+                }
+                ]
+            },
+            {
+                "2":[
+                {
+                    "name": "gdt",
+                    "ctime", 3600,
+                    "parameter": "1103498166_4000307655866441"
+                }
+                ]
+            }
+        ]
+    }]
+}

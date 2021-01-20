@@ -1,0 +1,8 @@
+/build
+/CMAdSdkDemo/build
+.idea
+*.iml
+.gradle
+/local.properties
+/captures
+gradle/

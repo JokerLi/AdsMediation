@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+</head>
+
+<body style="margin:0;padding:0;">
+<script type="text/javascript">
+    var   impUrls = [];
+
+    function cmFinishLoad() {
+        setTimeout(function() {
+            window.location = 'orion://finishLoad'
+        }, 0);
+    }
+    if(impTrackingHelper == null || !isFunction(impTrackingHelper)){
+        function impTrackingHelper(){
+            setTracking(impUrls);
+        }
+    }
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    };
+
+    function isString(obj) {
+        return Object.prototype.toString.call(obj) === '[object String]';
+    };
+    function isFunction(obj){
+        return Object.prototype.toString.call(obj) === '[object Function]';
+    }
+
+    function tracking(url) {
+        new Image().src = url;
+    };
+
+    function setTracking(urls) {
+        if (isArray(urls)) {
+            for (var i = 0; i < urls.length; i++) {
+                tracking(urls[i]);
+            }
+            return true;
+        }
+        if (isString(urls)) {
+            tracking(urls);
+        }
+    }
+
+</script>
+
+<div style="width:1px;height:1px;position:relative;display:none">
+    <img src="http://10.60.81.186/rp/?IA_qnvnzmHnzP1mYPyn4ujPWuau-XZKGujYdPWwxPjRsndtkP1c1g1D4PH7xnHbvniuduhN95iudmHdPULGGUAk9FHFAPi3sFHcsFHc3Nv-8uAqLTzRznD4RFHcsPB3kFHPaFHcsNYqgPWf-nWb-nWKKTZK_uNI-mbVGIaRzwWR1Pz31PBRznaRzrDVcNDdnFHFjFHcsUA-ouiRznDI-mvVEFHc4FHcsfv9zUvd-FHFAPjT8na3zPHcvQWDkniRzn7P9uh7zpiRzwWR1Pz31PBuduvRqnzudmyTqPiuVp1dMUvqMUARhUyfqUhN3IgPxPiubIjYkFhdWnWY1FhPY5iuWIA4E5H0hIWcqnHbhmv3qIgnhTLPspyfqnBuhIWYzFMNGIjcqFhkY5HDYPHnYPWc1nH0hmh6qFhdYgv-b5HckPH6LPj6hmh-b5HD8nj0snauYTh-MuvNzgLw4TARqniusULPYgvF9mvVxIgF_5iuWIZcqna3dnj0snj0hmgKsgLPCULIxIZ-suHYLnj0sriu9TZKxpyfqnHnznHR3P1fdFh-1myfqniuzugPxIZ-suHY3nauspvIxUh7VuHdzTB4YpZfhuv7GujYYrH7-njmLridBmWmzQHw9nhfVmW0Lmid9uh7BPWRLPhDYrj6hTATqnauETvsqnHbhUhNYgLw4TARqniuVuywGmNqGujYznjDhTAq1pyfqnW0knHfLFh78uZFEpywxpyfqPhnsuHNBPvDkmyFBP1KbmBu_my3quy4xNNnhUhNLgvk9UWd-UBuWULN8IZF45gN1FhdWm1YYPW0huMFEUHYkFhPC5iuWIMcqna3dnj0snj0hmLuznHYsQW0snWn1PauWIMFh5H08nj0snj0sFhNWTAYqPjmvPHDvPjbdQWTLFhNWTAYk5HfvPWRkPWf4Pi3LPzuWTjY1FhPETLfqnH0snj0snauWTjDqnzusUA78gv-b5HckPH6LPHnhmhbqPBudpyfqnWcvFh7MpyfqnHnznHR3P1fdFh7sUWdzTB4YpZfhTAk9mvRqnauWmgw-uvqzXNqGujYsFh745Hb4FMKz5H0hTMw3IjYsFhN35H0hUMTqniuWuMfqna3snj0snj0huLKz5HD8nj0hIy-Y5iuWThnqnWnLPj0&ac=50" />
+</div>
+
+<div style="width:320px; height:250px;overflow:hidden;position:relative;">
+    <a href="http://www.baidu.com"><img style="margin:0 auto;width:300px;height:250px;border:0px;" src="http://orionimg.adkmob.com/liehu/20150514/1431622360ax7v6.jpg"></a>
+</div>
+
+<script type="text/javascript">
+    if(typeof htmlFinishLoad == "undefined" || !htmlFinishLoad){
+        window.onload = cmFinishLoad;
+    }
+    if(typeof impTrackingHelper == 'function') { impTrackingHelper(); }  
+
+</script>
+</body>
+
+</html>

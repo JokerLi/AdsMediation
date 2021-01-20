@@ -1,0 +1,108 @@
+-optimizationpasses 5
+-dontusemixedcaseclassnames 
+-dontskipnonpubliclibraryclasses 
+-dontpreverify 
+-verbose 
+-dontwarn
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+-keepattributes InnerClasses,LineNumberTable
+
+
+
+
+-keep class android.support.v4.** { *; }
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+
+-dontwarn android.support.v4.**
+-dontwarn com.ijinshan.cloudconfig.util.**
+-dontwarn com.mopub.nativeads.**
+-keep class com.cmcm.adsdk.** { *;}
+-keep class com.mopub.**{*;}
+
+-dontwarn com.google.android.gms.**
+-keep class com.google.android.gms.** { *;}
+
+#for GDT
+-keep class com.qq.e.**{
+    public protected *;
+}
+
+-keep class com.tencent.gdt.**{
+    public protected *;
+}
+
+#for baidu
+-keep class com.baidu.** {
+    public protected *;
+}
+
+#iclick
+-keep class com.intowow.sdk.*{ *; }
+-dontwarn com.intowow.sdk.**
+-dontwarn com.intowow.sdk.InterstitialAdActivity
+-keep class com.intowow.sdk.InterstitialAdActivity{ *; }
+
+#for picks download
+-keep class com.cmcm.picks.down.env.DownLoadApplication{*;}
+-keep class com.cmcm.picks.down.** {
+        *;
+}
+-keep class com.cmcm.picks.** {
+        *;
+}
+-keep class com.cmcm.orion.picks.** {
+        *;
+}
+
+#added for vungle video
+-dontwarn com.vungle.**
+-keep class com.vungle.** { public *; }
+-keep class javax.inject.*
+-keepattributes Signature
+-keep class dagger.*
+
+#keep video adapter
+-keep class com.cmcm.ads.video.VastVideoHookLoader{ *; }
+-keep class com.cmcm.ads.video.LoopmeVideoAdapter{ *; }
+-keep class com.cmcm.ads.video.VungleHookLoader{ *; }
+-keep class com.cmcm.ads.video.IntowowAdapter{ *; }
+
+#mobvista
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.mobvista.** {*; }
+-keep interface com.mobvista.** {*; }
+-keep class android.support.v4.** { *; }
+-dontwarn com.mobvista.**
+-keep class **.R$* { public static final int mobvista*; }
+
+#inmobi
+-keep class com.inmobi.** { *; }
+-dontwarn com.inmobi.**
+-dontwarn com.moat.**

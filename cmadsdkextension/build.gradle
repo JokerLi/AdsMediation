@@ -1,0 +1,77 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    provided 'com.android.support:support-v4:22.2.0'
+}
+
+task copy_bins(){
+    String verName = getVerName();
+    String outputFolder = getAARDesfolder();
+    copy{
+        from("build/outputs/aar/cmadsdkextension-release.aar")
+        into(outputFolder)
+        include("cmadsdkextension-release.aar")
+        rename("cmadsdkextension-release","cmadsdk_ext_${verName}")
+    }
+    copy{
+        from("build/outputs/mapping/release")
+        into(outputFolder)
+        include("mapping.txt")
+        rename("mapping", "mapping_${verName}")
+    }
+}
+
+//assembleRelease.doLast {
+//    copy_bins
+
+//    android.productFlavors.all { variant ->
+//        String name = variant.name.toString()
+//        String verName = getVerName();
+//        String outputFolder = getAARDesfolder();
+//        copy{
+//            from("build/outputs/aar/cmadsdkextension-${name}-release.aar")
+//            into(outputFolder)
+//            include("cmadsdkextension-${name}-release.aar")
+//            rename("cmadsdkextension-${name}-release","cmadsdk_ext_${name}_${verName}")
+//        }
+//        copy{
+//            from("build/outputs/aar/cmadsdkextension-${name}-release.aar")
+//            into('../CMAdSdkDemo/libs/')
+//            include("cmadsdkextension-${name}-release.aar")
+//            rename("cmadsdkextension-${name}-release","cmadsdk_${name}_ext")
+//        }
+//        copy{
+//            from("build/outputs/mapping/${name}/release")
+//            into(outputFolder)
+//            include("mapping.txt")
+//            rename("mapping", "mapping_${name}_${verName}")
+//        }
+//    }
+//
+//    packageJava
+//}

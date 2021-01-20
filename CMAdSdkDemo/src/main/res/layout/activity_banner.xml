@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <EditText
+            android:id="@+id/refresh_time"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:hint="毫秒"
+            android:gravity="center"
+            android:textSize="15sp" />
+
+
+        <Button
+            android:id="@+id/btn_load"
+            android:layout_margin="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_blue_request"
+            android:text="load"
+            />
+
+        <Button
+            android:id="@+id/btn_show"
+            android:layout_margin="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:background="@drawable/btn_blue_request"
+            android:text="show"
+            />
+
+        <Button
+            android:id="@+id/btn_destroy"
+            android:layout_margin="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_blue_request"
+            android:text="destroy"
+            />
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/banner_view"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

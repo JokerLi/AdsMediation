@@ -1,0 +1,59 @@
+{
+	"type": "ads",
+	"code": 0,
+	"placements": [{
+		"definition": {
+			"type": "native",
+			"refresh": "0",
+			"refresh_threshold": "-1",
+			"min_viewability_percentage": "1",
+			"viewability_check_interval": "500",
+			"viewability_check_initial_delay": "500",
+			"cacheable": true
+		},
+		"feature_config": {
+			"enable_overlapping_view_check": null
+		},
+		"ads": [{
+			"adapter": "AN",
+			"data": {
+				"title": "tataUFO - \u5927\u5b66\u751f\u8f7b\u793e\u4ea4",
+				"subtitle": "tataUFO - \u7559\u5b66\u751f\u5fc5\u5907\uff01",
+				"call_to_action": "Install Now",
+				"body": "80\uff05\u7684\u7559\u5b66\u751f\u90fd\u5728\u73a9\u7684\u9ad8\u903c\u683c\u793e\u4ea4app\uff01",
+				"impression_report_url": "https:\/\/www.facebook.com\/ai.php?io=IS_ORIGINAL&tr=\u00257B\u002522ei\u002522\u00253A\u00257B\u002522ei\u002522\u00253A\u002522AQL18AmsVDe_E4JU53PTfgWcqPDLcbAoCc1_0EWgwWWqZaxVNs60FbBbTw1ZqrX2-q4dXZ3K5VgYHyN3utNFpwrf7ER-MXRadCip5hrVmVHbVh8XVaowqkOaG2mQAxSJJ2CESTFR4NH9XAeUzMrYwO72X-3Lnepk99EwAbjOGLm0xg-HhyuYJz3T2bGllOZcb6F6Srr94WAYxVV1OUQ3yooUU4hEHbcCZCxQWGq2xZOj8AkzzBtQBTSI-IjA4P7lDMigy1bY2MFaG7BQqp3EICyj48dDxWGcpaSs1WAdlPqjUdMnwixX3yVHLvZjvu-TuKtcgJWdNAym3mzK1ETiK7OQZmqKIuy_vDm7JCo8SMx2hGv6Nkyjo08tmWq9zpIZO9gS5kZZmsRohazYVviDDJ6_3wa7zpt8qLkTu0sHv8ulTlLZcDbpuWnjHMK7yMoi_6XvvGtGhK_YZ1c0aGD0buBxrwI7fqY1gLpLgjzDqb2XYiykmfUtGHsNNvueY3zn4DKQCD2AqRmPkbiWx4esrOmQyWWIS27Z3FKI4BNzmY8gWPT1PE636vN90Jlb_kp3U8OuOoZ_nARvknbE0hpZjYqFPkZNZm2OG8q-uhPS1KfoU0O13PygBXjYSl25FeCaO1rreN4hhpXGi72vz56CG-PcVyyon5iQ4uZbssxxs40EiVYc-vmsl6QetwpeWeRBohpnrWXvx3OeRRJBICAmRYKvpenZlyZJWwrg_8YCRBYZnDk2r_v78w-PI0iIWidbpLsEiLcv7T91tyeGjQHhQExskxHHS8WXwReKLKmCEwhk3vEW5gxq533-kPCjj9zwfluPlM8DEQPz2CCbb8ysOlrmBuDdaQrfJXWH3zJSV4szLaEzQ5HEOZTmwrCifqtu9VDZqZs8uaSSwo1gInypSdcBMZ55GibBrUSVYGvHqpYJVBrJNF9R-Wd0jjY2qwNR6C5VqehMZ4KD_umup5dy6kfHwqqOce_RX_JtVGJO5qjSzqhQnmBveCfc__1fulI8YrMXh2MZDGz2DrBYB9qhGqOM9W4GIroSbbdNbzHQz4tV-e7A_A3prYv6OKWRzkK7BKtQ4mL0BjX7e7PGC6A58FSpFIbfjSRFqfqsK6qI3n-FJO7puE_SADFX0zIZpvZw309yJBPAecmRBD3Gw6PG_LFqfLyREK3uNc-etmQeUxY-OcCDoNwt2HX3ak9y7aE_aAef8UZR9duYeCpRadRkdFch6RvtwLIlMra3i88IfglDEsSuFYz02gSmfta6YBtTxi-cOMEC47TdnVmrN3OIjrvfNkk2u_fkLLti7P0MnMKE_865D75sAKBl0cRiW8AEDG_bizntv9Z3sQzgg8DOI3IfOQLTHngsbXlLESRCevFVUR5_jjcvDM6UXIa0Fs17-g4npF4LuHdaMtM6otV7aSsFEZ3qTjEHhkiz4ZftcfIYY8lggWl1aJCfvrAGC5opV5Tb5w02c8BbPVfCkmzLP2RhwumvOkXGEu5g-Kn7vlERixgGzGL69CU2i-SvGxjNHM5LOC48Xqsg8KTU-AkBELLpkLjSIOOUnUzvUHZNoNxjZc8m7tbx4UruOY7_NBirnusrSKWO1D_aoLVHSDe-0GjEZYaDZB8H1rbR6a-_Jda2OTJkI8FcI7XbKKXriGyvIZ2BbV7mXPL6OlZhuHcNnGBLi4z52shF0L-duO4o7-44o44uKqp8TO6pYHSD5UlOzq5tl9ofNuesVtW_idWENyokG9v8vj5-ikLBPLn4kCOBXxJnrkYXlly0hVIcf-TA6ufsy4iQaMAHpzd-sCStMUGbLZe_m1BXvyCo4S1EX4B8vI0pmfHJRrZrJmT_BULCEI9kTjD4LpPk0n9hjfWK8XOJbQ4qEQAktzmHO1N8CZ632JrdjyhERUGLZFa9sJx2enzPIxaacZQT9pD96drJyXE6fKLgck2HPXk--DHXVi-ftgsDFwa22MikkQa0KKgQoLjxmNHQx7qVka2WFFZf4H-79RrPk8_4CrV_7zmro-MYOE05kj0Od5tCeEwT-6updqMSHFYsUUvIcSyoQLqqY25oPoSW34UMG8z2JuwU3Hh8ykYdKpCV4CdYgLbLC-D-HsGF4sl_qephqryYPbVFxG51r3Gf5Q9Qqu05iJicl7SDn9BbmbRkEObecm1Q-61nE45NE98iMB0nZkhEu4N50bl3SabyNUeFCX-ZP4KuKLGkTDg0o6-d-mhgoJjqT_5LFUxaaUHI527D2e3CNBzhyvl8HkUGiPy56JhXNmSp3ogIpyaw5d6m62fi58EbbANLQgh5XjX9GsD9_t7TbbjD4VAEJP8Z-lMmA5_GrGS1F7DJ-ayZP7OyG8TBwCYxvu6i2rYmbnOjhmhEuWVZJHwMpbTMHDpBoHXaqmouPrGLINT_3fD2bsKdKBfijal5pr9v_9L2z_7YzQCYVL4_gRd5F78KXWkHn2pwgM9BV5x2cRl3Djg7nRYKr_NIYifPgPfrNsM\u002522\u00257D\u00257D",
+				"click_report_url": "https:\/\/www.facebook.com\/rtb_click\/?ct=AQL18AmsVDe_E4JU53PTfgWcqPDLcbAoCc1_0EWgwWWqZaxVNs60FbBbTw1ZqrX2-q4dXZ3K5VgYHyN3utNFpwrf7ER-MXRadCip5hrVmVHbVh8XVaowqkOaG2mQAxSJJ2CESTFR4NH9XAeUzMrYwO72X-3Lnepk99EwAbjOGLm0xg-HhyuYJz3T2bGllOZcb6F6Srr94WAYxVV1OUQ3yooUU4hEHbcCZCxQWGq2xZOj8AkzzBtQBTSI-IjA4P7lDMigy1bY2MFaG7BQqp3EICyj48dDxWGcpaSs1WAdlPqjUdMnwixX3yVHLvZjvu-TuKtcgJWdNAym3mzK1ETiK7OQZmqKIuy_vDm7JCo8SMx2hGv6Nkyjo08tmWq9zpIZO9gS5kZZmsRohazYVviDDJ6_3wa7zpt8qLkTu0sHv8ulTlLZcDbpuWnjHMK7yMoi_6XvvGtGhK_YZ1c0aGD0buBxrwI7fqY1gLpLgjzDqb2XYiykmfUtGHsNNvueY3zn4DKQCD2AqRmPkbiWx4esrOmQyWWIS27Z3FKI4BNzmY8gWPT1PE636vN90Jlb_kp3U8OuOoZ_nARvknbE0hpZjYqFPkZNZm2OG8q-uhPS1KfoU0O13PygBXjYSl25FeCaO1rreN4hhpXGi72vz56CG-PcVyyon5iQ4uZbssxxs40EiVYc-vmsl6QetwpeWeRBohpnrWXvx3OeRRJBICAmRYKvpenZlyZJWwrg_8YCRBYZnDk2r_v78w-PI0iIWidbpLsEiLcv7T91tyeGjQHhQExskxHHS8WXwReKLKmCEwhk3vEW5gxq533-kPCjj9zwfluPlM8DEQPz2CCbb8ysOlrmBuDdaQrfJXWH3zJSV4szLaEzQ5HEOZTmwrCifqtu9VDZqZs8uaSSwo1gInypSdcBMZ55GibBrUSVYGvHqpYJVBrJNF9R-Wd0jjY2qwNR6C5VqehMZ4KD_umup5dy6kfHwqqOce_RX_JtVGJO5qjSzqhQnmBveCfc__1fulI8YrMXh2MZDGz2DrBYB9qhGqOM9W4GIroSbbdNbzHQz4tV-e7A_A3prYv6OKWRzkK7BKtQ4mL0BjX7e7PGC6A58FSpFIbfjSRFqfqsK6qI3n-FJO7puE_SADFX0zIZpvZw309yJBPAecmRBD3Gw6PG_LFqfLyREK3uNc-etmQeUxY-OcCDoNwt2HX3ak9y7aE_aAef8UZR9duYeCpRadRkdFch6RvtwLIlMra3i88IfglDEsSuFYz02gSmfta6YBtTxi-cOMEC47TdnVmrN3OIjrvfNkk2u_fkLLti7P0MnMKE_865D75sAKBl0cRiW8AEDG_bizntv9Z3sQzgg8DOI3IfOQLTHngsbXlLESRCevFVUR5_jjcvDM6UXIa0Fs17-g4npF4LuHdaMtM6otV7aSsFEZ3qTjEHhkiz4ZftcfIYY8lggWl1aJCfvrAGC5opV5Tb5w02c8BbPVfCkmzLP2RhwumvOkXGEu5g-Kn7vlERixgGzGL69CU2i-SvGxjNHM5LOC48Xqsg8KTU-AkBELLpkLjSIOOUnUzvUHZNoNxjZc8m7tbx4UruOY7_NBirnusrSKWO1D_aoLVHSDe-0GjEZYaDZB8H1rbR6a-_Jda2OTJkI8FcI7XbKKXriGyvIZ2BbV7mXPL6OlZhuHcNnGBLi4z52shF0L-duO4o7-44o44uKqp8TO6pYHSD5UlOzq5tl9ofNuesVtW_idWENyokG9v8vj5-ikLBPLn4kCOBXxJnrkYXlly0hVIcf-TA6ufsy4iQaMAHpzd-sCStMUGbLZe_m1BXvyCo4S1EX4B8vI0pmfHJRrZrJmT_BULCEI9kTjD4LpPk0n9hjfWK8XOJbQ4qEQAktzmHO1N8CZ632JrdjyhERUGLZFa9sJx2enzPIxaacZQT9pD96drJyXE6fKLgck2HPXk--DHXVi-ftgsDFwa22MikkQa0KKgQoLjxmNHQx7qVka2WFFZf4H-79RrPk8_4CrV_7zmro-MYOE05kj0Od5tCeEwT-6updqMSHFYsUUvIcSyoQLqqY25oPoSW34UMG8z2JuwU3Hh8ykYdKpCV4CdYgLbLC-D-HsGF4sl_qephqryYPbVFxG51r3Gf5Q9Qqu05iJicl7SDn9BbmbRkEObecm1Q-61nE45NE98iMB0nZkhEu4N50bl3SabyNUeFCX-ZP4KuKLGkTDg0o6-d-mhgoJjqT_5LFUxaaUHI527D2e3CNBzhyvl8HkUGiPy56JhXNmSp3ogIpyaw5d6m62fi58EbbANLQgh5XjX9GsD9_t7TbbjD4VAEJP8Z-lMmA5_GrGS1F7DJ-ayZP7OyG8TBwCYxvu6i2rYmbnOjhmhEuWVZJHwMpbTMHDpBoHXaqmouPrGLINT_3fD2bsKdKBfijal5pr9v_9L2z_7YzQCYVL4_gRd5F78KXWkHn2pwgM9BV5x2cRl3Djg7nRYKr_NIYifPgPfrNsM&action=0",
+				"fbad_command": "fbad:\/\/store?store_id=com.tatastar.tataufo&store_url=market\u00253A\u00252F\u00252Fdetails\u00253Fid\u00253Dcom.tatastar.tataufo&store_url_web_fallback=http\u00253A\u00252F\u00252Fplay.google.com\u00252Fstore\u00252Fapps\u00252Fdetails\u00253Fid\u00253Dcom.tatastar.tataufo&appsite_data=\u00257B\u002522android\u002522\u00253A\u00255B\u00257B\u002522package\u002522\u00253A\u002522com.tatastar.tataufo\u002522\u00252C\u002522appsite_url\u002522\u00253A\u002522\u002522\u00252C\u002522market_uri\u002522\u00253A\u002522market\u00253A\u00255C\u00252F\u00255C\u00252Fdetails\u00253Fid\u00253Dcom.tatastar.tataufo\u002522\u00257D\u00255D\u00257D",
+				"appsite_data": "{\"android\":[{\"package\":\"com.tatastar.tataufo\",\"appsite_url\":\"\",\"market_uri\":\"market:\\\/\\\/details?id=com.tatastar.tataufo\"}]}",
+				"detection_strings": "[\"com.tatastar.tataufo\"]",
+				"image": {
+					"url": "https:\/\/fbexternal-a.akamaihd.net\/safe_image.php?d=AQAc6ariISK87ENC&w=796&h=416&url=https\u00253A\u00252F\u00252Fwww.facebook.com\u00252Fads\u00252Fimage\u00252F\u00253Fd\u00253DAQLejdvIU8Ft_v9TP2ZXCKtbLJPNxi_y0uhM-GXBUPO0JCK2t-oNW5BiE0JCV3SnMsuOab21iKRz8a7-ybZJIXQ510EyqFmehKCbLdhEnBO970xLQ6T5dKaLadRW6qGudlgFHKDBD94GJ0F1X4TcTT4O&cfs=1&ext=jpg",
+					"width": "796",
+					"height": "416"
+				},
+				"social_context": "FREE \u00b7 Get it on Google Play",
+				"used_report_url": "https:\/\/www.facebook.com\/rtb_used\/?aed=AQIIrY6nKMw7skPD9QJJadDWNdK0LLTeXRebdcblw8mIz5P-0zUUEpO9wCz97hiD8ssXbU2zUOxOT6sWqJBNT5IGYUqr_jmpNFBDf3oRBckmyKdWcOr4UnblWq7AgGYR1dk0LutGEbegBvVJVtRdcDGW",
+				"invalidation_report_url": "https:\/\/www.facebook.com\/rtb_invalidation\/?aed=AQIIrY6nKMw7skPD9QJJadDWNdK0LLTeXRebdcblw8mIz5P-0zUUEpO9wCz97hiD8ssXbU2zUOxOT6sWqJBNT5IGYUqr_jmpNFBDf3oRBckmyKdWcOr4UnblWq7AgGYR1dk0LutGEbegBvVJVtRdcDGW",
+				"invalidation_behavior": "installed",
+				"manual_imp": false,
+				"viewability_check_interval": "500",
+				"viewability_check_initial_delay": "500",
+				"native_ui_config": [],
+				"ad_choices_icon": {
+					"url": "https:\/\/fbstatic-a.akamaihd.net\/rsrc.php\/v2\/ym\/r\/-oNSZayf7QK.png",
+					"width": "16",
+					"height": "16"
+				},
+				"ad_choices_link_url": "http:\/\/m.facebook.com\/ads\/ad_choices",
+				"request_id": "11033d7c-83dd-413d-a6a9-181498d19dd3",
+				"icon": {
+					"url": "https:\/\/fbexternal-a.akamaihd.net\/safe_image.php?d=AQCzLCQptP5RP9-h&w=128&h=128&url=http\u00253A\u00252F\u00252Flh3.googleusercontent.com\u00252FtGSadrG29IdxlGAuKGVkcpc2BC3K9gMGp-qOEamdd2Umi8yndwzKWMOX8CKNtcw2cT8\u00253Dw300",
+					"width": "128",
+					"height": "128"
+				},
+				"is_organic": false
+			},
+			"trackers": []
+		}]
+	}]
+}

@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+
+        buildConfigField "boolean", "IS_CN_VERSION", "false"
+    }
+
+    productFlavors {
+        china_all {
+            applicationId "com.cmcm.ads_cn"
+            buildConfigField "boolean", "IS_CN_VERSION", "true"
+        }
+        world_all {
+            applicationId "com.cmcm.ads"
+            buildConfigField "boolean", "IS_CN_VERSION", "false"
+        }
+    }
+
+    sourceSets {
+        china_all {
+            java.srcDirs = ['src/main/java', 'src/china_all/java']
+        }
+        world_all {
+            java.srcDirs = ['src/main/java', 'src/world_all/java']
+            res.srcDirs = ['src/world_all/res']
+        }
+    }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'cmmobsample'
+            keyPassword '123456'
+            storeFile file('cmmob.keystore')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-project.txt'
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs', 'libs/world_all', 'libs/china_all'
+    }
+}
+
+
+dependencies {
+    compile project(':cmadsdkextension')
+
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile files('libs/volley.jar')
+    china_allCompile fileTree(dir: 'libs/china_all', include: '*.jar')
+    china_allCompile(name: 'orion-sdk-china_all_V4.2.2', ext: 'aar')
+
+    world_allCompile fileTree(dir: 'libs/world_all', include: '*.jar')
+    compile(name: 'play-services-analytics-7.8.0', ext: 'aar')
+    compile(name: 'play-services-base-7.8.0', ext: 'aar')
+    compile(name: 'play-services-ads-7.8.0', ext: 'aar')
+    compile(name: 'AudienceNetwork', ext: 'aar')
+    world_allCompile(name: 'orion-sdk-world_all_V4.2.2', ext: 'aar')
+}
+
+/**
+ * 系统打包的默认目录
+ */
+def gAssembleApkPath = ''
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name.equals('release')) {
+        variant.outputs.each { output ->
+            gAssembleApkPath = output.packageApplication.outputFile.parent
+            println 'gAssembleApkPath is ' + gAssembleApkPath
+        }
+    }
+}
+
+
+//assembleRelease.doLast {
+//    copy {
+//        from gAssembleApkPath
+//        into getAARDesfolder()
+//        include '*.apk'
+//        exclude '*unaligned*'
+//    }
+//}
+

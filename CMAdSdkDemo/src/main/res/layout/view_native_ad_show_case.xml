@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_loader"
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+
+        <Button
+            android:id="@+id/btn_preload"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="PreloadAd"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_load"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="LoadAd"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/id_tv_tips"
+        android:layout_below="@+id/ll_loader"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#CCCCCC"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:text="-----下面是Native Ad,右滑进入FeedList场景------" />
+
+    <RelativeLayout
+        android:layout_below="@+id/id_tv_tips"
+        android:id="@+id/native_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </RelativeLayout>
+
+</RelativeLayout>
