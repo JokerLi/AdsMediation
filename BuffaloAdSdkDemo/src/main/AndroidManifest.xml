@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.buffalo.ads"
+    android:versionCode="13"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17"
+        tools:overrideLibrary="com.facebook.ads" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- baidu需要加的权限 六个必需权限  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- tencent需要加的权限 七个必需权限  -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <!-- 以下为可选权限  e866cfb0-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--for demo screensave test-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!--for demo screen save test-->
+
+    <!--for window manager  test-->
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--for window manager  test-->
+
+    <application
+        android:name="com.buffalo.ads.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="com.buffalo.ads.WelComeActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
+        <activity
+            android:name="com.buffalo.ads.WebViewBrowserAcitivty"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.NativeAdSampleActivityEx"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.NativeAdSampleActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.ListAdSimpleActivity"
+            android:label="@string/app_name"></activity>
+
+
+        <activity
+            android:name="com.buffalo.ads.InterstitalAdSampleActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.BannerAdSampleActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.CustomAdViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.ScreenSaverEnterActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.buffalo.ads.WindowManagerSimpleActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!--For Mopub start-->
+        <activity
+            android:name="com.mopub.mobileads.MoPubActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.mobileads.MraidActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.common.MoPubBrowser"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <!--For Mopub end-->
+
+        <!--admob ad request-->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:multiprocess="true"
+            android:theme="@android:style/Theme.Translucent" />
+
+
+        <!--iclick添加-->
+        <activity
+            android:name="com.intowow.sdk.WebViewActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <receiver
+            android:name="com.intowow.sdk.ScheduleReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.intowow.sdk.prefetch" />
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="CRYSTAL_ID"
+            android:value="c289283b310d44a2a9ea1ce91c55119d" />
+
+        <!--  接入Baidu必需：将下一行的android:value设置为您在百度union网站申请的AppSid-->
+        <meta-data
+            android:name="BaiduMobAd_APP_ID"
+            android:value="ec65005f" />
+        <activity
+            android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 接入腾讯gdt必需 -->
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" />
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!--========================  Vungle activity       ========================-->
+        <activity
+            android:name="com.vungle.publisher.banner.BannerFullActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <!--========================  LoopMe activity start ========================-->
+        <activity
+            android:name="com.loopme.AdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <activity android:name="com.loopme.AdBrowserActivity" />
+
+        <activity
+            android:name="com.loopme.PlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+        <!--========================  LoopMe activity end ========================-->
+
+        <activity
+            android:name="com.facebook.ads.InterstitialAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <!-- rcmd -->
+        <activity
+            android:name="com.buffalo.ads.QRcmdTestActivity"
+            android:label="@string/app_name"
+            android:process=":RcmdService"></activity>
+        <service
+            android:name=".mock.RcmdService"
+            android:exported="false"
+            android:process=":RcmdService" />
+
+        <activity android:name="com.buffalo.ads.ApkDownCtrlActivity" />
+        <activity android:name="com.buffalo.ads.ApkDownManagerActivity" />
+
+        <!-- mobvista -->
+        <activity
+            android:name="com.mobvista.msdk.out.LoadingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <!-- mobvista -->
+
+        <!--for inmobi-->
+        <activity
+            android:name="com.inmobi.rendering.InMobiAdActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:ignore="UnusedAttribute" />
+        <receiver
+            android:name="com.inmobi.commons.core.utilities.uid.ImIdShareBroadCastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.inmobi.share.id" />
+            </intent-filter>
+        </receiver>
+        <!--for inmobi-->
+
+        <activity android:name="com.buffalo.ads.NativeSplashAdSampleActivity" />
+
+        <activity
+            android:name="com.buffalo.ads.ScreenSaverActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:process=":server"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <service
+            android:name="com.buffalo.ads.TestService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":test_service" />
+
+    </application>
+
+</manifest>

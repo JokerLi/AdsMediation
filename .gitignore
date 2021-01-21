@@ -1,8 +1,9 @@
 /build
-/CMAdSdkDemo/build
+/BuffaloAdSdkDemo/build
 .idea
 *.iml
 .gradle
 /local.properties
 /captures
 gradle/
+/bin
