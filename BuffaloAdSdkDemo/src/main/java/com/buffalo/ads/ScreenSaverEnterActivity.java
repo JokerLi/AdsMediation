@@ -8,11 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.buffalo.ads.R;
-
-/**
- * Created by chenhao on 2016/1/6.
- */
 public class ScreenSaverEnterActivity extends Activity {
 
     @Override
@@ -37,14 +32,14 @@ public class ScreenSaverEnterActivity extends Activity {
     }
 
 
-    BroadcastReceiver mMasterResetReciever= new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent){
-            try{
+    BroadcastReceiver mMasterResetReciever = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            try {
                 Intent i = new Intent();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setClass(context, ScreenSaverActivity.class);
                 context.startActivity(i);
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.i("Output:", e.toString());
             }
         }

@@ -19,13 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.buffalo.ads.R;
 import com.buffalo.ads.utils.PackageUtils;
-
-
-/**
- * Created by chenhao on 16/11/19.
- */
 
 public class WebViewBrowserAcitivty extends Activity implements View.OnClickListener {
     public static final String EXTRA_URL = "browser.intent.extra.URL";
@@ -49,7 +43,7 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
         setContentView(R.layout.activity_webviewbrowser);
         this.webView = (WebView) findViewById(R.id.web_view);
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             mOriginUrl = extras.getString(EXTRA_URL);
         }
         mBackTv = (TextView) findViewById(R.id.webview_back);
@@ -91,13 +85,13 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void resumeWebView() {
-        if(null != webView) {
+        if (null != webView) {
             try {
                 webView.onResume();
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     webView.resumeTimers();
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -138,12 +132,12 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.webview_back){
+        if (view.getId() == R.id.webview_back) {
             finish();
         }
     }
 
-    class MyWebviewClient extends WebViewClient{
+    class MyWebviewClient extends WebViewClient {
         @Override
         public void onPageStarted(WebView webview, String url, Bitmap favicon) {
             super.onPageStarted(webview, url, favicon);
@@ -156,10 +150,10 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(PackageUtils.isGooglePlayUrl(url)){
+            if (PackageUtils.isGooglePlayUrl(url)) {
                 PackageUtils.go2GooglePlay(WebViewBrowserAcitivty.this, url);
                 finish();
-            }else {
+            } else {
                 return super.shouldOverrideUrlLoading(view, url);
             }
             return true;
@@ -167,15 +161,15 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
         }
     }
 
-    class MyWebChromeClient extends WebChromeClient{
+    class MyWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
         }
 
         @Override
-        public void onReceivedTitle(WebView view, String title){
-            if(mWebTitle != null){
+        public void onReceivedTitle(WebView view, String title) {
+            if (mWebTitle != null) {
                 mWebTitle.setText(title);
             }
 
@@ -184,12 +178,13 @@ public class WebViewBrowserAcitivty extends Activity implements View.OnClickList
 
     /**
      * 将cookie同步到WebView
-     * @param url WebView要加载的url
+     *
+     * @param url    WebView要加载的url
      * @param cookie 要同步的cookie
      * @return true 同步cookie成功，false同步cookie失败
      * @Author JPH
      */
-    public boolean syncCookie(String url,String cookie) {
+    public boolean syncCookie(String url, String cookie) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager.createInstance(this.getApplicationContext());
         }

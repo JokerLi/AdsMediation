@@ -2,6 +2,7 @@ package com.cmcm.adsdk.adapter;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cmcm.adsdk.Const;
 import com.cmcm.utils.internal.report.Reporter;
@@ -10,18 +11,12 @@ import com.facebook.ads.NativeAd;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.util.Log;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by i on 2015/7/2.
- */
 public class FaceBookInfomation {
-
-    public static String getRawJson(int operation, NativeAd ad){
-
-        if (ad == null){
+    public static String getRawJson(int operation, NativeAd ad) {
+        if (ad == null) {
             return "";
         }
 
@@ -37,7 +32,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdIcon().getUrl())) {
                 iconUrl = ad.getAdIcon().getUrl();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             iconUrl = null;
         }
 
@@ -45,7 +40,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdCoverImage().getUrl())) {
                 coverUrl = ad.getAdCoverImage().getUrl();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             coverUrl = null;
         }
 
@@ -53,7 +48,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdTitle())) {
                 title = ad.getAdTitle();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             title = null;
         }
 
@@ -61,7 +56,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdBody())) {
                 body = ad.getAdBody();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             body = null;
         }
 
@@ -69,7 +64,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdSocialContext())) {
                 socialcontext = ad.getAdSocialContext();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             socialcontext = null;
         }
 
@@ -77,7 +72,7 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(ad.getAdCallToAction())) {
                 calltoaction = ad.getAdCallToAction();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             calltoaction = null;
         }
 
@@ -86,20 +81,20 @@ public class FaceBookInfomation {
             if (!TextUtils.isEmpty(fbadString)) {
                 fbad = fbadString;
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             fbad = null;
         }
 
         JSONObject jsonObj = new JSONObject();
 
         try {
-            Reporter.putValueIntoJson(jsonObj, "operation", operation+"");
+            Reporter.putValueIntoJson(jsonObj, "operation", operation + "");
             Reporter.putValueIntoJson(jsonObj, "ad_id", ad.getId());
             Reporter.putValueIntoJson(jsonObj, "icon_url", iconUrl);
             Reporter.putValueIntoJson(jsonObj, "cover_url", coverUrl);
             Reporter.putValueIntoJson(jsonObj, "title", title);
             Reporter.putValueIntoJson(jsonObj, "body", body);
-            Reporter.putValueIntoJson(jsonObj, "social_context" , socialcontext);
+            Reporter.putValueIntoJson(jsonObj, "social_context", socialcontext);
             Reporter.putValueIntoJson(jsonObj, "call2action", calltoaction);
             Reporter.putValueIntoJson(jsonObj, "fbad", fbad);
         } catch (JSONException e) {
@@ -160,47 +155,47 @@ public class FaceBookInfomation {
     }
 
     /**
-     *  for AudienceNetwork v4.7.0
+     * for AudienceNetwork v4.7.0
      */
-    public static String getRawFBAdV470(NativeAd ad){
+    public static String getRawFBAdV470(NativeAd ad) {
         String rawAdUriString = "";
-        try{
+        try {
             Field adAdapterField = ad.getClass().getDeclaredField("j");
             adAdapterField.setAccessible(true);
             Object adAdpterObject = adAdapterField.get(ad);
-            if (adAdpterObject instanceof  com.facebook.ads.internal.adapters.k) {
-                com.facebook.ads.internal.adapters.k kAdapter =  (com.facebook.ads.internal.adapters.k)adAdpterObject;
+            if (adAdpterObject instanceof com.facebook.ads.internal.adapters.k) {
+                com.facebook.ads.internal.adapters.k kAdapter = (com.facebook.ads.internal.adapters.k) adAdpterObject;
                 Field adapterN = kAdapter.getClass().getDeclaredField("b");
                 adapterN.setAccessible(true);
-                Object nObject =  adapterN.get(kAdapter);
-                if(nObject instanceof   com.facebook.ads.internal.adapters.n ){
-                    com.facebook.ads.internal.adapters.n  nAdapter =  (com.facebook.ads.internal.adapters.n)nObject;
+                Object nObject = adapterN.get(kAdapter);
+                if (nObject instanceof com.facebook.ads.internal.adapters.n) {
+                    com.facebook.ads.internal.adapters.n nAdapter = (com.facebook.ads.internal.adapters.n) nObject;
                     Field uriField = nAdapter.getClass().getDeclaredField("b");
                     uriField.setAccessible(true);
-                    Object o  = uriField.get(nAdapter);
+                    Object o = uriField.get(nAdapter);
                     if (o instanceof Uri) {
                         Uri fbadUri = (Uri) o;
                         rawAdUriString = fbadUri.toString();
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
         }
         return rawAdUriString;
     }
 
 
     /**
-     *  for AudienceNetwork v4.8.0
+     * for AudienceNetwork v4.8.0
      */
-    public static String getRawFBAdV480(NativeAd ad){
+    public static String getRawFBAdV480(NativeAd ad) {
         String rawAdUriString = "";
-        try{
+        try {
             Field adAdapterField = ad.getClass().getDeclaredField("k");
             adAdapterField.setAccessible(true);
             Object adAdpterObject = adAdapterField.get(ad);
-            if (adAdpterObject instanceof  com.facebook.ads.internal.adapters.j) {
-                com.facebook.ads.internal.adapters.j kAdapter =  (com.facebook.ads.internal.adapters.j)adAdpterObject;
+            if (adAdpterObject instanceof com.facebook.ads.internal.adapters.j) {
+                com.facebook.ads.internal.adapters.j kAdapter = (com.facebook.ads.internal.adapters.j) adAdpterObject;
                 Field adapterN = kAdapter.getClass().getDeclaredField("c");
                 adapterN.setAccessible(true);
 //                Object nObject =  adapterN.get(kAdapter);
@@ -208,44 +203,45 @@ public class FaceBookInfomation {
 //                    com.facebook.ads.internal.adapters.n  nAdapter =  (com.facebook.ads.internal.adapters.n)nObject;
 //                    Field uriField = nAdapter.getClass().getDeclaredField("b");
 //                    uriField.setAccessible(true);
-                    Object o  = adapterN.get(kAdapter);
-                    if (o instanceof Uri) {
-                        Uri fbadUri = (Uri) o;
-                        rawAdUriString = fbadUri.toString();
+                Object o = adapterN.get(kAdapter);
+                if (o instanceof Uri) {
+                    Uri fbadUri = (Uri) o;
+                    rawAdUriString = fbadUri.toString();
 //                    }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
         }
         return rawAdUriString;
     }
 
     /**
      * 获取facebook 插屏广告 offer信息
+     *
      * @param ad
      * @return
      */
-    public static String getFacebookInterstitialOfferStringV482(Ad ad){
+    public static String getFacebookInterstitialOfferStringV482(Ad ad) {
         try {
             Field hField = ad.getClass().getDeclaredField("d");
             hField.setAccessible(true);
             Object hObject = hField.get(ad);
-            if(hObject instanceof com.facebook.ads.internal.h){
-                com.facebook.ads.internal.h  object_h =  (com.facebook.ads.internal.h)hObject;
+            if (hObject instanceof com.facebook.ads.internal.h) {
+                com.facebook.ads.internal.h object_h = (com.facebook.ads.internal.h) hObject;
                 Field iField = object_h.getClass().getDeclaredField("l");
                 iField.setAccessible(true);
                 Object iObject = iField.get(object_h);
-                if(iObject instanceof  com.facebook.ads.internal.adapters.i){
-                    com.facebook.ads.internal.adapters.i object_i =  (com.facebook.ads.internal.adapters.i)iObject;
+                if (iObject instanceof com.facebook.ads.internal.adapters.i) {
+                    com.facebook.ads.internal.adapters.i object_i = (com.facebook.ads.internal.adapters.i) iObject;
                     Field kField = object_i.getClass().getDeclaredField("f");
                     kField.setAccessible(true);
                     Object kObject = kField.get(object_i);
-                    if(kObject instanceof com.facebook.ads.internal.adapters.k){
-                        com.facebook.ads.internal.adapters.k object_k = (com.facebook.ads.internal.adapters.k)kObject;
+                    if (kObject instanceof com.facebook.ads.internal.adapters.k) {
+                        com.facebook.ads.internal.adapters.k object_k = (com.facebook.ads.internal.adapters.k) kObject;
 
                         Field strField = object_k.getClass().getDeclaredField("a");
                         strField.setAccessible(true);
-                        Object strHtml  = strField.get(object_k);
+                        Object strHtml = strField.get(object_k);
                         if (strHtml instanceof String) {
                             return strHtml.toString();
                         }
@@ -261,13 +257,13 @@ public class FaceBookInfomation {
         return "";
     }
 
-    public static String getFBReportPkg(String typeName){
+    public static String getFBReportPkg(String typeName) {
         String suffix = "";
-        if(typeName.equals(Const.KEY_FB_L)){
+        if (typeName.equals(Const.KEY_FB_L)) {
             suffix = "low";
-        }else if(typeName.equals(Const.KEY_FB_B)){
+        } else if (typeName.equals(Const.KEY_FB_B)) {
             suffix = "balance";
-        }else if(typeName.equals(Const.KEY_FB_H)){
+        } else if (typeName.equals(Const.KEY_FB_H)) {
             suffix = "hight";
         }
         return String.format("%s.%s", Const.pkgName.facebook, suffix);

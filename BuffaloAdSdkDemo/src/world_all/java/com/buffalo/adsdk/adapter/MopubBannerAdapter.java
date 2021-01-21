@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.mopub.mobileads.MoPubErrorCode;
@@ -29,7 +29,7 @@ public class MopubBannerAdapter extends NativeloaderAdapter {
         mContext = context;
         mExtras = extras;
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         new MopubBannerHookAd().loadAd();
@@ -46,33 +46,33 @@ public class MopubBannerAdapter extends NativeloaderAdapter {
             return 0;
         switch ((MoPubErrorCode) errorInstance) {
             case NO_FILL:
-                return CMAdError.NO_FILL;
+                return NativeAdError.NO_FILL;
             case WARMUP:
-                return CMAdError.WARMUP;
+                return NativeAdError.WARMUP;
             case SERVER_ERROR:
-                return CMAdError.SERVER_ERROR;
+                return NativeAdError.SERVER_ERROR;
             case NO_CONNECTION:
-                return CMAdError.NO_CONNECTION;
+                return NativeAdError.NO_CONNECTION;
             case CANCELLED:
-                return CMAdError.CANCELLED;
+                return NativeAdError.CANCELLED;
             case ADAPTER_NOT_FOUND:
-                return CMAdError.ADAPTER_NOT_FOUND;
+                return NativeAdError.ADAPTER_NOT_FOUND;
             case ADAPTER_CONFIGURATION_ERROR:
-                return CMAdError.ADAPTER_CONFIGURATION_ERROR;
+                return NativeAdError.ADAPTER_CONFIGURATION_ERROR;
             case MRAID_LOAD_ERROR:
-                return CMAdError.MRAID_LOAD_ERROR;
+                return NativeAdError.MRAID_LOAD_ERROR;
             case VIDEO_CACHE_ERROR:
-                return CMAdError.VIDEO_CACHE_ERROR;
+                return NativeAdError.VIDEO_CACHE_ERROR;
             case VIDEO_DOWNLOAD_ERROR:
-                return CMAdError.VIDEO_DOWNLOAD_ERROR;
+                return NativeAdError.VIDEO_DOWNLOAD_ERROR;
             case VIDEO_NOT_AVAILABLE:
-                return CMAdError.VIDEO_NOT_AVAILABLE;
+                return NativeAdError.VIDEO_NOT_AVAILABLE;
             case VIDEO_PLAYBACK_ERROR:
-                return CMAdError.VIDEO_PLAYBACK_ERROR;
+                return NativeAdError.VIDEO_PLAYBACK_ERROR;
             case LOADIMAGE_ERROR:
-                return CMAdError.LOADIMAGE_ERROR;
+                return NativeAdError.LOADIMAGE_ERROR;
             case BANNER_CREATE_ERROR:
-                return CMAdError.BANNER_CREATE_ERROR;
+                return NativeAdError.BANNER_CREATE_ERROR;
             default:
                 break;
         }

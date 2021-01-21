@@ -9,13 +9,10 @@ import com.buffalo.utils.gaid.AdvertisingIdHelper;
 
 import java.util.Map;
 
-/**
- * Created by $lzb on 2015/10/23.
- */
 public class BuinessPublicData {
 
     public static final int AC_REQUEST_AD = 3;
-    public static final int AC_VIEW  = 50;
+    public static final int AC_VIEW = 50;
     public static final int AC_CLICK = 60;
     public static final int AC_SUCCESS = 36;
     public static final int AC_INSTALL = 38;
@@ -36,9 +33,13 @@ public class BuinessPublicData {
     private String mAid;
     private String mLan;
     private String mExt = "";
-    /**如果为null，不需要最后传出去*/
+    /**
+     * 如果为null，不需要最后传出去
+     */
     private String mRf = null;
-    /**等于-1不上报*/
+    /**
+     * 等于-1不上报
+     */
     private String mMcc = "";
     private String mGaid = "";
     private String mMnc = "";
@@ -54,7 +55,7 @@ public class BuinessPublicData {
         data.mAid = Commons.getAndroidId();
 
         String language = Commons.getLanguage(AdManager.getContext());
-        String country  = Commons.getCountry(AdManager.getContext());
+        String country = Commons.getCountry(AdManager.getContext());
         data.mLan = String.format("%s_%s", language, country);
 
         data.mMcc = Commons.getMCC(AdManager.getContext());
@@ -64,11 +65,11 @@ public class BuinessPublicData {
         return data;
     }
 
-    public void setLpCode(int code){
+    public void setLpCode(int code) {
         this.mLp = code;
     }
 
-    public void setReportParam(Map<String, String> reportParam){
+    public void setReportParam(Map<String, String> reportParam) {
         this.mReportParam = reportParam;
     }
 
@@ -82,26 +83,26 @@ public class BuinessPublicData {
     public String toReportString() {
         StringBuilder sb = new StringBuilder();
         sb.append("ac=" + mAc)
-            .append("&pos=" + mPos)
-            .append("&mid=" + mMid)
-            .append("&aid=" + mAid)
-            .append("&lan=" + mLan)
-            .append("&ext=" + mExt)
-            .append("&mcc=" + (TextUtils.isEmpty(mMcc)?"":mMcc))
-            .append("&mnc=" + (TextUtils.isEmpty(mMnc)?"":mMnc))
-            .append("&gaid="+mGaid)
-            .append("&pl=2")
+                .append("&pos=" + mPos)
+                .append("&mid=" + mMid)
+                .append("&aid=" + mAid)
+                .append("&lan=" + mLan)
+                .append("&ext=" + mExt)
+                .append("&mcc=" + (TextUtils.isEmpty(mMcc) ? "" : mMcc))
+                .append("&mnc=" + (TextUtils.isEmpty(mMnc) ? "" : mMnc))
+                .append("&gaid=" + mGaid)
+                .append("&pl=2")
                 // FIXME: 2016/7/28
-            //.append("&v=" + CmMarketHttpClient.PROTOCAL_VERSION)
-            .append("&channelid=" + mChannelid)
-            .append("&lp=" + mLp)
-            .append("&sdkv="+ Const.VERSION)
-            .append("&at=" + System.currentTimeMillis());
+                //.append("&v=" + CmMarketHttpClient.PROTOCAL_VERSION)
+                .append("&channelid=" + mChannelid)
+                .append("&lp=" + mLp)
+                .append("&sdkv=" + Const.VERSION)
+                .append("&at=" + System.currentTimeMillis());
         if (mRf != null) {
             sb.append("&rf=" + mRf);
         }
-        if(mReportParam != null && !mReportParam.isEmpty()){
-            for(String key: mReportParam.keySet()){
+        if (mReportParam != null && !mReportParam.isEmpty()) {
+            for (String key : mReportParam.keySet()) {
                 sb.append("&").append(key).append("=").append(mReportParam.get(key));
             }
         }

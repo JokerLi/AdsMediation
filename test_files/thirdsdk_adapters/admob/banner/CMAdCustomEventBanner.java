@@ -1,6 +1,5 @@
 package com.cmcm.customevent.banner;
 
-
 import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,16 +16,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/23.
- */
-public class CMAdCustomEventBanner implements CustomEventBanner,CMBannerAdListener {
+public class CMAdCustomEventBanner implements CustomEventBanner, CMBannerAdListener {
     private CustomEventBannerListener mCustomEventBannerListener;
-    private static final String KEY_POSID= "posid";
-    private static final String KEY_SIZE ="size";
+    private static final String KEY_POSID = "posid";
+    private static final String KEY_SIZE = "size";
     private String mPosId;
     private String mSize;
-    private Map<String,String> styleMap = new HashMap<String,String>();
+    private Map<String, String> styleMap = new HashMap<String, String>();
+
     //s1  json 样式 {"posid":"1094108","size":"0"}
     @Override
     public void requestBannerAd(CustomEventBannerListener customEventBannerListener, Activity activity, String s, String s1, AdSize adSize, MediationAdRequest mediationAdRequest, Object o) {
@@ -41,18 +38,19 @@ public class CMAdCustomEventBanner implements CustomEventBanner,CMBannerAdListen
             mCustomEventBannerListener.onFailedToReceiveAd();
             return;
         }
-        Log.d("CMAdCustomEventBanner","posid is"+ styleMap.get(KEY_POSID));
-        Log.d("CMAdCustomEventBanner","size is"+ styleMap.get(KEY_SIZE));
-        CMCustomAdProvider.getInstance().loadBannerAd(activity.getApplicationContext(), styleMap.get(KEY_POSID),styleMap.get(KEY_SIZE), this);
+        Log.d("CMAdCustomEventBanner", "posid is" + styleMap.get(KEY_POSID));
+        Log.d("CMAdCustomEventBanner", "size is" + styleMap.get(KEY_SIZE));
+        CMCustomAdProvider.getInstance().loadBannerAd(activity.getApplicationContext(), styleMap.get(KEY_POSID), styleMap.get(KEY_SIZE), this);
     }
-    public void parserData(String s){
-        try{
+
+    public void parserData(String s) {
+        try {
             JSONObject jsonObject = new JSONObject(s);
             mPosId = (String) jsonObject.get(KEY_POSID);
-            mSize = (String)jsonObject.get(KEY_SIZE);
-            styleMap.put(KEY_POSID,mPosId);
-            styleMap.put(KEY_SIZE,mSize);
-        }catch (Exception e){
+            mSize = (String) jsonObject.get(KEY_SIZE);
+            styleMap.put(KEY_POSID, mPosId);
+            styleMap.put(KEY_SIZE, mSize);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -60,7 +58,7 @@ public class CMAdCustomEventBanner implements CustomEventBanner,CMBannerAdListen
 
     @Override
     public void destroy() {
-        if(!styleMap.isEmpty()){
+        if (!styleMap.isEmpty()) {
             styleMap.clear();
         }
         CMCustomAdProvider.getInstance().destroy(styleMap.get(KEY_POSID));

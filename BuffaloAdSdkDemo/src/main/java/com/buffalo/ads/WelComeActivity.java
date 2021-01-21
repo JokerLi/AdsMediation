@@ -12,15 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.buffalo.ads.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by chenhao on 2015/8/16.
- */
 public class WelComeActivity extends Activity {
     public static final String FROM = "from";
     public static final String CLASS_NAME = "WelComeActivity";

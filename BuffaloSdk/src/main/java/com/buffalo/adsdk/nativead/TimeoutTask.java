@@ -6,9 +6,6 @@ import com.buffalo.utils.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by shimiaolei on 16/1/2.
- */
 class TimeoutTask extends TimerTask {
 
     Timer mTimer = null;

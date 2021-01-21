@@ -7,8 +7,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.utils.Commons;
 import com.mopub.common.ClientMetadata;
@@ -18,9 +18,6 @@ import com.mopub.nativeads.NativeResponse;
 
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
 public class MopubNativeAdapter extends NativeloaderAdapter {
     private final String PREFS_NAME = "cmcmadsdk_config";
 
@@ -28,7 +25,7 @@ public class MopubNativeAdapter extends NativeloaderAdapter {
     public void loadNativeAd(@NonNull Context context,
                              @NonNull Map<String, Object> extras) {
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         new MopubNativeAd(context, extras).loadAd();
@@ -50,33 +47,33 @@ public class MopubNativeAdapter extends NativeloaderAdapter {
             return 0;
         switch ((NativeErrorCode) errorInstance) {
             case EMPTY_AD_RESPONSE:
-                return CMAdError.EMPTY_AD_RESPONSE;
+                return NativeAdError.EMPTY_AD_RESPONSE;
             case INVALID_JSON:
-                return CMAdError.INVALID_JSON;
+                return NativeAdError.INVALID_JSON;
             case IMAGE_DOWNLOAD_FAILURE:
-                return CMAdError.IMAGE_DOWNLOAD_FAILURE;
+                return NativeAdError.IMAGE_DOWNLOAD_FAILURE;
             case INVALID_REQUEST_URL:
-                return CMAdError.INVALID_REQUEST_URL;
+                return NativeAdError.INVALID_REQUEST_URL;
             case UNEXPECTED_RESPONSE_CODE:
-                return CMAdError.UNEXPECTED_RESPONSE_CODE;
+                return NativeAdError.UNEXPECTED_RESPONSE_CODE;
             case SERVER_ERROR_RESPONSE_CODE:
-                return CMAdError.SERVER_ERROR_RESPONSE_CODE;
+                return NativeAdError.SERVER_ERROR_RESPONSE_CODE;
             case CONNECTION_ERROR:
-                return CMAdError.CONNECTION_ERROR;
+                return NativeAdError.CONNECTION_ERROR;
             case UNSPECIFIED:
-                return CMAdError.UNSPECIFIED;
+                return NativeAdError.UNSPECIFIED;
             case NETWORK_INVALID_REQUEST:
-                return CMAdError.NETWORK_INVALID_REQUEST;
+                return NativeAdError.NETWORK_INVALID_REQUEST;
             case NETWORK_TIMEOUT:
-                return CMAdError.NETWORK_TIMEOUT;
+                return NativeAdError.NETWORK_TIMEOUT;
             case NETWORK_NO_FILL:
-                return CMAdError.NETWORK_NO_FILL;
+                return NativeAdError.NETWORK_NO_FILL;
             case NETWORK_INVALID_STATE:
-                return CMAdError.NETWORK_INVALID_STATE;
+                return NativeAdError.NETWORK_INVALID_STATE;
             case NATIVE_ADAPTER_CONFIGURATION_ERROR:
-                return CMAdError.NATIVE_ADAPTER_CONFIGURATION_ERROR;
+                return NativeAdError.NATIVE_ADAPTER_CONFIGURATION_ERROR;
             case NATIVE_ADAPTER_NOT_FOUND:
-                return CMAdError.NATIVE_ADAPTER_NOT_FOUND;
+                return NativeAdError.NATIVE_ADAPTER_NOT_FOUND;
             default:
                 break;
         }

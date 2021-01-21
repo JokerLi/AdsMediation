@@ -8,13 +8,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.buffalo.adsdk.BitmapListener;
-import com.buffalo.adsdk.CMAdManagerFactory;
 import com.buffalo.adsdk.ImageDownloadListener;
+import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.baseapi.ads.INativeAd;
 
-/**
- * Created by Li Guoqing on 2016/11/19.
- */
 public class RenderViewHelper {
 
     public static void setImageView(final ImageView imageView, String url) {
@@ -24,7 +21,7 @@ public class RenderViewHelper {
 
         // TODO: 2016/11/15 default image
         imageView.setVisibility(View.VISIBLE);
-        ImageDownloadListener listener = CMAdManagerFactory.getImageDownloadListener();
+        ImageDownloadListener listener = NativeAdManagerFactory.getImageDownloadListener();
         if (listener != null) {
             listener.getBitmap(url, false, new BitmapListener() {
                 @Override
@@ -66,7 +63,7 @@ public class RenderViewHelper {
         textView.setText(txt);
     }
 
-    public static void setBigCard(CMMediaView mainImageView, INativeAd ad, View view) {
+    public static void setBigCard(NativeMediaView mainImageView, INativeAd ad, View view) {
         if (mainImageView == null || ad == null) {
             return;
         }

@@ -1,8 +1,8 @@
 package com.buffalo.adsdk.banner;
 
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 
-public class BannerParams extends CMRequestParams {
+public class BannerParams extends RequestParams {
     public void setBannerViewSize(BannerAdSize mBannerAdSize) {
         if (mParams != null) {
             mParams.put(KEY_BANNER_VIEW_SIZE, mBannerAdSize);

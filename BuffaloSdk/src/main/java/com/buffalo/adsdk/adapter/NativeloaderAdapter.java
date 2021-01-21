@@ -12,17 +12,16 @@ import com.buffalo.utils.ThreadHelper;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
 public abstract class NativeloaderAdapter {
     public static final int DEFAULT_LOAD_SIZE = 1;
     public static final int RES_TYPE_RCV = 0;
     public static final int RES_TYPE_PEG = 1;
 
-    public interface NativeAdapterListener{
+    public interface NativeAdapterListener {
         void onNativeAdLoaded(INativeAd nativeAd);
+
         void onNativeAdLoaded(List<INativeAd> list);
+
         void onNativeAdFailed(String errorInfo);
     }
 
@@ -34,7 +33,7 @@ public abstract class NativeloaderAdapter {
                 String object = (String) extras.get(BaseNativeAd.KEY_PLACEMENT_ID);
                 return !TextUtils.isEmpty(object);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;
@@ -42,14 +41,18 @@ public abstract class NativeloaderAdapter {
 
     public abstract void loadNativeAd(@NonNull final Context context,
 
-                                         @NonNull final Map<String, Object> extras);
+                                      @NonNull final Map<String, Object> extras);
 
     public int getDefaultLoadNum() {
         return DEFAULT_LOAD_SIZE;
     }
+
     public abstract int getReportRes(String adTypeName);
+
     public abstract String getReportPkgName(String adTypeName);
+
     public abstract String getAdKeyType();
+
     public abstract long getDefaultCacheTime();
 
 
@@ -74,11 +77,12 @@ public abstract class NativeloaderAdapter {
     private final String ADLOAD_ADS = "adload_ads";
     private final String ADLOAD_AD = "adload_ad";
     private final String FAILED = "failed";
+
     private void callBack(String type, final INativeAd nativeAd, final List<INativeAd> list, final String errorInfo) {
         ThreadHelper.runOnUiThread(new CallBackRunnable(type, nativeAd, list, errorInfo));
     }
 
-    private class CallBackRunnable implements Runnable{
+    private class CallBackRunnable implements Runnable {
         private String type;
         private INativeAd nativeAd;
         private List<INativeAd> list;
@@ -94,23 +98,23 @@ public abstract class NativeloaderAdapter {
         @Override
         public void run() {
             if (mListener != null) {
-                if(ADLOAD_ADS.equals(type)){
+                if (ADLOAD_ADS.equals(type)) {
                     mListener.onNativeAdLoaded(list);
-                }else if(ADLOAD_AD.equals(type)){
+                } else if (ADLOAD_AD.equals(type)) {
                     mListener.onNativeAdLoaded(nativeAd);
-                }else if(FAILED.equals(type)){
+                } else if (FAILED.equals(type)) {
                     mListener.onNativeAdFailed(errorInfo);
                 }
             }
         }
     }
 
-    public Const.AdType getAdType(){
+    public Const.AdType getAdType() {
         return Const.AdType.NATIVE;
     }
 
     //返回广告请求的错误码,如果返回不是int型，则子类中实现该方法转换，提供给上报统计用
-    public int getAdErrorCode(Object errorInstance){
+    public int getAdErrorCode(Object errorInstance) {
         return 0;
     }
 }

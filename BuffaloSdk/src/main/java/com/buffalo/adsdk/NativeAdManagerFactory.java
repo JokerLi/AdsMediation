@@ -15,11 +15,11 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CMAdManagerFactory extends CMBaseFactory {
+public class NativeAdManagerFactory extends BaseFactory {
 
     private static ImageDownloadListener sImageDownloadListener;
     private static ReportProxy sReportProxy;
-    public CMAdManagerFactory() {
+    public NativeAdManagerFactory() {
     }
 
     @Override

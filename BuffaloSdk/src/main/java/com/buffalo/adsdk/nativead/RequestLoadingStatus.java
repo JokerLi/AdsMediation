@@ -1,11 +1,7 @@
 package com.buffalo.adsdk.nativead;
 
-
 import java.util.Vector;
 
-/**
- * Created by shimiaolei on 16/1/2.
- */
 class RequestLoadingStatus {
     int mSize = 0;
     final private Vector<Boolean> mLoadingStatus = new Vector<Boolean>();

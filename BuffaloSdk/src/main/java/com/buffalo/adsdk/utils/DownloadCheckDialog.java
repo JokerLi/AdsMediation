@@ -13,18 +13,15 @@ import com.buffalo.adsdk.R;
 import com.buffalo.utils.Commons;
 import com.buffalo.utils.NetworkUtil;
 
-
-/**
- * Created by chenhao on 16/5/11.
- */
 public class DownloadCheckDialog {
-    public interface DownloadCheckListener{
+    public interface DownloadCheckListener {
         void handleDownload();
+
         void cancelDownload();
     }
 
-    public static void showDialog(Context context, final DownloadCheckListener listener){
-        if(context == null || listener == null){
+    public static void showDialog(Context context, final DownloadCheckListener listener) {
+        if (context == null || listener == null) {
             return;
         }
         if (NetworkUtil.isMobileNetWork(context)) {

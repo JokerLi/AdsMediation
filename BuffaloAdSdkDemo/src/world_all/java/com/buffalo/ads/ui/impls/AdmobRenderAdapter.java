@@ -8,17 +8,15 @@ import com.buffalo.baseapi.ads.INativeAd;
 import com.google.android.gms.ads.formats.NativeAppInstallAdView;
 import com.google.android.gms.ads.formats.NativeContentAdView;
 
-/**
- * Created by Li Guoqing on 2016/11/19.
- */
-public class AdmobRenderAdapter implements NativeAdTemplate.ICMNativeAdViewAdapter {
+public class AdmobRenderAdapter implements NativeAdTemplate.INativeAdViewAdapter {
     private Context mContext;
+
     public AdmobRenderAdapter(Context context) {
         mContext = context;
     }
 
     @Override
-    public View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder  viewHolder) {
+    public View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder viewHolder) {
         return addAdmobBrandLogoView(viewHolder, ad);
     }
 

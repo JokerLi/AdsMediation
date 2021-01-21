@@ -1,9 +1,5 @@
 package com.buffalo.adsdk;
 
-
-/**
- * Created by chenhao on 16/5/11.
- */
 public enum InternalAdError {
 
     NETWORK_OTHER_ERROR(200, "network other error"),
@@ -37,14 +33,14 @@ public enum InternalAdError {
         return this;
     }
 
-    public InternalAdError withExceptionName(Throwable ex){
-        if(null != ex){
+    public InternalAdError withExceptionName(Throwable ex) {
+        if (null != ex) {
             exceptionName = ex.getClass().getName();
         }
         return this;
     }
 
-    public String getExceptionName(){
+    public String getExceptionName() {
         return exceptionName;
     }
 

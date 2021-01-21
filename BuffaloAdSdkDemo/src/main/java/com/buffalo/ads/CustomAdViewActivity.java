@@ -19,9 +19,6 @@ import com.buffalo.ads.ui.AdViewHelper;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
-/**
- * Created by chenhao on 16/3/29.
- */
 public class CustomAdViewActivity extends FragmentActivity implements INativeAdLoaderListener, View.OnClickListener {
     private static final String POSID = BuildConfig.IS_CN_VERSION ? "1096106" : "1094109";
 

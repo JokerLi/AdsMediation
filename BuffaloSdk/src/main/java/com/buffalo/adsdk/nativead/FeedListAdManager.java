@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.utils.NativeReportUtil;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
@@ -297,7 +297,7 @@ public class FeedListAdManager {
     private void replenishCache(boolean isPreload) {
         if (mNativeAdManagerInternal != null && mNativeAdCache.size() < mCacheSize) {
             Logger.i(TAG, "replenishCache: " + isPreload);
-            CMRequestParams params = new CMRequestParams();
+            RequestParams params = new RequestParams();
             params.setTabId(mRequestTabId);
             params.setPicksLoadNum(mRequestOrionAdNum);
             params.setIsTop(mIsTop);

@@ -14,25 +14,13 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Created by wklbeta on 14/10/23.
- *
- * 这个类专门用来实现屏保上一些卡片的特殊跳转逻辑
- *
- * 使用本类的条件：
- * 1. 需求：在有系统锁情况下，点击卡片不跳转，等到用户重新获取系统操作权限再跳转
- * 2. 卡片的跳转使用intent实现，且卡片的跳转目的不属于本app内，因此不可控
- *
- * 3. facebook卡片和其他卡片使用本类时存在一点区别：facebook不用手动调用startActivity方法
- */
-public class NativeAdBaseContextWrapper extends ContextWrapper{
+public class NativeAdBaseContextWrapper extends ContextWrapper {
     private Context mBase;
 
     private static final String GP_PACKAGE_NAME = "com.android.vending";
@@ -54,7 +42,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
         super(base.getApplicationContext());
         mBase = base.getApplicationContext();
         mIsScreenSaver = isScreenSaver;
-        if(sScreenOnReceiver == null){
+        if (sScreenOnReceiver == null) {
             sScreenOnReceiver = new ScreenOnReceiver();
             sScreenOnReceiver.registerReceiver(mBase);
         }
@@ -83,7 +71,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
                 throw new Exception("null uri");
 
             String url = uri.toString().toLowerCase(Locale.getDefault());
-            if (!mJumpIntent.getAction().equals(Intent.ACTION_VIEW)){
+            if (!mJumpIntent.getAction().equals(Intent.ACTION_VIEW)) {
                 throw new Exception("not view action");
             }
 
@@ -94,11 +82,11 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
                 } else {
                     //云端控制是否采用内部webview进行跳转
                     boolean isJumpInnerWebView = checkJumpInnerWebView(url);
-                    if(isJumpInnerWebView) {
+                    if (isJumpInnerWebView) {
                         mIsWebView = true;
                         jumpToInnerWebView(url);
                         return;
-                    }else{
+                    } else {
                         updateCustomIntent(mJumpIntent, ANDROID_BROWSER);
                     }
                 }
@@ -123,7 +111,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
                 }
             });
         } else {
-            if(!mIsWebView) {
+            if (!mIsWebView) {
                 super.startActivity(mJumpIntent);
             }
         }
@@ -168,7 +156,8 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
             if (null == infos) {
                 return null;
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return infos;
     }
@@ -187,7 +176,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
         return null;
     }
 
-    public void setIsSplashAd(){
+    public void setIsSplashAd() {
         mIsSplashAd = true;
     }
 
@@ -195,7 +184,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
         return (Build.VERSION.SDK_INT >= 16) && isKeyGuardLockedAndSecure(mBase);
     }
 
-    private boolean checkJumpInnerWebView(String url){
+    private boolean checkJumpInnerWebView(String url) {
         //1代表使用内部webview打开,非1代表不使用内部webview打开跳转到默认浏览器,默认采用内部webview打开
         //魔方控制
         boolean cloudSet = true;
@@ -206,7 +195,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
         return !mIsSplashAd && cloudSet && (!isFBRedirect);
     }
 
-    private void jumpToInnerWebView(String url){
+    private void jumpToInnerWebView(String url) {
         Intent intent = new Intent(mBase, WebViewBrowserAcitivty.class);
         if (!(mBase instanceof android.app.Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -219,19 +208,21 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
     // 检查当前是否需要解锁屏幕且需要输入密码
     private static boolean isKeyGuardLockedAndSecure(Context context) {
         try {
-            KeyguardManager keyguardManager = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
+            KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
             return (hasPassword(context) || hasPattern(context) || hasSecure(context)) && keyguardManager.inKeyguardRestrictedInputMode();
         } catch (Throwable t) {
             return false;
         }
     }
 
-    /** 4.1及以上系统提供检测锁屏是否为密码锁的方法，低版本通过反射调用 */
+    /**
+     * 4.1及以上系统提供检测锁屏是否为密码锁的方法，低版本通过反射调用
+     */
     private static boolean hasSecure(Context context) {
         if (Build.VERSION.SDK_INT >= 16) {
             try {
                 ///< android m上不需要ACCESS_KEYGUARD_SECURE_STORAGE此权限
-                KeyguardManager keyguardManager = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
+                KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
                 Method isKeyguardSecure = keyguardManager.getClass().getMethod("isKeyguardSecure");
                 return ((Boolean) isKeyguardSecure.invoke(keyguardManager));
             } catch (Exception e) {
@@ -259,6 +250,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
     }
 
     private static final String PASSWORD_TYPE_KEY = "lockscreen.password_type";
+
     private static boolean hasPassword(Context context) {
         try {
             long mode = Settings.Secure.getLong(
@@ -281,18 +273,19 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
         mIsScreenSaver = true;
     }
 
-    private class ScreenOnReceiver extends BroadcastReceiver{
+    private class ScreenOnReceiver extends BroadcastReceiver {
         private Observer mObservers;
-        void addOberver(Observer observer){
+
+        void addOberver(Observer observer) {
             mObservers = observer;
         }
 
-        void removeObserver(){
+        void removeObserver() {
             mObservers = null;
         }
 
-        void registerReceiver(Context context){
-            if(context != null){
+        void registerReceiver(Context context) {
+            if (context != null) {
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(Intent.ACTION_USER_PRESENT);
                 context.registerReceiver(this, filter);
@@ -301,7 +294,7 @@ public class NativeAdBaseContextWrapper extends ContextWrapper{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent == null || TextUtils.isEmpty(intent.getAction())){
+            if (intent == null || TextUtils.isEmpty(intent.getAction())) {
                 return;
             }
 

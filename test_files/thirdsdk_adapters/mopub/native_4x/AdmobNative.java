@@ -14,18 +14,17 @@ import com.google.android.gms.ads.formats.NativeAd;
 
 import java.util.Map;
 
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/31.
- */
-public class AdmobNative extends CustomEventNative{
+public class AdmobNative extends CustomEventNative {
 
     private static final String PLACEMENT_ID_KEY = "placement_id";
     private String mPlacementId;
     private NativeContentAd mAd;
     private CustomEventNative.CustomEventNativeListener mCustomEventListener;
-    public AdmobNative(){
+
+    public AdmobNative() {
 
     }
+
     @Override
     protected void loadNativeAd(Activity activity, CustomEventNative.CustomEventNativeListener customEventNativeListener, Map<String, Object> localExtras, Map<String, String> serverExtras) {
         //load yahoo native ad
@@ -45,14 +44,15 @@ public class AdmobNative extends CustomEventNative{
     }
 
     public class AdmobStaticNativeAd extends StaticNativeAd implements NativeAppInstallAd.OnAppInstallAdLoadedListener,
-            NativeContentAd.OnContentAdLoadedListener{
+            NativeContentAd.OnContentAdLoadedListener {
 
         private Context mContext;
-        public AdmobStaticNativeAd(Context context){
-            mContext =context;
+
+        public AdmobStaticNativeAd(Context context) {
+            mContext = context;
         }
 
-        public void loadAd(){
+        public void loadAd() {
             AdLoader adLoader = new AdLoader.Builder(mContext, mPlacementId)
                     .forContentAd(this)
                     .forAppInstallAd(this)
@@ -80,7 +80,7 @@ public class AdmobNative extends CustomEventNative{
 
         @Override
         public void onAppInstallAdLoaded(NativeAppInstallAd nativeAppInstallAd) {
- 						setUpData(nativeAppInstallAd);            
+            setUpData(nativeAppInstallAd);
             mCustomEventListener.onNativeAdLoaded(this);
         }
 
@@ -91,9 +91,9 @@ public class AdmobNative extends CustomEventNative{
         }
 
         private void setUpData(@NonNull com.google.android.gms.ads.formats.NativeAd admobAd) {
-                 mAd = (NativeContentAd) admobAd;
-                  if(mAd instanceof NativeContentAd){
-                NativeContentAd ad = (NativeContentAd)mAd;
+            mAd = (NativeContentAd) admobAd;
+            if (mAd instanceof NativeContentAd) {
+                NativeContentAd ad = (NativeContentAd) mAd;
                 setTitle(ad.getHeadline().toString());
                 setText(ad.getBody().toString());
                 if (ad.getImages() != null && ad.getImages().get(0) != null
@@ -107,8 +107,8 @@ public class AdmobNative extends CustomEventNative{
                 }
                 setCallToAction(ad.getCallToAction().toString());
                 setStarRating(0.0d);
-            }else{
-                NativeAppInstallAd ad = (NativeAppInstallAd)mAd;
+            } else {
+                NativeAppInstallAd ad = (NativeAppInstallAd) mAd;
                 setTitle(ad.getHeadline().toString());
                 setText(ad.getBody().toString());
                 if (ad.getImages() != null && ad.getImages().get(0) != null
@@ -127,19 +127,19 @@ public class AdmobNative extends CustomEventNative{
 
         @Override
         public void prepare(@NonNull View view) {
-             notifyAdImpressed();
+            notifyAdImpressed();
             if (view instanceof NativeContentAdView && mAd instanceof NativeContentAd) {
                 ((NativeContentAdView) view).setNativeAd(mAd);
             } else if (view instanceof NativeAppInstallAdView && mAd instanceof NativeAppInstallAd) {
                 ((NativeAppInstallAdView) view).setNativeAd(mAd);
             }
         }
-        
-         @Override
+
+        @Override
         public void clear(final View view) {
-           
+
         }
 
     }
-   
+
 }

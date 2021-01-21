@@ -10,14 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
-import com.buffalo.ads.R;
 import com.buffalo.ads.ui.ShowCasePagerAdapter;
 
-
-
-/**
- * Created by chenhao on 16/11/19.
- */
 
 public class ScreenSaverActivity extends FragmentActivity {
     private ViewPager mViewPager;
@@ -39,7 +33,7 @@ public class ScreenSaverActivity extends FragmentActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(new ShowCasePagerAdapter(this));
-        KeyguardManager mKeyguardManager = (KeyguardManager)getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         mKeyguardLock = mKeyguardManager.newKeyguardLock("");
         mKeyguardLock.disableKeyguard();//解锁屏幕，也就是 关闭 屏幕 锁定 功能
     }
@@ -62,7 +56,7 @@ public class ScreenSaverActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mKeyguardLock != null){
+        if (mKeyguardLock != null) {
             mKeyguardLock.reenableKeyguard();
         }
     }

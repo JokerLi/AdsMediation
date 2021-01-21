@@ -15,10 +15,6 @@ import com.flurry.android.ads.FlurryAdNativeListener;
 
 import java.util.Map;
 
-
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/31.
- */
 public class YahooNative extends CustomEventNative {
     private static final String PLACEMENT_ID_KEY = "placement_id";
     private String mApiKey = null;
@@ -156,7 +152,7 @@ public class YahooNative extends CustomEventNative {
                                         @Nullable final View.OnClickListener onClickListener) {
             view.setOnClickListener(onClickListener);
             if ((view instanceof ViewGroup)) {
-                ViewGroup viewGroup = (ViewGroup)view;
+                ViewGroup viewGroup = (ViewGroup) view;
                 for (int i = 0; i < viewGroup.getChildCount(); i++)
                     setOnClickListener(viewGroup.getChildAt(i), onClickListener);
             }

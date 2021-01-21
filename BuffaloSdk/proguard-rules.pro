@@ -109,15 +109,15 @@
 
 # init methods
 -keep class com.buffalo.adsdk.AdManager {*;}
--keep class com.buffalo.adsdk.CMRequestParams {*;}
--keep class com.buffalo.adsdk.CMAdManagerFactory {*;}
+-keep class com.buffalo.adsdk.RequestParams {*;}
+-keep class com.buffalo.adsdk.NativeAdManagerFactory {*;}
 -keep class com.buffalo.adsdk.base.BaseNativeAd {*;}
 -keep class com.buffalo.adsdk.nativead.NativeAd{*;}
 -keep interface com.buffalo.adsdk.base.BaseNativeAd$* {*;}
 -keep interface com.buffalo.adsdk.nativead.INativeAdListListener{*;}
 -keep class com.buffalo.adsdk.Const {*;}
 -keep class com.buffalo.adsdk.Const$* {*;}
--keep class com.buffalo.adsdk.CMAdError {*;}
+-keep class com.buffalo.adsdk.NativeAdError {*;}
 -keep class com.buffalo.adsdk.utils.ReportProxy{*;}
 #-keep class com.buffalo.adsdk.utils.PerferenceUtil{*;}
 
@@ -179,11 +179,11 @@
 #-keep class com.buffalo.adsdk.config.RequestUFS{*;}
 
 #CMAdView Render
--keep class com.buffalo.adsdk.view.CMMediaView{*;}
+-keep class com.buffalo.adsdk.view.NativeMediaView{*;}
 -keep class com.buffalo.adsdk.NativeAdTemplate{*;}
 -keep class com.buffalo.adsdk.NativeAdTemplate$Builder{*;}
 -keep class com.buffalo.adsdk.NativeAdTemplate$ViewHolder{*;}
--keep interface com.buffalo.adsdk.NativeAdTemplate$ICMNativeAdViewAdapter{*;}
+-keep interface com.buffalo.adsdk.NativeAdTemplate$INativeAdViewAdapter{*;}
 
 # native splash ad
 -keep class com.buffalo.adsdk.splashad.NativeSplashAd{*;}

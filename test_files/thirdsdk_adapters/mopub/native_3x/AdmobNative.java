@@ -16,14 +16,12 @@ import com.liehu.nativeads.loaders.mopub.MopubNativeAdManager;
 
 import java.util.Map;
 
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/31.
- */
 public class AdmobNative extends CustomEventNative {
 
     private static final String PLACEMENT_ID_KEY = "placement_id";
     private String mPlacementId;
     private CustomEventNativeListener mCustomEventListener;
+
     @Override
     protected void loadNativeAd(Context context, CustomEventNativeListener customEventNativeListener, Map<String, Object> localExtras, Map<String, String> serverExtras) {
         //load yahoo native ad
@@ -89,8 +87,8 @@ public class AdmobNative extends CustomEventNative {
 
         private void setUpData(@NonNull NativeAd admobAd) {
             mAd = admobAd;
-            if(mAd instanceof NativeContentAd){
-                NativeContentAd ad = (NativeContentAd)mAd;
+            if (mAd instanceof NativeContentAd) {
+                NativeContentAd ad = (NativeContentAd) mAd;
                 setTitle(ad.getHeadline().toString());
                 setText(ad.getBody().toString());
                 if (ad.getImages() != null && ad.getImages().get(0) != null
@@ -104,8 +102,8 @@ public class AdmobNative extends CustomEventNative {
                 }
                 setCallToAction(ad.getCallToAction().toString());
                 setStarRating(0.0d);
-            }else{
-                NativeAppInstallAd ad = (NativeAppInstallAd)mAd;
+            } else {
+                NativeAppInstallAd ad = (NativeAppInstallAd) mAd;
                 setTitle(ad.getHeadline().toString());
                 setText(ad.getBody().toString());
                 if (ad.getImages() != null && ad.getImages().get(0) != null

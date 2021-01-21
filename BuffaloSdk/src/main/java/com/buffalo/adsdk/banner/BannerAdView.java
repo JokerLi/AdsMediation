@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 import com.buffalo.utils.Logger;
@@ -83,7 +83,7 @@ public class BannerAdView extends FrameLayout {
             Logger.e(TAG, "params error ,context is null: " + (mContext == null)
                     + "or posid is empty:" + TextUtils.isEmpty(posid)
                     + "or banner adsize is null:" + (adSize == null));
-            notifyFailed(CMAdError.PARAMS_ERROR);
+            notifyFailed(NativeAdError.PARAMS_ERROR);
         }
     }
 
@@ -267,7 +267,7 @@ public class BannerAdView extends FrameLayout {
                 }
             }
         }
-        notifyFailed(CMAdError.NO_VALID_DATA_ERROR);
+        notifyFailed(NativeAdError.NO_VALID_DATA_ERROR);
     }
 
     private void notifyFailed(final int errorCode) {

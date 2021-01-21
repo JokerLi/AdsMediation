@@ -4,9 +4,6 @@ import com.buffalo.adsdk.Const;
 
 import java.util.Map;
 
-/**
- * Created by chenhao on 16/4/7.
- */
 public interface ReportProxy {
 
     String KEY_POSID = "posid";

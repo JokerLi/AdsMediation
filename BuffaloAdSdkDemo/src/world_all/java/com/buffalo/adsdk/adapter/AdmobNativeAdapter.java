@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
@@ -20,15 +20,12 @@ import com.google.android.gms.ads.formats.NativeContentAdView;
 
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
 public class AdmobNativeAdapter extends NativeloaderAdapter {
     @Override
     public void loadNativeAd(@NonNull Context context,
                              @NonNull Map<String, Object> extras) {
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         new AdmobNativeAd(context, extras).loadAd();

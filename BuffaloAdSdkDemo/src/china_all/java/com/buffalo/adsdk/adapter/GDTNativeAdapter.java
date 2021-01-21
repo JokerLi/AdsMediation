@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.baseapi.ads.INativeAd;
@@ -17,10 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
-public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.NativeAdListener  {
+public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.NativeAdListener {
     private static final int GDT_MAX_LOAD_NUM = 10;
 
     private Context mContext;
@@ -28,9 +25,9 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
 
     @Override
     public boolean extrasAreValid(Map<String, Object> extras) {
-        if(extras != null && extras.containsKey(BaseNativeAd.KEY_PLACEMENT_ID)){
+        if (extras != null && extras.containsKey(BaseNativeAd.KEY_PLACEMENT_ID)) {
             String params = (String) extras.get(BaseNativeAd.KEY_PLACEMENT_ID);
-            if(!TextUtils.isEmpty(params)) {
+            if (!TextUtils.isEmpty(params)) {
                 String tencentIds[] = params.split("_");
                 return tencentIds != null && tencentIds.length > 1;
             }
@@ -40,15 +37,15 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
 
     @Override
     public void loadNativeAd(@NonNull Context context,
-                                @NonNull Map<String, Object> extras) {
+                             @NonNull Map<String, Object> extras) {
 
         mContext = context;
         mExtras = extras;
-        if(!extrasAreValid(extras)){
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+        if (!extrasAreValid(extras)) {
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
-        String placementId = (String)mExtras.get(BaseNativeAd.KEY_PLACEMENT_ID);
+        String placementId = (String) mExtras.get(BaseNativeAd.KEY_PLACEMENT_ID);
         String gdtAppId = null;
         String gdtPlaceId = null;
         if (!TextUtils.isEmpty(placementId) && placementId.contains("_")) {
@@ -60,10 +57,10 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
         }
         Object loadSizeObject = mExtras.get(BaseNativeAd.KEY_LOAD_SIZE);
         final int mLoadSize;
-        if(loadSizeObject == null){
+        if (loadSizeObject == null) {
             mLoadSize = GDT_MAX_LOAD_NUM;
-        }else {
-            mLoadSize = (Integer)loadSizeObject;
+        } else {
+            mLoadSize = (Integer) loadSizeObject;
         }
         final NativeAD nativeAD = new NativeAD(mContext, gdtAppId, gdtPlaceId, this);
         nativeAD.setDownAPPConfirmPolicy(DownAPPConfirmPolicy.NOConfirm);
@@ -83,9 +80,9 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
 
     @Override
     public String getReportPkgName(String adTypeName) {
-        if(adTypeName.equals(Const.KEY_GDT)){
+        if (adTypeName.equals(Const.KEY_GDT)) {
             return Const.pkgName.gdt;
-        }else {
+        } else {
             return String.format("%s.%s", Const.pkgName.gdt, adTypeName);
         }
     }
@@ -104,9 +101,9 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
     public void onADLoaded(List<NativeADDataRef> list) {
         List<INativeAd> tempList = new ArrayList<INativeAd>();
 
-        if(list != null && !list.isEmpty()) {
-            for(NativeADDataRef nativeADDataRef : list){
-                if(nativeADDataRef != null){
+        if (list != null && !list.isEmpty()) {
+            for (NativeADDataRef nativeADDataRef : list) {
+                if (nativeADDataRef != null) {
                     tempList.add(new TencentNativeAd(nativeADDataRef));
                 }
             }
@@ -132,7 +129,8 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
     public class TencentNativeAd extends BaseNativeAd {
         private View mAdView;
         private NativeADDataRef mNativeADDataRef;
-        public TencentNativeAd(NativeADDataRef nativeADDataRef){
+
+        public TencentNativeAd(NativeADDataRef nativeADDataRef) {
             mNativeADDataRef = nativeADDataRef;
             setUpData();
         }
@@ -166,7 +164,7 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
 
         @Override
         public void unregisterView() {
-            if(null != mAdView) {
+            if (null != mAdView) {
                 mAdView = null;
             }
         }
@@ -177,7 +175,7 @@ public class GDTNativeAdapter extends NativeloaderAdapter implements NativeAD.Na
         }
 
         @Override
-        public void handleClick(){
+        public void handleClick() {
             mNativeADDataRef.onClicked(mAdView);
         }
 

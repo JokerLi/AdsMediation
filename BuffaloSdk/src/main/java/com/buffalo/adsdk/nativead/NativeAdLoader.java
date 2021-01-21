@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.BuildConfig;
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.adapter.BaseNativeLoaderAdapter;
 import com.buffalo.adsdk.adapter.CustomVideoAdapter;
@@ -100,7 +100,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
             if(mNativeAdListener == null){
                 return;
             }
-            mNativeAdListener.adFailedToLoad(this.getAdTypeName(), CMAdError.ERROR_CONFIG);
+            mNativeAdListener.adFailedToLoad(this.getAdTypeName(), NativeAdError.ERROR_CONFIG);
             return;
         }
 

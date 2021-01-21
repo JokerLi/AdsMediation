@@ -5,10 +5,7 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by chenhao on 2015/7/27.
- */
-public class CMRequestParams {
+public class RequestParams {
 
     public static final String KEY_REPORT_SHOW_IGNORE_VIEW = "report_show_ignore_view";
     public static final String KEY_BANNER_VIEW_SIZE = "key_banner_view_size";
@@ -21,7 +18,8 @@ public class CMRequestParams {
     public static final String KEY_IS_TOP = "key_is_top";
 
     protected Map<String, Object> mParams = null;
-    public CMRequestParams() {
+
+    public RequestParams() {
         mParams = new HashMap<String, Object>();
     }
 
@@ -42,22 +40,20 @@ public class CMRequestParams {
 
 
     /**
-     *
      * @param ignoreView 上报的时候忽略View是否真的展示
      */
-    public void setReportShowIgnoreView(boolean ignoreView){
-        if(mParams != null) {
+    public void setReportShowIgnoreView(boolean ignoreView) {
+        if (mParams != null) {
             mParams.put(KEY_REPORT_SHOW_IGNORE_VIEW, ignoreView);
         }
     }
 
 
     /**
-     *
      * @return 是否忽略View真正展示就上报，默认不忽略
      */
-    public boolean getReportShowIgnoreView(){
-        if(mParams != null) {
+    public boolean getReportShowIgnoreView() {
+        if (mParams != null) {
             Object isIgnore = mParams.get(KEY_REPORT_SHOW_IGNORE_VIEW);
             if (null != isIgnore) {
                 return Boolean.valueOf(isIgnore.toString());
@@ -68,11 +64,11 @@ public class CMRequestParams {
     }
 
 
-
     /**
+     *
      */
-    public void setSelectAllPriorityAd(boolean select){
-        if(mParams != null) {
+    public void setSelectAllPriorityAd(boolean select) {
+        if (mParams != null) {
             mParams.put(KEY_SELECT_ALL_PRIORITYAD, select);
         }
     }
@@ -81,9 +77,9 @@ public class CMRequestParams {
     /**
      *
      */
-    public boolean isSelectAllPriorityAd(){
-        if(mParams != null) {
-            if(mParams.containsKey(KEY_SELECT_ALL_PRIORITYAD)){
+    public boolean isSelectAllPriorityAd() {
+        if (mParams != null) {
+            if (mParams.containsKey(KEY_SELECT_ALL_PRIORITYAD)) {
                 return (boolean) mParams.get(KEY_SELECT_ALL_PRIORITYAD);
             }
         }
@@ -92,68 +88,68 @@ public class CMRequestParams {
 
 
     /**
+     *
      */
-    public void setPicksLoadNum(int num){
-        if(mParams != null) {
+    public void setPicksLoadNum(int num) {
+        if (mParams != null) {
             mParams.put(KEY_PICKS_LOAD_NUM, num);
         }
     }
 
 
     /**
-     *默认返回0
+     * 默认返回0
      */
-    public int getPicksLoadNum(){
-        if(mParams != null) {
-            if(mParams.containsKey(KEY_PICKS_LOAD_NUM)){
+    public int getPicksLoadNum() {
+        if (mParams != null) {
+            if (mParams.containsKey(KEY_PICKS_LOAD_NUM)) {
                 return (Integer) mParams.get(KEY_PICKS_LOAD_NUM);
             }
         }
         return 0;
     }
 
-    public void setFilterAdmobInstallAd(boolean filter){
-        if(mParams != null){
+    public void setFilterAdmobInstallAd(boolean filter) {
+        if (mParams != null) {
             mParams.put(KEY_FILTER_ADMOB_INSTALL_AD, filter);
         }
     }
 
     //默认不过滤
-    public boolean isFilterAdmobInstallAd(){
-        if(mParams != null && mParams.containsKey(KEY_FILTER_ADMOB_INSTALL_AD)){
-            return (Boolean)mParams.get(KEY_FILTER_ADMOB_INSTALL_AD);
+    public boolean isFilterAdmobInstallAd() {
+        if (mParams != null && mParams.containsKey(KEY_FILTER_ADMOB_INSTALL_AD)) {
+            return (Boolean) mParams.get(KEY_FILTER_ADMOB_INSTALL_AD);
         }
         return false;
     }
 
 
-    public void setFilterAdmobContentAd(boolean filter){
-        if(mParams != null){
+    public void setFilterAdmobContentAd(boolean filter) {
+        if (mParams != null) {
             mParams.put(KEY_FILTER_ADMOB_CONTENT_AD, filter);
         }
     }
 
     //默认不过滤
-    public boolean isFilterAdmobContentAd(){
-        if(mParams != null && mParams.containsKey(KEY_FILTER_ADMOB_CONTENT_AD)){
-            return (Boolean)mParams.get(KEY_FILTER_ADMOB_CONTENT_AD);
+    public boolean isFilterAdmobContentAd() {
+        if (mParams != null && mParams.containsKey(KEY_FILTER_ADMOB_CONTENT_AD)) {
+            return (Boolean) mParams.get(KEY_FILTER_ADMOB_CONTENT_AD);
         }
         return false;
     }
 
 
-
-    public Object getExtraObject(){
-        if(mParams != null) {
-            if(mParams.containsKey(KEY_EXTRA_OBJECT)){
+    public Object getExtraObject() {
+        if (mParams != null) {
+            if (mParams.containsKey(KEY_EXTRA_OBJECT)) {
                 return mParams.get(KEY_EXTRA_OBJECT);
             }
         }
         return null;
     }
 
-    public void setExtraObject(Object object){
-        if(mParams != null){
+    public void setExtraObject(Object object) {
+        if (mParams != null) {
             mParams.put(KEY_EXTRA_OBJECT, object);
         }
     }
@@ -167,9 +163,9 @@ public class CMRequestParams {
         }
     }
 
-    public String getTabId(){
-        if(mParams != null) {
-            if(mParams.containsKey(KEY_TAB_ID)){
+    public String getTabId() {
+        if (mParams != null) {
+            if (mParams.containsKey(KEY_TAB_ID)) {
                 return ((String) mParams.get(KEY_TAB_ID));
             }
         }

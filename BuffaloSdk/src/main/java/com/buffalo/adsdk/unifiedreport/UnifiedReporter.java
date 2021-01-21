@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMBaseFactory;
+import com.buffalo.adsdk.BaseFactory;
 import com.buffalo.adsdk.InternalAdError;
 import com.buffalo.utils.Commons;
 import com.buffalo.utils.NetworkUtil;
@@ -91,7 +91,7 @@ public class UnifiedReporter {
 
                 @Override
                 public void onError(int responseCode, InternalAdError error) {
-                    CMBaseFactory factory = AdManager.createFactory();
+                    BaseFactory factory = AdManager.createFactory();
                     if (factory != null) {
                         factory.doNetworkingReport(posid + "", "2", error.getErrorCode() + "");
                     }

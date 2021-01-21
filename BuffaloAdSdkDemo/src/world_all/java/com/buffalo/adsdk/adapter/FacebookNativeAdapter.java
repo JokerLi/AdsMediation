@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.buffalo.ads.NativeAdBaseContextWrapper;
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.baseapi.ads.INativeAd;
@@ -36,7 +36,7 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
         mContext = new NativeAdBaseContextWrapper(context);
         mExtras = extras;
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         mPlacementId = (String) mExtras.get(BaseNativeAd.KEY_PLACEMENT_ID);

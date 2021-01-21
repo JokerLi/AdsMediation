@@ -2,7 +2,6 @@ package com.cmcm.adsdk.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.cmcm.adsdk.CMAdError;
@@ -18,22 +17,19 @@ import com.facebook.ads.InterstitialAdListener;
 
 import java.util.Map;
 
-
-/**
- * Created by $ liuluchao@cmcm.com on 2016/2/15.
- */
 public class FacebookInterstitialAdapter extends NativeloaderAdapter implements InterstitialAdListener {
     private static final String TAG = "FacebookInterstitialAdapter";
     private InterstitialAd interstitialAd;
     private Context mContext;
     private FacebookInterstatialAd mFacebookInterstatialAd;
     private InterstitialAdCallBack mInterstitialAdCallBack;
-    private Map<String,Object> mExtras;
+    private Map<String, Object> mExtras;
+
     @Override
     public void loadNativeAd(@NonNull Context context, @NonNull Map<String, Object> extras) {
         this.mContext = context;
         mExtras = extras;
-        if(!extrasAreValid(extras)){
+        if (!extrasAreValid(extras)) {
             notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
             return;
         }
@@ -41,14 +37,14 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
             interstitialAd.destroy();
             interstitialAd = null;
         }
-        if(extras.containsKey(CMBaseNativeAd.KEY_EXTRA_OBJECT)){
+        if (extras.containsKey(CMBaseNativeAd.KEY_EXTRA_OBJECT)) {
             Object object = extras.get(CMBaseNativeAd.KEY_EXTRA_OBJECT);
-            if(object instanceof InterstitialAdCallBack){
+            if (object instanceof InterstitialAdCallBack) {
                 mInterstitialAdCallBack = (InterstitialAdCallBack) object;
             }
         }
 
-        interstitialAd = new InterstitialAd(context, (String)extras.get(CMBaseNativeAd.KEY_PLACEMENT_ID));
+        interstitialAd = new InterstitialAd(context, (String) extras.get(CMBaseNativeAd.KEY_PLACEMENT_ID));
         interstitialAd.setAdListener(this);
         interstitialAd.loadAd();
     }
@@ -57,7 +53,7 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
     @Override
     public void onInterstitialDisplayed(Ad ad) {
         mFacebookInterstatialAd.onLoggingImpression();
-        if(mInterstitialAdCallBack != null){
+        if (mInterstitialAdCallBack != null) {
             mInterstitialAdCallBack.onAdDisplayed();
         }
     }
@@ -65,7 +61,7 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
     @Override
     public void onInterstitialDismissed(Ad ad) {
         Logger.d(TAG, "facebookInterstitial is dismiss");
-        if(mInterstitialAdCallBack  != null){
+        if (mInterstitialAdCallBack != null) {
             mInterstitialAdCallBack.onAdDismissed();
         }
     }
@@ -73,11 +69,12 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
     @Override
     public void onError(Ad ad, AdError adError) {
         //改ErrorCode值为int
-        notifyNativeAdFailed(adError.getErrorCode()+"");
+        notifyNativeAdFailed(adError.getErrorCode() + "");
     }
+
     @Override
     public void onAdLoaded(Ad ad) {
-        mFacebookInterstatialAd =  new FacebookInterstatialAd(ad);
+        mFacebookInterstatialAd = new FacebookInterstatialAd(ad);
         notifyNativeAdLoaded(mFacebookInterstatialAd);
     }
 
@@ -91,10 +88,10 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
     }
 
     @Override
-    public int getReportRes(int type,String adTypeName) {
-        if(type == RES_TYPE_RCV) {
+    public int getReportRes(int type, String adTypeName) {
+        if (type == RES_TYPE_RCV) {
             return Const.res.facebook;
-        }else{
+        } else {
             return Const.res.pega_fb_interstitial;
         }
     }
@@ -118,6 +115,7 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
 
     class FacebookInterstatialAd extends CMBaseNativeAd implements INativeAd.ImpressionListener {
         private Ad mAd;
+
         public FacebookInterstatialAd(Ad ad) {
             mAd = ad;
         }

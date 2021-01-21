@@ -12,10 +12,6 @@ import com.buffalo.adsdk.R;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Logger;
 
-
-/**
- * Created by chenhao on 2016/8/17.
- */
 public class NativeSplashAdView extends RelativeLayout implements View.OnClickListener, CountdownView.OnCountdownListener {
     protected Context mContext;
     private NativeSplashAd.SplashAdListener mListener;
@@ -28,15 +24,15 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
     private boolean mIsShowSpreadSign;
     private int mShowMills;
 
-    public NativeSplashAdView(Context context, NativeSplashAd.SplashAdListener listener){
+    public NativeSplashAdView(Context context, NativeSplashAd.SplashAdListener listener) {
         super(context);
         mContext = context;
         mListener = listener;
     }
 
-    public boolean build(View adView, INativeAd ad){
+    public boolean build(View adView, INativeAd ad) {
         boolean isRet = false;
-        if(adView != null){
+        if (adView != null) {
             isRet = true;
             initLayout();
             addAdView(adView, ad);
@@ -51,7 +47,7 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
         addView(rootView);
         mMainContainer = (RelativeLayout) rootView.findViewById(R.id.native_splash_ad_body);
         mMainContainer.setOnClickListener(this);
-        if(mIsShowCountDownTime){
+        if (mIsShowCountDownTime) {
             //倒计时
             LinearLayout skipViewContainer = (LinearLayout) rootView.findViewById(R.id.native_splash_ad_skip_view);
             skipViewContainer.setVisibility(VISIBLE);
@@ -67,14 +63,14 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
             mCountDownView.setOnCountdownListener(this);
         }
 
-        if(mIsShowSpreadSign){
+        if (mIsShowSpreadSign) {
             TextView spreadSignView = (TextView) rootView.findViewById(R.id.native_splash_ad_sponsored);
             spreadSignView.setVisibility(VISIBLE);
         }
     }
 
-    public void addAdView(View view, INativeAd ad){
-        if(null != mMainContainer && null != ad){
+    public void addAdView(View view, INativeAd ad) {
+        if (null != mMainContainer && null != ad) {
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             lp.addRule(RelativeLayout.CENTER_IN_PARENT);
             adView = view;
@@ -87,16 +83,16 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
         }
     }
 
-    public void setShowMills(int showTimeMills){
+    public void setShowMills(int showTimeMills) {
         //TODO judge time save
         mShowMills = showTimeMills;
     }
 
-    public void setShowSpreadSign(boolean isShow){
+    public void setShowSpreadSign(boolean isShow) {
         mIsShowSpreadSign = isShow;
     }
 
-    public void setShowCountDownTime(boolean isShow){
+    public void setShowCountDownTime(boolean isShow) {
         mIsShowCountDownTime = isShow;
     }
 
@@ -109,12 +105,12 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
         if (mHaveImpression) {
             return;
         }
-        if(visibility == VISIBLE){
-            if(!mIsEndImpression){
+        if (visibility == VISIBLE) {
+            if (!mIsEndImpression) {
                 if (mCountDownView != null) {
                     mCountDownView.start();
                 }
-                if(mListener != null){
+                if (mListener != null) {
                     Logger.i(Const.TAG, "native splash adView VisibilityChanged: onAdImpression");
                     mListener.onAdImpression();
                     mHaveImpression = true;
@@ -126,11 +122,11 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if(id == R.id.native_splash_skip){
-            if(mListener != null){
+        if (id == R.id.native_splash_skip) {
+            if (mListener != null) {
                 mListener.onSkipClick();
             }
-        } else if(id == R.id.native_splash_ad_body) {
+        } else if (id == R.id.native_splash_ad_body) {
             if (adView != null) {
                 adView.performClick();
             }
@@ -143,7 +139,7 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
 
     @Override
     public void onCountdownFinish() {
-        if(mListener != null && !mIsEndImpression){
+        if (mListener != null && !mIsEndImpression) {
             mIsEndImpression = true;
             Logger.i(Const.TAG, "native splash adView onCountdownFinish: onEndAdImpression");
             mListener.onEndAdImpression();
@@ -151,7 +147,7 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
     }
 
     public void destory() {
-        if(mMainContainer != null){
+        if (mMainContainer != null) {
             mMainContainer.removeAllViews();
             mMainContainer = null;
         }

@@ -12,11 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by shimiaolei on 16/1/2.
- */
 public class RequestResultLogger {
-
     public static class Model {
         public static final String KEY_ADTYPE = "Adtype";
         public static final String KEY_IS_SUCCESS = "IsSuccess";
@@ -42,11 +38,11 @@ public class RequestResultLogger {
             mRequestEnd = System.currentTimeMillis();
         }
 
-        public boolean isSuccess(){
+        public boolean isSuccess() {
             return mIsSuccess;
         }
 
-        public String getFailReason(){
+        public String getFailReason() {
             return mFailReason;
         }
     }

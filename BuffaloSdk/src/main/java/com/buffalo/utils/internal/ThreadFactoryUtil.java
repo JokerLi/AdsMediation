@@ -5,9 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by Chu Zongxiang on 2016/4/29.
- */
 public class ThreadFactoryUtil {
     public static ThreadFactory createNamedThreadFactory(@NonNull final String threadName) {
         return new ThreadFactory() {

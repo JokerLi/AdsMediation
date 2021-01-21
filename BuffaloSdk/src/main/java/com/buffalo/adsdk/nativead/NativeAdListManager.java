@@ -3,7 +3,7 @@ package com.buffalo.adsdk.nativead;
 
 import android.content.Context;
 
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.utils.ThreadHelper;
 import com.buffalo.baseapi.ads.INativeAd;
@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
 
 public class NativeAdListManager {
     private NativeAdsManagerInternal mRequest;
-    private CMRequestParams requestParams;
+    private RequestParams requestParams;
     public NativeAdListManager(Context context, String posid, INativeAdListListener listener) {
         mRequest = new NativeAdsManagerInternal(context, posid);
         mRequest.setAdListener(listener);
@@ -59,7 +59,7 @@ public class NativeAdListManager {
     }
 
 
-    public void setRequestParams(CMRequestParams params){
+    public void setRequestParams(RequestParams params){
         this.requestParams = params;
     }
 

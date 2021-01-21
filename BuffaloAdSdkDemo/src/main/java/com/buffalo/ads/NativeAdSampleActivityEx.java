@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.adsdk.nativead.NativeAdManagerEx;
 import com.buffalo.utils.Commons;
@@ -40,14 +40,14 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
     private EditText etPicksLoadNum;
 	//用户记录功能页面的PV的ID，可以自定义
 	public static  final int PAGE_UNITID = 10001;
-    CMRequestParams params = null;
+    RequestParams params = null;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         etPicksLoadNum = (EditText) findViewById(R.id.et_picks_num);
-        params = new CMRequestParams();
+        params = new RequestParams();
         nativeAdManagerEx = new NativeAdManagerEx(this, mAdPosid);
         nativeAdManagerEx.setRequestParams(params);
 		nativeAdContainer = (FrameLayout) findViewById(R.id.big_ad_container);

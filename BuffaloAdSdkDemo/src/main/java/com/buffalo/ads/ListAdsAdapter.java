@@ -11,16 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buffalo.ads.R;
 import com.buffalo.ads.utils.VolleyUtil;
 import com.buffalo.baseapi.ads.INativeAd;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by chenhao on 2015/8/26.
- */
 public class ListAdsAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
@@ -28,7 +24,8 @@ public class ListAdsAdapter extends BaseAdapter {
     private static final int OTHERS_ITEM = 1;
     private IFeedAdFetch iFeedAdFetch;
     private Map<Integer, INativeAd> mPositonAdMap = new HashMap<>();
-    public ListAdsAdapter(Context context,IFeedAdFetch adFetch) {
+
+    public ListAdsAdapter(Context context, IFeedAdFetch adFetch) {
         this.mContext = context;
         this.iFeedAdFetch = adFetch;
         mInflater = LayoutInflater.from(mContext);
@@ -63,11 +60,11 @@ public class ListAdsAdapter extends BaseAdapter {
     public int getItemViewType(int position) {
         if (position > 0 && position % 6 == 0) {
             INativeAd iNativeAd = mPositonAdMap.get(position);
-            if(iNativeAd == null) {
+            if (iNativeAd == null) {
                 iNativeAd = iFeedAdFetch.getAd();
                 mPositonAdMap.put(position, iNativeAd);
             }
-            if(iNativeAd != null) {
+            if (iNativeAd != null) {
                 return NATIVE_ITEM;
             }
         }
@@ -85,7 +82,7 @@ public class ListAdsAdapter extends BaseAdapter {
                 viewHolder.mNativeTitle = (TextView) convertView.findViewById(R.id.native_title);
                 viewHolder.mNativeText = (TextView) convertView.findViewById(R.id.native_text);
                 viewHolder.mCallToAction = (Button) convertView.findViewById(R.id.native_cta);
-                INativeAd ad  = (INativeAd) getItem(position);
+                INativeAd ad = (INativeAd) getItem(position);
                 viewHolder.setNativeAd(ad);
                 ad.unregisterView();
                 ad.registerViewForInteraction(convertView);
@@ -95,12 +92,12 @@ public class ListAdsAdapter extends BaseAdapter {
                 NewsViewHolder newsViewHolder = new NewsViewHolder();
                 newsViewHolder.mImageView = (ImageView) convertView.findViewById(R.id.main_image_view);
                 newsViewHolder.mTitleView = (TextView) convertView.findViewById(R.id.title_text);
-                newsViewHolder.mTitleView.setText("测试数据Item#"+position);
+                newsViewHolder.mTitleView.setText("测试数据Item#" + position);
                 convertView.setTag(newsViewHolder);
             }
 
-        }else {
-            switch (getItemViewType(position)){
+        } else {
+            switch (getItemViewType(position)) {
                 case NATIVE_ITEM:
                     NativeViewHolder nativeViewHolder = (NativeViewHolder) convertView.getTag();
                     INativeAd nativeAd = (INativeAd) getItem(position);
@@ -109,8 +106,8 @@ public class ListAdsAdapter extends BaseAdapter {
                     nativeAd.registerViewForInteraction(convertView);
                     break;
                 case OTHERS_ITEM:
-                    NewsViewHolder newsViewHolder = (NewsViewHolder)convertView.getTag();
-                    newsViewHolder.mTitleView.setText("测试数据Item#"+position);
+                    NewsViewHolder newsViewHolder = (NewsViewHolder) convertView.getTag();
+                    newsViewHolder.mTitleView.setText("测试数据Item#" + position);
                     break;
             }
         }
@@ -124,7 +121,7 @@ public class ListAdsAdapter extends BaseAdapter {
         TextView mNativeText;
         Button mCallToAction;
 
-        public void setNativeAd(INativeAd ad){
+        public void setNativeAd(INativeAd ad) {
             String iconUrl = ad.getAdIconUrl();
             Log.i("Test", "iconUrl:" + iconUrl);
             mImageIcon.setImageResource(R.drawable.default_bg);
@@ -133,7 +130,7 @@ public class ListAdsAdapter extends BaseAdapter {
             }
             String coverImageUrl = ad.getAdCoverImageUrl();
             Log.i("Test", "iconUrl:" + coverImageUrl);
-           mImageCover.setImageResource(R.drawable.default_bg);
+            mImageCover.setImageResource(R.drawable.default_bg);
             if (!TextUtils.isEmpty(coverImageUrl)) {
                 VolleyUtil.loadImage(mImageCover, coverImageUrl);
             }
@@ -148,7 +145,7 @@ public class ListAdsAdapter extends BaseAdapter {
         TextView mTitleView;
     }
 
-    public interface IFeedAdFetch{
+    public interface IFeedAdFetch {
         INativeAd getAd();
     }
 

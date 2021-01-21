@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.nativead.NativeAd;
@@ -18,9 +18,6 @@ import com.flurry.android.ads.FlurryAdNativeListener;
 
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
 public class YahooNativeAdapter extends NativeloaderAdapter {
 
 
@@ -29,7 +26,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
                              @NonNull Map<String, Object> extras) {
 
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         new YahooNativeAd(context, extras).loadAd();

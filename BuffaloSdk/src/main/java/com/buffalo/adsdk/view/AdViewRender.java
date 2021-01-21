@@ -7,14 +7,11 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMBaseFactory;
+import com.buffalo.adsdk.BaseFactory;
 import com.buffalo.adsdk.NativeAdTemplate;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Logger;
 
-/**
- * Created by Li Guoqing on 2016/11/15.
- */
 public class AdViewRender {
     private static final String TAG = "CMViewRenderLog";
 
@@ -23,14 +20,14 @@ public class AdViewRender {
 
     public AdViewRender(NativeAdTemplate viewBinder) {
         mContext = AdManager.getContext();
-        if(viewBinder == null){
+        if (viewBinder == null) {
             throw new RuntimeException("NativeAdTemplate is null");
         }
         mViewHolder = new NativeAdTemplate.ViewHolder(mContext, viewBinder);
     }
 
-    public View getMainView(){
-        if(null != mViewHolder){
+    public View getMainView() {
+        if (null != mViewHolder) {
             return mViewHolder.mLayoutView;
         }
         return null;
@@ -42,26 +39,26 @@ public class AdViewRender {
             return null;
         }
 
-        NativeAdTemplate.ICMNativeAdViewAdapter adapter = getAdapter(ad);
+        NativeAdTemplate.INativeAdViewAdapter adapter = getAdapter(ad);
         renderView(adapter, ad);
         View view = mViewHolder.getView();
         return view;
     }
 
-    private NativeAdTemplate.ICMNativeAdViewAdapter getAdapter(INativeAd ad) {
+    private NativeAdTemplate.INativeAdViewAdapter getAdapter(INativeAd ad) {
         if (ad == null) {
             return null;
         }
         String adTypeName = ad.getAdTypeName();
-        CMBaseFactory factory = AdManager.createFactory();
-        if(factory == null){
+        BaseFactory factory = AdManager.createFactory();
+        if (factory == null) {
             return null;
         }
         return factory.getRenderAdapter(getTypeName(adTypeName));
     }
 
-    private String getTypeName(String key){
-        if(TextUtils.isEmpty(key)){
+    private String getTypeName(String key) {
+        if (TextUtils.isEmpty(key)) {
             return null;
         }
 
@@ -69,7 +66,7 @@ public class AdViewRender {
         return str[0];
     }
 
-    private void renderView(NativeAdTemplate.ICMNativeAdViewAdapter adapter, INativeAd ad) {
+    private void renderView(NativeAdTemplate.INativeAdViewAdapter adapter, INativeAd ad) {
         mViewHolder.resetView();
         if (ad == null) {
             return;
@@ -87,25 +84,25 @@ public class AdViewRender {
     }
 
     private void removeFromOldViewGroup() {
-        if(mViewHolder.mLayoutView == null){
+        if (mViewHolder.mLayoutView == null) {
             return;
         }
 
         ViewParent parent = mViewHolder.mLayoutView.getParent();
-        if(parent == null || !(parent instanceof ViewGroup)){
+        if (parent == null || !(parent instanceof ViewGroup)) {
             return;
         }
 
-        ((ViewGroup)parent).removeAllViews();
+        ((ViewGroup) parent).removeAllViews();
     }
 
-    private void setCustomView(NativeAdTemplate.ICMNativeAdViewAdapter adapter, INativeAd ad) {
-        if(adapter == null || ad == null){
+    private void setCustomView(NativeAdTemplate.INativeAdViewAdapter adapter, INativeAd ad) {
+        if (adapter == null || ad == null) {
             return;
         }
 
-        View view =  adapter.onPostProcessAdView(ad, mViewHolder);
-        if(view != null) {
+        View view = adapter.onPostProcessAdView(ad, mViewHolder);
+        if (view != null) {
             mViewHolder.setView(view);
         }
     }

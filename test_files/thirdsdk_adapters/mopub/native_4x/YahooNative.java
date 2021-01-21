@@ -16,16 +16,13 @@ import com.flurry.android.ads.FlurryAdNativeListener;
 
 import java.util.Map;
 
-
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/31.
- */
-public class YahooNative extends CustomEventNative{
+public class YahooNative extends CustomEventNative {
     private static final String PLACEMENT_ID_KEY = "placement_id";
     private String mApiKey = null;
     private static String mAdSpace = null;
     private String mPlacementId;
     private CustomEventNativeListener mCustomEventListener;
+
     @Override
     protected void loadNativeAd(Activity activity, CustomEventNativeListener customEventNativeListener, Map<String, Object> localExtras, Map<String, String> serverExtras) {
         //load yahoo native ad
@@ -48,7 +45,7 @@ public class YahooNative extends CustomEventNative{
     }
 
     private void initParameters(String params) {
-        try{
+        try {
             if (!TextUtils.isEmpty(params) && params.contains(";")) {
                 String[] ids = params.split(";");
                 if (ids.length >= 2) {
@@ -56,30 +53,33 @@ public class YahooNative extends CustomEventNative{
                     mAdSpace = ids[1];
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
     }
 
-     class YahooStaticNativeAd extends StaticNativeAd implements FlurryAdNativeListener{
+    class YahooStaticNativeAd extends StaticNativeAd implements FlurryAdNativeListener {
 
-        private  FlurryAdNative mFlurryAdNative;
-        private  Context mContext;
-         private static final String AD_TITLE = "headline";
-         private static final String AD_SEC_HQIMAGE = "secHqImage";
-         private static final String AD_SEC_IMAGE = "secImage";
-         private static final String CALL_TO_ACTION = "callToAction";
-         private static final String SUMMARY = "summary";
-         private static final String APP_RATING = "appRating";
-         private static final String AD_ASSET_CATEGORY = "appCategory";
-        public YahooStaticNativeAd(Context context){
-            mContext =context;
+        private FlurryAdNative mFlurryAdNative;
+        private Context mContext;
+        private static final String AD_TITLE = "headline";
+        private static final String AD_SEC_HQIMAGE = "secHqImage";
+        private static final String AD_SEC_IMAGE = "secImage";
+        private static final String CALL_TO_ACTION = "callToAction";
+        private static final String SUMMARY = "summary";
+        private static final String APP_RATING = "appRating";
+        private static final String AD_ASSET_CATEGORY = "appCategory";
+
+        public YahooStaticNativeAd(Context context) {
+            mContext = context;
         }
-        public  void loadNative(){
+
+        public void loadNative() {
             mFlurryAdNative = new FlurryAdNative(mContext, mAdSpace);
             mFlurryAdNative.setListener(this);
             mFlurryAdNative.fetchAd();
         }
+
         @Override
         public void onFetched(FlurryAdNative flurryAdNative) {
             setUpData(flurryAdNative);
@@ -117,69 +117,69 @@ public class YahooNative extends CustomEventNative{
             mCustomEventListener.onNativeAdFailed(NativeErrorCode.UNSPECIFIED);
         }
 
-         private void setUpData(@NonNull FlurryAdNative flurryAdNative) {
+        private void setUpData(@NonNull FlurryAdNative flurryAdNative) {
 
-             FlurryAdNativeAsset adTitle = flurryAdNative.getAsset(AD_TITLE);
-             if (adTitle != null) {
-                 setTitle(adTitle.getValue());
-             }
-             FlurryAdNativeAsset adBody = flurryAdNative.getAsset(SUMMARY);
-             if(adBody != null){
-                 setText(adBody.getValue());
-             }
+            FlurryAdNativeAsset adTitle = flurryAdNative.getAsset(AD_TITLE);
+            if (adTitle != null) {
+                setTitle(adTitle.getValue());
+            }
+            FlurryAdNativeAsset adBody = flurryAdNative.getAsset(SUMMARY);
+            if (adBody != null) {
+                setText(adBody.getValue());
+            }
 
-             FlurryAdNativeAsset adAdCoverImageAsset = flurryAdNative.getAsset(AD_SEC_HQIMAGE);
-             if (adAdCoverImageAsset != null) {
-                 setMainImageUrl(flurryAdNative.getAsset(AD_SEC_HQIMAGE).getValue());
-             }
-             FlurryAdNativeAsset adAdIconImageAsset = flurryAdNative.getAsset(AD_SEC_IMAGE);
-             if (adAdIconImageAsset != null) {
-                 setIconImageUrl(flurryAdNative.getAsset(AD_SEC_IMAGE).getValue());
-             }
-             FlurryAdNativeAsset adCallToAction = flurryAdNative.getAsset(CALL_TO_ACTION);
-             if (adCallToAction != null) {
-                 setCallToAction(adCallToAction.getValue());
-             }
+            FlurryAdNativeAsset adAdCoverImageAsset = flurryAdNative.getAsset(AD_SEC_HQIMAGE);
+            if (adAdCoverImageAsset != null) {
+                setMainImageUrl(flurryAdNative.getAsset(AD_SEC_HQIMAGE).getValue());
+            }
+            FlurryAdNativeAsset adAdIconImageAsset = flurryAdNative.getAsset(AD_SEC_IMAGE);
+            if (adAdIconImageAsset != null) {
+                setIconImageUrl(flurryAdNative.getAsset(AD_SEC_IMAGE).getValue());
+            }
+            FlurryAdNativeAsset adCallToAction = flurryAdNative.getAsset(CALL_TO_ACTION);
+            if (adCallToAction != null) {
+                setCallToAction(adCallToAction.getValue());
+            }
 
-             FlurryAdNativeAsset appRating = flurryAdNative.getAsset(APP_RATING);
-             if (appRating != null && !TextUtils.isEmpty(appRating.getValue())) {
-                 setStarRating(Double.parseDouble(appRating.getValue()));
-             }
-         }
+            FlurryAdNativeAsset appRating = flurryAdNative.getAsset(APP_RATING);
+            if (appRating != null && !TextUtils.isEmpty(appRating.getValue())) {
+                setStarRating(Double.parseDouble(appRating.getValue()));
+            }
+        }
 
-         private void setOnClickListener(@NonNull final View view,
-                                         @Nullable final View.OnClickListener onClickListener) {
-             view.setOnClickListener(onClickListener);
-             if ((view instanceof ViewGroup)) {
-                 ViewGroup viewGroup = (ViewGroup)view;
-                 for (int i = 0; i < viewGroup.getChildCount(); i++)
-                     setOnClickListener(viewGroup.getChildAt(i), onClickListener);
-             }
-         }
+        private void setOnClickListener(@NonNull final View view,
+                                        @Nullable final View.OnClickListener onClickListener) {
+            view.setOnClickListener(onClickListener);
+            if ((view instanceof ViewGroup)) {
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); i++)
+                    setOnClickListener(viewGroup.getChildAt(i), onClickListener);
+            }
+        }
 
 
-         @Override
-         public void prepare(@NonNull View view) {
+        @Override
+        public void prepare(@NonNull View view) {
 
-             if(view !=null && null != mFlurryAdNative){
-                 mFlurryAdNative.setLogControl(true);
-                 mFlurryAdNative.logImpression();
-                 setOnClickListener(view, new View.OnClickListener() {
-                     @Override
-                     public void onClick(View v) {
-                         notifyAdClicked();
-                         mFlurryAdNative.logClick();
-                     }
-                 });
-             }
-         }
+            if (view != null && null != mFlurryAdNative) {
+                mFlurryAdNative.setLogControl(true);
+                mFlurryAdNative.logImpression();
+                setOnClickListener(view, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        notifyAdClicked();
+                        mFlurryAdNative.logClick();
+                    }
+                });
+            }
+        }
 
-         @Override
-         public void clear(@NonNull View view) {
-                 if(null != mFlurryAdNative) {
-                     mFlurryAdNative.setLogControl(false);
-                     mFlurryAdNative.destroy();
-                 }
-             }
-     }
+        @Override
+        public void clear(@NonNull View view) {
+            if (null != mFlurryAdNative) {
+                mFlurryAdNative.setLogControl(false);
+                mFlurryAdNative.destroy();
+            }
+        }
+    }
 }

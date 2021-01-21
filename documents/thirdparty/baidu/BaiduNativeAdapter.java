@@ -18,25 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
-public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNative.BaiduNativeNetworkListener{
+public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNative.BaiduNativeNetworkListener {
 
     private Context mContext;
     private Map<String, Object> mExtras;
 
     @Override
     public void loadNativeAd(@NonNull Context context,
-                                @NonNull Map<String, Object> extras) {
+                             @NonNull Map<String, Object> extras) {
 
         mContext = context;
         mExtras = extras;
-        if(!extrasAreValid(extras)){
+        if (!extrasAreValid(extras)) {
             notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
             return;
         }
-        String mPlacementId = (String)mExtras.get(CMBaseNativeAd.KEY_PLACEMENT_ID);
+        String mPlacementId = (String) mExtras.get(CMBaseNativeAd.KEY_PLACEMENT_ID);
         final BaiduNative baiduNative = new BaiduNative(mContext, mPlacementId, this);
         final RequestParameters requestParameters = new RequestParameters.Builder().
                 downloadAppConfirmPolicy(RequestParameters.DOWNLOAD_APP_CONFIRM_CUSTOM_BY_APP).build();
@@ -57,9 +54,9 @@ public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNati
 
     @Override
     public String getReportPkgName(String adTypeName) {
-        if(adTypeName.equals(Const.KEY_BD)){
+        if (adTypeName.equals(Const.KEY_BD)) {
             return Const.pkgName.baidu;
-        }else {
+        } else {
             return String.format("%s.%s", Const.pkgName.baidu, adTypeName);
         }
     }
@@ -78,9 +75,9 @@ public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNati
     public void onNativeLoad(List<NativeResponse> list) {
         List<INativeAd> tempList = new ArrayList<INativeAd>();
 
-        if(list != null && !list.isEmpty()) {
-            for(NativeResponse response : list){
-                if(response != null && response.isAdAvailable(mContext)){
+        if (list != null && !list.isEmpty()) {
+            for (NativeResponse response : list) {
+                if (response != null && response.isAdAvailable(mContext)) {
                     tempList.add(new BaiduNativeAd(response));
                 }
             }
@@ -102,13 +99,14 @@ public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNati
 
         private View mAdView;
         final private NativeResponse mNativeResponse;
+
         public BaiduNativeAd(NativeResponse response) {
 
             mNativeResponse = response;
             setUpData(response);
         }
 
-        void setUpData(@NonNull NativeResponse nativeResponse){
+        void setUpData(@NonNull NativeResponse nativeResponse) {
             setTitle(nativeResponse.getTitle());
             setAdCoverImageUrl(nativeResponse.getImageUrl());
             setAdIconUrl(nativeResponse.getIconUrl());
@@ -133,7 +131,7 @@ public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNati
 
         @Override
         public void unregisterView() {
-            if(null != mAdView) {
+            if (null != mAdView) {
                 mAdView = null;
             }
         }
@@ -149,7 +147,7 @@ public class BaiduNativeAdapter extends NativeloaderAdapter implements BaiduNati
         }
 
         @Override
-        public void handleClick(){
+        public void handleClick() {
             mNativeResponse.handleClick(mAdView);// 点击响应
         }
     }

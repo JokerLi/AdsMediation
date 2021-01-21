@@ -9,13 +9,11 @@ import com.mopub.mobileads.MoPubErrorCode;
 
 import java.util.Map;
 
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/17.
- */
 public class CMAdCustomEventInterstitial extends CustomEventInterstitial implements InterstitialAdCallBack {
     private static final String POSID_ID_KEY = "posid";
     private String mPosId;
     private CustomEventInterstitialListener mCustomEventInterstitialListener;
+
     @Override
     protected void loadInterstitial(Context context, CustomEventInterstitialListener customEventInterstitialListener, Map<String, Object> localExtras, Map<String, String> serverExtras) {
         mCustomEventInterstitialListener = customEventInterstitialListener;
@@ -45,13 +43,13 @@ public class CMAdCustomEventInterstitial extends CustomEventInterstitial impleme
 
     @Override
     public void onAdLoadFailed(int i) {
-        if(i == 10001){
+        if (i == 10001) {
             mCustomEventInterstitialListener.onInterstitialFailed(MoPubErrorCode.ADAPTER_CONFIGURATION_ERROR);
-        }else if(i == 10002){
+        } else if (i == 10002) {
             mCustomEventInterstitialListener.onInterstitialFailed(MoPubErrorCode.NETWORK_NO_FILL);
-        }else if(i == 10004){
+        } else if (i == 10004) {
             mCustomEventInterstitialListener.onInterstitialFailed(MoPubErrorCode.NETWORK_TIMEOUT);
-        }else{
+        } else {
             mCustomEventInterstitialListener.onInterstitialFailed(MoPubErrorCode.UNSPECIFIED);
         }
     }

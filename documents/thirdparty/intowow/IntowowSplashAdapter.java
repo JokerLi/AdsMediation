@@ -18,10 +18,6 @@ import com.intowow.sdk.AdListener;
 import com.intowow.sdk.DisplayAd;
 import com.intowow.sdk.I2WAPI;
 
-
-/**
- * Created by xzl on  2015/11/30 16:58.
- */
 public class IntowowSplashAdapter extends SplashBaseAdapter {
 
     private static final String TAG = "SplashAdManager";
@@ -30,7 +26,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
     private OnSplashAdapterResultListener mOnSplashAdapterResultListener;
     private DisplayAd mDisplayAd;
     private static final String ADERROR = "iclick inner error";
-    
+
     @Override
     public String getAdType() {
         return Const.KEY_ICLICK;
@@ -38,7 +34,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
 
     @Override
     public void onDestroy() {
-        if(mDisplayAd != null) {
+        if (mDisplayAd != null) {
             mDisplayAd.stop();
             mDisplayAd.destroy();
             mDisplayAd = null;
@@ -47,7 +43,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
 
     @Override
     public void onStop() {
-        if(mDisplayAd != null) {
+        if (mDisplayAd != null) {
             mDisplayAd.stop();
         }
     }
@@ -61,7 +57,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
 
     @Override
     public void onResume() {
-        if(mContext != null) {
+        if (mContext != null) {
             I2WAPI.onActivityResume(mContext);
         }
     }
@@ -75,12 +71,12 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
         Log.i(TAG, "SplashMainActivity onCreate ++++++++++++++ width=" + width);
-        if(mContext != null && mParamters != null && width != 0){
+        if (mContext != null && mParamters != null && width != 0) {
             Logger.i(TAG, "iclick load splash ad,and the placeid =" + mParamters + ",and width = " + width);
             try {
-                if(BuildConfig.DEBUG){
+                if (BuildConfig.DEBUG) {
                     I2WAPI.init(mContext, true);
-                }else {
+                } else {
                     I2WAPI.init(mContext);
                 }
                 mDisplayAd = new DisplayAd(context, mParamters);
@@ -90,14 +86,14 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
                 mDisplayAd.loadAd();
                 //TODO:外部回调
 //                doLoadReport(getAdType());
-            }catch (Exception e){
-                if(null != mOnSplashAdapterResultListener) {
+            } catch (Exception e) {
+                if (null != mOnSplashAdapterResultListener) {
                     mOnSplashAdapterResultListener.onAdFailed(Const.KEY_ICLICK, ADERROR);
 //                    doLoadFailReport(getAdType(), ADERROR);
                 }
             }
-        }else{
-            if(null != mOnSplashAdapterResultListener) {
+        } else {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_ICLICK, CMAdError.ERROR_CONFIG);
 //                doLoadFailReport(getAdType(), CMAdError.ERROR_CONFIG);
             }
@@ -116,7 +112,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         super.reportClick(Const.res.iclick, reportPkgName);
     }
 
-    class MyIntowowListener implements AdListener{
+    class MyIntowowListener implements AdListener {
 
         private boolean mIsFirstVideoClick = false;
         private boolean mIsFirstImgClick = false;
@@ -124,7 +120,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onError(Ad ad, AdError adError) {
             Logger.i(TAG, "iclick load splash ad,and onError");
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_ICLICK, adError.getErrorMessage());
             }
 //            doLoadFailReport(getAdType(), adError.getErrorMessage());
@@ -140,11 +136,11 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
                     //mDisplayAd.play();
                 }
                 if (null != mOnSplashAdapterResultListener) {
-                    mOnSplashAdapterResultListener.onAdPresent(mDisplayAd.hasVideoContent() ? Const.KEY_ICLICK_VIDEO  : Const.KEY_ICLICK);
+                    mOnSplashAdapterResultListener.onAdPresent(mDisplayAd.hasVideoContent() ? Const.KEY_ICLICK_VIDEO : Const.KEY_ICLICK);
                 }
 //                doLoadSuccReport(getAdType());
-            }else{
-                if(null != mOnSplashAdapterResultListener) {
+            } else {
+                if (null != mOnSplashAdapterResultListener) {
                     mOnSplashAdapterResultListener.onAdFailed(Const.KEY_ICLICK, ADERROR);
                 }
             }
@@ -153,7 +149,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onAdClicked(Ad ad) {
             Logger.i(TAG, "iclick load splash ad,and onAdClicked");
-            if(null != mOnSplashAdapterResultListener && !mIsFirstImgClick) {
+            if (null != mOnSplashAdapterResultListener && !mIsFirstImgClick) {
                 mIsFirstImgClick = true;
                 mOnSplashAdapterResultListener.onClicked(Const.KEY_ICLICK);
                 reportClick();
@@ -162,7 +158,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
 
         @Override
         public void onAdImpression(Ad ad) {
-            if(mDisplayAd != null){
+            if (mDisplayAd != null) {
                 Logger.i(TAG, "iclick load splash ad,and onAdImpression，is video" + mDisplayAd.hasVideoContent());
             }
             reportImpression();
@@ -171,7 +167,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onAdMute(Ad ad) {
             Logger.i(TAG, "iclick load splash ad,and onAdMute");
-            if(null != mOnSplashAdapterResultListener && !mIsFirstVideoClick) {
+            if (null != mOnSplashAdapterResultListener && !mIsFirstVideoClick) {
                 mIsFirstVideoClick = true;
                 mOnSplashAdapterResultListener.onClicked(Const.KEY_ICLICK_VIDEO);
             }
@@ -180,7 +176,7 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onAdUnmute(Ad ad) {
             Logger.i(TAG, "iclick load splash ad,and onAdUnmute");
-            if(null != mOnSplashAdapterResultListener && !mIsFirstVideoClick) {
+            if (null != mOnSplashAdapterResultListener && !mIsFirstVideoClick) {
                 mIsFirstVideoClick = true;
                 mOnSplashAdapterResultListener.onClicked(Const.KEY_ICLICK_VIDEO);
             }
@@ -199,8 +195,8 @@ public class IntowowSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onVideoProgress(Ad ad, int totoalDuration, int currentPosition) {
             Logger.i(TAG, "iclick load splash ad,and onVideoProgress,and totalDuration = " + totoalDuration + ",the currentPosition = " + currentPosition);
-            if(totoalDuration - currentPosition < DELAYE_TIME){
-                if(null != mOnSplashAdapterResultListener) {
+            if (totoalDuration - currentPosition < DELAYE_TIME) {
+                if (null != mOnSplashAdapterResultListener) {
                     mOnSplashAdapterResultListener.onAdDismissed(Const.KEY_ICLICK_VIDEO);
                 }
             }

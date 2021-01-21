@@ -3,7 +3,7 @@ package com.buffalo.adsdk.adapter;
 
 import android.content.Context;
 
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.base.INativeReqeustCallBack;
 import com.buffalo.baseapi.ads.INativeAdLoader;
 import com.buffalo.baseapi.ads.INativeAd;
@@ -19,7 +19,7 @@ public abstract class BaseNativeLoaderAdapter implements INativeAdLoader {
     protected INativeReqeustCallBack mNativeAdListener;
     protected INativeAd.IAdOnClickListener mNativeAdClickListener = null;
     protected String mAdTypeName;
-    protected CMRequestParams requestParams;
+    protected RequestParams requestParams;
 
     protected BaseNativeLoaderAdapter(Context context, String posId, String adTypeName) {
         mContext = context;
@@ -33,11 +33,11 @@ public abstract class BaseNativeLoaderAdapter implements INativeAdLoader {
         return mAdTypeName;
     }
 
-    public void setRequestParams( CMRequestParams requestParams){
+    public void setRequestParams( RequestParams requestParams){
         this.requestParams = requestParams;
     }
 
-    public CMRequestParams getRequestParams(){
+    public RequestParams getRequestParams(){
         return requestParams;
     }
 

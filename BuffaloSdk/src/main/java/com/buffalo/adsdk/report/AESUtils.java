@@ -1,6 +1,5 @@
 package com.buffalo.adsdk.report;
 
-
 import android.annotation.SuppressLint;
 import android.util.Base64;
 
@@ -12,9 +11,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by i on 2015/5/29. 128位AES 加密
- */
 public class AESUtils {
     protected IvParameterSpec mIv;
     protected SecretKeySpec mKey;
@@ -95,8 +91,8 @@ public class AESUtils {
         this(iv, SDEFAULTKEY);
     }
 
-    @SuppressLint({ "NewApi", "InlinedApi" })
-	public String base64Encrypt(String content) {
+    @SuppressLint({"NewApi", "InlinedApi"})
+    public String base64Encrypt(String content) {
         try {
             if (null != content) {
                 String version = new String(new DecimalFormat("0000").format(mVersion));

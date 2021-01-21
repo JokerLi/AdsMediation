@@ -15,10 +15,7 @@ import com.mopub.common.UrlHandler;
 import com.mopub.common.util.Drawables;
 import com.mopub.nativeads.NativeResponse;
 
-/**
- * Created by Li Guoqing on 2016/11/19.
- */
-public class MopubRenderAdapter implements NativeAdTemplate.ICMNativeAdViewAdapter {
+public class MopubRenderAdapter implements NativeAdTemplate.INativeAdViewAdapter {
     private Context mContext;
 
     public MopubRenderAdapter(Context context) {

@@ -18,10 +18,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Created by peiboning on 2016/8/9.
- */
-public class ViewShowReporter implements Callable<Boolean>{
+public class ViewShowReporter implements Callable<Boolean> {
     private static String TAG = ViewShowReporter.class.getSimpleName();
     private static ViewCheckHelper checkHelper;
     private static Map<Model, WeakReference<View>> waitReportMap = new Hashtable<Model, WeakReference<View>>();
@@ -29,21 +26,22 @@ public class ViewShowReporter implements Callable<Boolean>{
     private static long mBeginRunTime = 0L;
     private static final float VIEW_ALPHA_VALUE = 0.9f;
 
-    private ViewShowReporter(){}
+    private ViewShowReporter() {
+    }
 
-    public synchronized static void add(Model model, View view){
-        if(null == model || null == view){
+    public synchronized static void add(Model model, View view) {
+        if (null == model || null == view) {
             return;
         }
-        if(!waitReportMap.containsKey(model)){
+        if (!waitReportMap.containsKey(model)) {
             waitReportMap.put(model, new WeakReference<View>(view));
             mBeginRunTime = System.currentTimeMillis();
             Logger.i(TAG, "add view size = " + waitReportMap.size());
         }
-        if(null == mIsRunning){
+        if (null == mIsRunning) {
             mIsRunning = new AtomicBoolean(false);
         }
-        if(!mIsRunning.get()){
+        if (!mIsRunning.get()) {
             mIsRunning.set(true);
             checkHelper = new ViewCheckHelper(AdManager.getContext(), new ViewShowReporter());
             Logger.i(TAG, "new ViewCheckHelper");
@@ -52,13 +50,13 @@ public class ViewShowReporter implements Callable<Boolean>{
     }
 
     private boolean shouldStop() {
-        if(waitReportMap.size() <= 0){
+        if (waitReportMap.size() <= 0) {
             reset();
             Logger.i(TAG, "Stop cause map size <= 0 ");
             return true;
         }
 
-        if(System.currentTimeMillis() - mBeginRunTime >= 3 * 60 * 1000){
+        if (System.currentTimeMillis() - mBeginRunTime >= 3 * 60 * 1000) {
             Logger.i(TAG, "Stop cause time out > 3 minutes");
             reset();
             return true;
@@ -67,16 +65,16 @@ public class ViewShowReporter implements Callable<Boolean>{
         return false;
     }
 
-    private void reset(){
+    private void reset() {
         mIsRunning.set(false);
         waitReportMap.clear();
         mBeginRunTime = 0;
         checkHelper = null;
     }
 
-    public static void unRegister(Model model){
-        if(waitReportMap != null && model != null){
-            if(waitReportMap.containsKey(model)){
+    public static void unRegister(Model model) {
+        if (waitReportMap != null && model != null) {
+            if (waitReportMap.containsKey(model)) {
                 waitReportMap.remove(model);
             }
         }
@@ -88,26 +86,25 @@ public class ViewShowReporter implements Callable<Boolean>{
     }
 
     /**
-     *
      * @return true --> need stop;
      */
-    private boolean check(){
+    private boolean check() {
         Logger.i(TAG, "check");
         long startTime = System.currentTimeMillis();
         Set<Model> keys = waitReportMap.keySet();
         List<Model> removed = new ArrayList<Model>();
-        for(Model model : keys){
+        for (Model model : keys) {
             View view = waitReportMap.get(model).get();
-            if(view != null && isViewOnScreen(view)){
+            if (view != null && isViewOnScreen(view)) {
                 //report
                 model.report();
                 removed.add(model);
-            }else if(view == null){
+            } else if (view == null) {
                 //移除
                 removed.add(model);
             }
         }
-        for(Model model : removed){
+        for (Model model : removed) {
             waitReportMap.remove(model);
             Logger.i(TAG, "remove view size = " + waitReportMap.size());
         }
@@ -139,7 +136,7 @@ public class ViewShowReporter implements Callable<Boolean>{
         return true;
     }
 
-    public static class Model{
+    public static class Model {
         private String pkgName;
         private String posid;
         private int rcvReportRes;
@@ -163,7 +160,7 @@ public class ViewShowReporter implements Callable<Boolean>{
             this.ad = ad;
         }
 
-        public void report(){
+        public void report() {
             Logger.i(TAG, "report title = " + ad.getAdTitle());
             extraReportParams = ad.addDupReportExtra(false, ad.hasReportUserImpression(), extraReportParams);
             ad.setHasReportUserImpression(true);

@@ -3,7 +3,7 @@ package com.buffalo.adsdk.banner;
 import android.content.Context;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.nativead.NativeAdManagerInternal;
 import com.buffalo.adsdk.utils.Assure;
@@ -11,20 +11,16 @@ import com.buffalo.baseapi.ads.INativeAdLoader;
 import com.buffalo.utils.Logger;
 import com.buffalo.baseapi.ads.INativeAd;
 
-
-/**
- * Created by xzl on  2016/1/5 10:45.
- */
 public class BannerAdManagerRequest extends NativeAdManagerInternal {
 
     private INativeAd mSrcNativeAd;
 
     public Object getAdObject() {
-        return mSrcNativeAd != null ?  mSrcNativeAd.getAdObject() : null;
+        return mSrcNativeAd != null ? mSrcNativeAd.getAdObject() : null;
     }
 
-    public String getAdType(){
-        return mSrcNativeAd != null ?  mSrcNativeAd.getAdTypeName() : null;
+    public String getAdType() {
+        return mSrcNativeAd != null ? mSrcNativeAd.getAdTypeName() : null;
     }
 
     public BannerAdManagerRequest(Context context, String posId, BannerAdSize adSize) {
@@ -39,7 +35,7 @@ public class BannerAdManagerRequest extends NativeAdManagerInternal {
         return PRELOAD_REQUEST_SIZE;
     }
 
-    public void loadAd(){
+    public void loadAd() {
         Logger.i(TAG, mPositionId + " loadAd");
         mIsOpenPriority = false;
         mIsPreload = true;
@@ -73,18 +69,18 @@ public class BannerAdManagerRequest extends NativeAdManagerInternal {
         }
 
         if (isAllLoaderFinished()) {
-            notifyAdFailed(CMAdError.NO_FILL_ERROR);
+            notifyAdFailed(NativeAdError.NO_FILL_ERROR);
         }
     }
 
-    public void prepare(View view){
-        if(mSrcNativeAd != null && view != null){
+    public void prepare(View view) {
+        if (mSrcNativeAd != null && view != null) {
             mSrcNativeAd.registerViewForInteraction(view);
         }
     }
 
-    public void destroy(){
-        if(mSrcNativeAd != null){
+    public void destroy() {
+        if (mSrcNativeAd != null) {
             Logger.w(Const.TAG, "banner unregister view");
             mSrcNativeAd.unregisterView();
         }

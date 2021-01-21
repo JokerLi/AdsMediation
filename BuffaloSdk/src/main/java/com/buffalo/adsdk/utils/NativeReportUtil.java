@@ -1,7 +1,7 @@
 package com.buffalo.adsdk.utils;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMBaseFactory;
+import com.buffalo.adsdk.BaseFactory;
 import com.buffalo.adsdk.Const;
 
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class NativeReportUtil {
 
     private static void doNativeAdReport(Const.Event event, String posid, String adTypeName,
                                          long time, String error, Map<String, String> extras){
-        CMBaseFactory factory = AdManager.createFactory();
+        BaseFactory factory = AdManager.createFactory();
         if (factory != null) {
             factory.doNativeReport(event, posid, adTypeName, time, error, extras);
         }

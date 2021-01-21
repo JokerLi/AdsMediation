@@ -19,13 +19,9 @@ import java.util.Map;
 
 import static com.mopub.nativeads.NativeImageHelper.preCacheImages;
 
-/**
- *  Created by $ liuluchao@cmcm.com on 2016/3/31.
- *  juhe sdk
- *
- */
 public class CMAdCustomEventNative extends CustomEventNative {
     private static final String POSID_ID_KEY = "posid";
+
     @Override
     protected void loadNativeAd(@NonNull Activity activity,
                                 @NonNull CustomEventNativeListener customEventNativeListener,
@@ -55,14 +51,15 @@ public class CMAdCustomEventNative extends CustomEventNative {
         private final CustomEventNativeListener mCustomEventNativeListener;
         private INativeAd mNativeAd;
         private String mPosid;
+
         CMStaticNativeAd(final Context context, String posid,
-                               final CustomEventNativeListener customEventNativeListener) {
+                         final CustomEventNativeListener customEventNativeListener) {
             mContext = context.getApplicationContext();
             mCustomEventNativeListener = customEventNativeListener;
             mPosid = posid;
         }
 
-        void loadAd(){
+        void loadAd() {
             CMCustomAdProvider.getInstance().loadNativeAd(mContext, mPosid, CMStaticNativeAd.this);
         }
 

@@ -3,7 +3,6 @@ package com.cmcm.customevent.interstitial;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.cmcm.adsdk.interstitial.InterstitialAdCallBack;
 import com.google.android.gms.ads.AdRequest;
@@ -11,22 +10,18 @@ import com.google.android.gms.ads.mediation.MediationAdRequest;
 import com.google.android.gms.ads.mediation.customevent.CustomEventInterstitial;
 import com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialListener;
 
-import java.util.logging.Logger;
-
-/**
- * Created by $ liuluchao@cmcm.com on 2016/3/23.
- */
-public class CMAdCustomEventInterstitial implements CustomEventInterstitial,InterstitialAdCallBack {
-    private static final String TAG ="CMAdCustomEventInterstitial";
+public class CMAdCustomEventInterstitial implements CustomEventInterstitial, InterstitialAdCallBack {
+    private static final String TAG = "CMAdCustomEventInterstitial";
     private String mPosId;
     private CustomEventInterstitialListener mCustomEventInterstitialListener;
+
     @Override
     public void requestInterstitialAd(Context context, CustomEventInterstitialListener customEventInterstitialListener, String s, MediationAdRequest mediationAdRequest, Bundle bundle) {
         mCustomEventInterstitialListener = customEventInterstitialListener;
         mPosId = s;
         if (TextUtils.isEmpty(mPosId)) {
             mCustomEventInterstitialListener.onAdFailedToLoad(AdRequest.ERROR_CODE_INVALID_REQUEST);
-                return;
+            return;
         }
         CMCustomAdProvider.getInstance().loadInterstitialAd(context, mPosId, this);
     }
@@ -50,12 +45,13 @@ public class CMAdCustomEventInterstitial implements CustomEventInterstitial,Inte
     public void onResume() {
 
     }
+
     // cmcm InterstitialAdCallBack
     @Override
     public void onAdLoadFailed(int i) {
-        if(i == 10001){
+        if (i == 10001) {
             mCustomEventInterstitialListener.onAdFailedToLoad(AdRequest.ERROR_CODE_INVALID_REQUEST);
-        }else if(i == 10002){
+        } else if (i == 10002) {
             mCustomEventInterstitialListener.onAdFailedToLoad(AdRequest.ERROR_CODE_NO_FILL);
         }
     }
@@ -69,6 +65,7 @@ public class CMAdCustomEventInterstitial implements CustomEventInterstitial,Inte
     public void onAdClicked() {
         mCustomEventInterstitialListener.onAdClicked();
     }
+
     @Override
     public void onAdDisplayed() {
         mCustomEventInterstitialListener.onAdLeftApplication();

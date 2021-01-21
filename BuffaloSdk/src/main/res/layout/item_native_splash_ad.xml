@@ -17,7 +17,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/img_native_splash_image_shadow" />
 
-        <com.buffalo.adsdk.view.CMMediaView
+        <com.buffalo.adsdk.view.NativeMediaView
             android:id="@+id/iv_image_cover"
             android:layout_centerHorizontal="true"
             android:layout_width="280dp"

@@ -5,26 +5,21 @@ import android.text.TextUtils;
 
 import com.buffalo.adsdk.config.RequestUFS;
 import com.buffalo.adsdk.unifiedreport.UnifiedReporter;
-import com.buffalo.picks.internal.ReceiverUtils;
 import com.buffalo.utils.BackgroundThread;
-import com.buffalo.utils.CMReceiverUtils;
 import com.buffalo.utils.Logger;
+import com.buffalo.utils.ReceiverUtils;
 import com.buffalo.utils.gaid.AdvertisingIdHelper;
 
 import java.util.Hashtable;
 import java.util.Map;
 
-
-/**
- * Created by chenhao on 2015/7/9.
- */
 public abstract class AdManager {
     private static Context mContext;
     private static String mMid;
     //全局的开关
     public static final int DEFAULT_SSPID = -1;
     private static String sChannelId;
-    private static CMBaseFactory sAdFactory = null;
+    private static BaseFactory sAdFactory = null;
     //控制offer上报开关
     private static int sReportSwitcher = 0;
     // request ufs
@@ -35,16 +30,16 @@ public abstract class AdManager {
     public static boolean sIsCnVersion = true;
     private static Map<String, String> mOrionTestAppId = new Hashtable<String, String>();
 
-    public static void applicationInit(Context context, String mid, boolean isCnVersion){
+    public static void applicationInit(Context context, String mid, boolean isCnVersion) {
         applicationInit(context, mid, isCnVersion, "");
     }
 
-    public static void applicationInit(final Context context, String mid, boolean isCnVersion, String channelId){
+    public static void applicationInit(final Context context, String mid, boolean isCnVersion, String channelId) {
         //第三个参数是渠道id
-        if(TextUtils.isEmpty(mid)){
+        if (TextUtils.isEmpty(mid)) {
             throw new IllegalArgumentException("PublisherID cannot be null or empty");
         }
-        sIsCnVersion =isCnVersion;
+        sIsCnVersion = isCnVersion;
         mContext = context;
         mMid = mid;
         sChannelId = channelId;
@@ -56,8 +51,8 @@ public abstract class AdManager {
             public void run() {
                 // FIXME: 2016/7/12
 //                freshPicksConfig();
+                com.buffalo.picks.internal.ReceiverUtils.regist(mContext);
                 ReceiverUtils.regist(mContext);
-                CMReceiverUtils.regist(mContext);
                 createFactory();
                 if (sAdFactory != null) {
                     sAdFactory.initConfig();
@@ -75,16 +70,16 @@ public abstract class AdManager {
         }
     }*/
 
-    public static Context getContext(){
+    public static Context getContext() {
         return mContext;
     }
 
 
-    public static String getMid(){
+    public static String getMid() {
         return mMid;
     }
 
-    public static String getChannelId(){
+    public static String getChannelId() {
         return sChannelId;
     }
 
@@ -93,12 +88,12 @@ public abstract class AdManager {
     }
 
     //将CMAdManagerFactory放置到扩展包，因为base包没有
-    public static CMBaseFactory createFactory() {
+    public static BaseFactory createFactory() {
         if (sAdFactory == null) {
             try {
-                Class className = Class.forName("com.buffalo.adsdk.CMAdManagerFactory");
+                Class className = Class.forName("com.buffalo.adsdk.NativeAdManagerFactory");
                 if (sAdFactory == null) {
-                    sAdFactory = (CMBaseFactory) className.newInstance();
+                    sAdFactory = (BaseFactory) className.newInstance();
                 }
             } catch (Exception e) {
             }
@@ -107,14 +102,14 @@ public abstract class AdManager {
     }
 
     public static void addLoaderClass(String loaderKey, String loaderClass) {
-        CMBaseFactory adFactory = createFactory();
+        BaseFactory adFactory = createFactory();
         if (adFactory != null) {
             adFactory.addLoaderClass(loaderKey, loaderClass);
         }
     }
 
-    public static void addRenderAdapter(String loaderKey, NativeAdTemplate.ICMNativeAdViewAdapter adapter){
-        CMBaseFactory adFactory = createFactory();
+    public static void addRenderAdapter(String loaderKey, NativeAdTemplate.INativeAdViewAdapter adapter) {
+        BaseFactory adFactory = createFactory();
         if (adFactory != null) {
             adFactory.addRenderAdapter(loaderKey, adapter);
         }
@@ -128,30 +123,30 @@ public abstract class AdManager {
         return sReportSwitcher;
     }
 
-    public static void setDebug(){
+    public static void setDebug() {
         sIsDebug = true;
     }
 
-    public static boolean isDebug(){
+    public static boolean isDebug() {
         return sIsDebug;
     }
 
-    public static void reportPV(int pageId){
-        try{
+    public static void reportPV(int pageId) {
+        try {
             UnifiedReporter.getInstance().reportShow(pageId);
-        }catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
-    public static void setRequestUfs(boolean isRequestUfs){
+    public static void setRequestUfs(boolean isRequestUfs) {
         sIsRequestUfs = isRequestUfs;
     }
 
-    public static boolean isRequestUfs(){
+    public static boolean isRequestUfs() {
         return sIsRequestUfs;
     }
 
-    public static void setPegasusReportViewCheckIntervalMillisecond(int timeMillisecond){
+    public static void setPegasusReportViewCheckIntervalMillisecond(int timeMillisecond) {
         if (timeMillisecond < 300) {
             timeMillisecond = 300;
         } else if (timeMillisecond > 1000) {
@@ -160,7 +155,7 @@ public abstract class AdManager {
         mPegasusReportViewCheckIntervalMills = timeMillisecond;
     }
 
-    public static int getPegasusReportViewCheckIntervalMillisecond(){
+    public static int getPegasusReportViewCheckIntervalMillisecond() {
         return mPegasusReportViewCheckIntervalMills;
     }
 }

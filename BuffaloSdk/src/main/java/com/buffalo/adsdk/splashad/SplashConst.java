@@ -1,8 +1,5 @@
 package com.buffalo.adsdk.splashad;
 
-/**
- * Created by Administrator on 2016/11/18.
- */
 public class SplashConst {
     public static final short SPLASH_SKIP_ID = Short.MAX_VALUE;
     public static final short SPLASH_AD_ID = SPLASH_SKIP_ID - 1;

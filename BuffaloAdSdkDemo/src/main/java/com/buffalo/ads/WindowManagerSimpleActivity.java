@@ -13,17 +13,12 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.buffalo.ads.R;
 import com.buffalo.ads.ui.AdClickListener;
 import com.buffalo.ads.ui.ShowCasePagerAdapter;
 import com.buffalo.baseapi.ads.INativeAd;
 
-
-/**
- * Created by chenhao on 2016/1/7.
- */
 public class WindowManagerSimpleActivity extends FragmentActivity implements AdClickListener {
-    private WindowManager  mWindowManager;
+    private WindowManager mWindowManager;
     private View mWindowRootView;
 
 
@@ -40,20 +35,20 @@ public class WindowManagerSimpleActivity extends FragmentActivity implements AdC
         showWindowManager();
     }
 
-    private void showWindowManager(){
-        mWindowManager =  (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+    private void showWindowManager() {
+        mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 mWindowManager.getDefaultDisplay().getWidth(),
                 mWindowManager.getDefaultDisplay().getHeight(),
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN ,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 PixelFormat.RGBA_8888);
         params.gravity = (Gravity.CENTER);
         RelativeLayout relativeLayout = new RelativeLayout(WindowManagerSimpleActivity.this);
         relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(mWindowManager.getDefaultDisplay().getWidth(),
                 mWindowManager.getDefaultDisplay().getHeight()));
         relativeLayout.setBackgroundResource(R.drawable.screensave_bg);
-        RelativeLayout.LayoutParams  layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         ViewPager viewPager = new ViewPager(this);
@@ -90,14 +85,14 @@ public class WindowManagerSimpleActivity extends FragmentActivity implements AdC
         return textView;
     }
 
-    private void closeWindowManger(){
+    private void closeWindowManger() {
         try {
             if (mWindowManager != null && mWindowRootView != null && mWindowRootView.getParent() != null) {
                 mWindowManager.removeView(mWindowRootView);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             mWindowRootView = null;
             mWindowManager = null;
         }

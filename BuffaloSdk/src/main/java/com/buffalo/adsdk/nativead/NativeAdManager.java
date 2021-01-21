@@ -3,61 +3,57 @@ package com.buffalo.adsdk.nativead;
 import android.app.Activity;
 import android.content.Context;
 
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.config.PosBean;
-import com.buffalo.utils.ThreadHelper;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
+import com.buffalo.utils.ThreadHelper;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
-/**
- * Created by shimiaolei on 16/1/1.
- */
-
-public class NativeAdManager implements LifeCycleDelegate{
-    public CMRequestParams requestParams;
+public class NativeAdManager implements LifeCycleDelegate {
+    public RequestParams requestParams;
     private Context mContext;
     NativeAdManagerInternal requestAd = null;
 
     public NativeAdManager(Context context, String posid) {
-        if(context instanceof Activity){
+        if (context instanceof Activity) {
             this.mContext = context.getApplicationContext();
-        }else {
+        } else {
             this.mContext = context;
         }
         requestAd = new NativeAdManagerInternal(mContext, posid);
 
     }
 
-    public void setRequestParams(CMRequestParams params){
+    public void setRequestParams(RequestParams params) {
         this.requestParams = params;
     }
 
-    public void setNativeAdListener(INativeAdLoaderListener listener){
-        if(requestAd != null){
+    public void setNativeAdListener(INativeAdLoaderListener listener) {
+        if (requestAd != null) {
             requestAd.setAdListener(listener);
         }
     }
 
-    public void preloadAd(){
+    public void preloadAd() {
         requestAd(true);
     }
 
-    public void loadAd(){
+    public void loadAd() {
         requestAd(false);
     }
 
-    protected void requestAd(boolean isPreload){
-        if(requestParams != null){
+    protected void requestAd(boolean isPreload) {
+        if (requestParams != null) {
             requestAd.setRequestParams(requestParams);
         }
         requestAd.setPreload(isPreload);
         requestAd.loadAd();
     }
 
-    public INativeAd getAd(){
+    public INativeAd getAd() {
         return ThreadHelper.runOnUiThreadBlockingNoException(new Callable<INativeAd>() {
             @Override
             public INativeAd call() throws Exception {
@@ -82,52 +78,52 @@ public class NativeAdManager implements LifeCycleDelegate{
         return null;
     }
 
-    public String getRequestErrorInfo(){
-        if(requestAd != null){
+    public String getRequestErrorInfo() {
+        if (requestAd != null) {
             return requestAd.mRequestLogger.getRequestErrorInfo();
         }
         return null;
     }
 
-    public void setOpenPriority(boolean openPriority){
+    public void setOpenPriority(boolean openPriority) {
         requestAd.setOpenPriority(openPriority);
     }
 
-    public void enableVideoAd(){
-        if(requestAd != null){
+    public void enableVideoAd() {
+        if (requestAd != null) {
             requestAd.enableVideoAd();
-}
+        }
     }
 
-    public void enableBannerAd(){
-        if(requestAd != null){
+    public void enableBannerAd() {
+        if (requestAd != null) {
             requestAd.enableBannerAd();
         }
     }
 
     @Override
     public void onPause() {
-        if(requestAd != null){
+        if (requestAd != null) {
             requestAd.onPause();
         }
     }
 
     @Override
     public void onResume() {
-        if(requestAd != null){
+        if (requestAd != null) {
             requestAd.onResume();
         }
     }
 
     @Override
     public void onDestroy() {
-        if(requestAd != null){
+        if (requestAd != null) {
             requestAd.onDestroy();
         }
     }
 
-    public void disableAdType(List<String> adTypes){
-        if(adTypes == null){
+    public void disableAdType(List<String> adTypes) {
+        if (adTypes == null) {
             return;
         }
         requestAd.setDisableAdType(adTypes);

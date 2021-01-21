@@ -33,9 +33,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by chenhao on 2016/2/18.
- */
 public class RequestUFS {
 
     private static final String TAG = "RequestUFS";

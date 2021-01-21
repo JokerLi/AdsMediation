@@ -3,7 +3,7 @@ package com.buffalo.adsdk.interstitial;
 
 import android.content.Context;
 
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
@@ -50,7 +50,7 @@ public class InterstitialAdManager implements INativeAdLoaderListener {
 	public void setInterstitialCallBack(InterstitialAdCallBack callBack) {
 		mCallBack = callBack;
 		if(interstitialRequest != null){
-			CMRequestParams requestParams = new CMRequestParams();
+			RequestParams requestParams = new RequestParams();
 			requestParams.setExtraObject(callBack);
 			interstitialRequest.setRequestParams(requestParams);
 		}

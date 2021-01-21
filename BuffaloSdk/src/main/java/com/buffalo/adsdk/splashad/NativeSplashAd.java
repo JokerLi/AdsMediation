@@ -8,7 +8,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdManagerFactory;
+import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.NativeAdTemplate;
 import com.buffalo.adsdk.R;
@@ -81,7 +81,7 @@ public class NativeSplashAd {
                         callbackLoadSuccess(ad);
                         return;
                     }
-                    CMAdManagerFactory.getImageDownloadListener().getBitmap(ad.getAdCoverImageUrl(), false, new BitmapListener() {
+                    NativeAdManagerFactory.getImageDownloadListener().getBitmap(ad.getAdCoverImageUrl(), false, new BitmapListener() {
 
                         @Override
                         public void onFailed(String errorCode) {

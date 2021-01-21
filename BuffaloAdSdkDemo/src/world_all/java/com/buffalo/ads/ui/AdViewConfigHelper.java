@@ -7,9 +7,6 @@ import com.buffalo.ads.ui.impls.YahooRenderAdapter;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.Const;
 
-/**
- * Created by Li Guoqing on 2016/11/21.
- */
 public class AdViewConfigHelper {
     public static void setRenderAdapter() {
         AdManager.addRenderAdapter(Const.KEY_FB, new FacebookRenderAdapter(AdManager.getContext()));

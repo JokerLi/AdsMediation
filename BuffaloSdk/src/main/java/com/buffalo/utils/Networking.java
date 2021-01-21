@@ -35,9 +35,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-/**
- * Created by Chu Zongxiang on 2016/4/19.
- */
 public class Networking {
     private static final String TAG = "Networking";
     private static final String ENCODING = "UTF-8";

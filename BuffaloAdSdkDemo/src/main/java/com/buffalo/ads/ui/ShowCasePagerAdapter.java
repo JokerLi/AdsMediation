@@ -11,16 +11,12 @@ import com.buffalo.baseapi.ads.INativeAd;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by chenhao on 16/11/21.
- */
-
 public class ShowCasePagerAdapter extends PagerAdapter implements AdClickListener {
     private List<View> mList = new ArrayList<View>();
     private Context mContext;
     private AdClickListener mAdClickListner;
 
-    public ShowCasePagerAdapter(Context context){
+    public ShowCasePagerAdapter(Context context) {
         this.mContext = context;
         NativeAdCaseView nativeAdCaseView = new NativeAdCaseView(mContext);
         FeedListCaseView feedListCaseView = new FeedListCaseView(mContext);
@@ -52,13 +48,13 @@ public class ShowCasePagerAdapter extends PagerAdapter implements AdClickListene
         return mList.get(position);
     }
 
-    public void setAdClickLisener(AdClickListener lisener){
+    public void setAdClickLisener(AdClickListener lisener) {
         this.mAdClickListner = lisener;
     }
 
     @Override
     public void onAdClicked(INativeAd ad) {
-        if(mAdClickListner != null){
+        if (mAdClickListner != null) {
             mAdClickListner.onAdClicked(ad);
         }
     }

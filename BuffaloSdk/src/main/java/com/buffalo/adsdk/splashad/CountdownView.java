@@ -17,10 +17,6 @@ import com.buffalo.adsdk.R;
 import com.buffalo.utils.Commons;
 import com.buffalo.utils.Logger;
 
-/**
- * Created by chenhao on 16/11/3.
- */
-
 public class CountdownView extends View {
 
     private int mCircleColor;
@@ -50,11 +46,11 @@ public class CountdownView extends View {
         try {
             mCircleColor = typedArray.getColor(R.styleable.CountdownView_circle_color, Color.parseColor("#656869"));
             mCircleWidth = typedArray.getDimension(R.styleable.CountdownView_circle_width, Commons.dip2px(context, 2));
-            mTextColor = typedArray.getColor(R.styleable.CountdownView_text_color,Color.parseColor("#656869"));
+            mTextColor = typedArray.getColor(R.styleable.CountdownView_text_color, Color.parseColor("#656869"));
             mTextSize = typedArray.getDimension(R.styleable.CountdownView_text_size, Commons.sp2px(context, 12));
-        }catch (Exception e){
+        } catch (Exception e) {
 
-        }finally {
+        } finally {
             typedArray.recycle();
         }
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -63,15 +59,15 @@ public class CountdownView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int centre = getWidth()/2; //获取圆心的x坐标
-        int radius = (int) (centre - mCircleWidth /2); //圆环的半径
+        int centre = getWidth() / 2; //获取圆心的x坐标
+        int radius = (int) (centre - mCircleWidth / 2); //圆环的半径
         //开始画圆弧
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(mCircleColor);
         mPaint.setStrokeWidth(mCircleWidth);
         //计算弧度
         RectF oval = new RectF(centre - radius, centre - radius, centre + radius, centre + radius);  //用于定义的圆弧的形状和大小的界限
-        int angle =(int)(360* (1 - mCurrentCount*1.0/mCount));
+        int angle = (int) (360 * (1 - mCurrentCount * 1.0 / mCount));
         int start = -90 + angle;   //开始的角度
         int sweepAngle = 360 - angle; //扫过的角度
         canvas.drawArc(oval, start, sweepAngle, false, mPaint);  //根据进度画圆弧
@@ -83,24 +79,24 @@ public class CountdownView extends View {
         //计算数字
         String text = "" + mCurrentCount;
         float textWidth = mPaint.measureText(text);
-        canvas.drawText(text, centre- textWidth/ 2, centre + textWidth/2,  mPaint); //画出进度百分比
+        canvas.drawText(text, centre - textWidth / 2, centre + textWidth / 2, mPaint); //画出进度百分比
     }
 
-    public void setCountNum(int num){
-        if(num > 0) {
+    public void setCountNum(int num) {
+        if (num > 0) {
             this.mCount = num;
         }
         mCurrentCount = mCount;
     }
 
 
-    public void start(){
+    public void start() {
         mHandler = new Handler(Looper.getMainLooper());
         mHandler.postDelayed(myCountDownRunnable, COUNT_DOWN_INTERVAL);
         Logger.i(Const.TAG, "native splash CountDownTimer start.");
     }
 
-    private Runnable myCountDownRunnable = new Runnable(){
+    private Runnable myCountDownRunnable = new Runnable() {
         @Override
         public void run() {
             CountdownView.this.postInvalidate();
@@ -111,14 +107,14 @@ public class CountdownView extends View {
                 mOnCountdownListener.onCountdownFinish();
             }
             if (mCurrentCount > 0) {
-               mHandler.postDelayed(this, COUNT_DOWN_INTERVAL);
+                mHandler.postDelayed(this, COUNT_DOWN_INTERVAL);
             }
 
         }
     };
 
 
-    public void stop(){
+    public void stop() {
         if (mHandler != null) {
             mHandler.removeMessages(COUNTDOWN_MSG);
             mHandler.removeCallbacks(myCountDownRunnable);
@@ -141,11 +137,11 @@ public class CountdownView extends View {
         this.mTextSize = size;
     }
 
-    public void setOnCountdownListener(OnCountdownListener listener){
+    public void setOnCountdownListener(OnCountdownListener listener) {
         this.mOnCountdownListener = listener;
     }
 
-    public interface OnCountdownListener{
+    public interface OnCountdownListener {
         public abstract void onCountdownFinish();
     }
 }

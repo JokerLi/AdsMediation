@@ -10,9 +10,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.buffalo.adsdk.CMAdError;
 import com.buffalo.adsdk.Const;
-import com.buffalo.adsdk.adapter.NativeloaderAdapter;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.inmobi.ads.InMobiAdRequestStatus;
 import com.inmobi.ads.InMobiNative;
@@ -29,7 +28,7 @@ public class InmobiNativeAdapter extends NativeloaderAdapter {
     public void loadNativeAd(@NonNull Context context,
                              @NonNull Map<String, Object> extras) {
         if (!extrasAreValid(extras)) {
-            notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
+            notifyNativeAdFailed(String.valueOf(NativeAdError.PARAMS_ERROR));
             return;
         }
         //接入时需要将此处ACCOUNT_ID替换

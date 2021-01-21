@@ -6,17 +6,14 @@ import android.text.TextUtils;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.config.PosBean;
-import com.buffalo.utils.Logger;
 import com.buffalo.baseapi.ads.INativeAd;
+import com.buffalo.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by shimiaolei on 16/1/1.
- */
 public class NativeAdLoaderMap {
 
     final private Map<String, NativeAdLoader> mLoaderCacheMap = new HashMap<String, NativeAdLoader>();
@@ -25,17 +22,17 @@ public class NativeAdLoaderMap {
     boolean enableVideo = false;
     boolean enableBanner = false;
 
-    private boolean assurePosbeanSame(List<PosBean> newPosbean, List<PosBean> oldPosbean){
-        if(newPosbean.size() != oldPosbean.size()){
+    private boolean assurePosbeanSame(List<PosBean> newPosbean, List<PosBean> oldPosbean) {
+        if (newPosbean.size() != oldPosbean.size()) {
             return false;
         }
-        for(int i = 0; i < oldPosbean.size(); i++ ){
+        for (int i = 0; i < oldPosbean.size(); i++) {
             PosBean newBean = newPosbean.get(i);
             PosBean oldBean = oldPosbean.get(i);
-            if((null == newBean.name) || (null == newBean.parameter)){
+            if ((null == newBean.name) || (null == newBean.parameter)) {
                 return false;
             }
-            if(!newBean.name.equalsIgnoreCase(oldBean.name) || !newBean.parameter.equalsIgnoreCase(oldBean.parameter)){
+            if (!newBean.name.equalsIgnoreCase(oldBean.name) || !newBean.parameter.equalsIgnoreCase(oldBean.parameter)) {
                 return false;
             }
         }
@@ -43,7 +40,7 @@ public class NativeAdLoaderMap {
     }
 
     public void updateLoaders(Context context, List<PosBean> posBeans, INativeAd.IAdOnClickListener onClickListener) {
-        if(!assurePosbeanSame(posBeans, oldBeanList)){
+        if (!assurePosbeanSame(posBeans, oldBeanList)) {
             oldBeanList = posBeans;
             mLoaderCacheMap.clear();
         }
@@ -90,12 +87,12 @@ public class NativeAdLoaderMap {
         return mLoaderCacheMap.containsKey(key);
     }
 
-    public void enableVideo(boolean enable){
+    public void enableVideo(boolean enable) {
         this.enableVideo = enable;
     }
 
 
-    public void enableBanner(boolean enable){
+    public void enableBanner(boolean enable) {
         this.enableBanner = enable;
     }
 

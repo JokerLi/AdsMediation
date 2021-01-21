@@ -13,10 +13,7 @@ import com.buffalo.utils.Commons;
 import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeAsset;
 
-/**
- * Created by Li Guoqing on 2016/11/19.
- */
-public class YahooRenderAdapter implements NativeAdTemplate.ICMNativeAdViewAdapter {
+public class YahooRenderAdapter implements NativeAdTemplate.INativeAdViewAdapter {
     public static final String AD_ASSET_SOURCE = "source";
     public static final String AD_ASSET_SPONSORED_MARKER = "secBrandingLogo";
 

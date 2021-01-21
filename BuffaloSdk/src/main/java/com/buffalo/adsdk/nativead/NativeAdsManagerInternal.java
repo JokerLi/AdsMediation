@@ -3,22 +3,19 @@ package com.buffalo.adsdk.nativead;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.buffalo.adsdk.CMAdError;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.config.PosBean;
-import com.buffalo.baseapi.ads.INativeAdLoader;
-import com.buffalo.utils.ThreadHelper;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAd.IAdOnClickListener;
+import com.buffalo.baseapi.ads.INativeAdLoader;
 import com.buffalo.utils.Logger;
+import com.buffalo.utils.ThreadHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by shimiaolei on 16/1/3.
- */
 public class NativeAdsManagerInternal extends NativeAdManagerInternal implements IAdOnClickListener {
     private List<INativeAd> mAdPool = new ArrayList<INativeAd>();
     private List<String> mTitlePool = new ArrayList<String>();
@@ -29,7 +26,7 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
         super(context, posId);
     }
 
-    public void loadAds(int num){
+    public void loadAds(int num) {
         Logger.i(TAG, mPositionId + " loadAds num:" + num);
 //        mIsPreload = true;
         mOptimizeEnabled = false;
@@ -51,10 +48,10 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
 
     @Override
     protected int getLoadAdTypeSize() {
-        if(mIsOpenPriority) {
+        if (mIsOpenPriority) {
             Logger.i(TAG, "is open priority, all load");
             return mConfigBeans.size();
-        }else {
+        } else {
             return PRELOAD_REQUEST_SIZE;
         }
     }
@@ -82,32 +79,32 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
             adLoader.setAdIndex(getAdTypeNameIndex(adName));
             adLoader.loadAds(requestSize);
             return true;
-        }else {
-            adFailedToLoad(adName, String.valueOf(CMAdError.NO_AD_TYPE_EROOR));
+        } else {
+            adFailedToLoad(adName, String.valueOf(NativeAdError.NO_AD_TYPE_EROOR));
             return false;
         }
     }
 
 
-    private void pushAdsToPool(List<INativeAd> list){
-        if(list == null || list.isEmpty()){
+    private void pushAdsToPool(List<INativeAd> list) {
+        if (list == null || list.isEmpty()) {
             return;
         }
         Iterator<INativeAd> iterator = list.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             INativeAd ad = iterator.next();
-            if(ad == null || checkPoolHasAd(ad)){
+            if (ad == null || checkPoolHasAd(ad)) {
                 iterator.remove();
             }
         }
         mAdPool.addAll(list);
     }
 
-    private boolean checkPoolHasAd(INativeAd ad){
-        for(String title : mTitlePool){
-            if(!TextUtils.isEmpty(title)){
-                if(title.equals(ad.getAdTitle())){
-                    Logger.i( "ad :" + ad.getAdTitle() + " has in pool list");
+    private boolean checkPoolHasAd(INativeAd ad) {
+        for (String title : mTitlePool) {
+            if (!TextUtils.isEmpty(title)) {
+                if (title.equals(ad.getAdTitle())) {
+                    Logger.i("ad :" + ad.getAdTitle() + " has in pool list");
                     return true;
                 }
             }
@@ -117,11 +114,10 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
     }
 
 
-
     @Override
     public void adLoaded(String adTypeName) {
         super.adLoaded(adTypeName);
-        if(!mIsOpenPriority) {
+        if (!mIsOpenPriority) {
             int oldSize = mAdPool.size();
             INativeAdLoader loader = mLoaderMap.getAdLoader(adTypeName);
             if (loader != null) {
@@ -150,7 +146,7 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
             return;
         }
 
-        if(mIsOpenPriority) {
+        if (mIsOpenPriority) {
             if (isAllLoaderFinished()) {
                 List<INativeAd> list = super.getAdList(mExpectedSize);
                 pushAdsToPool(list);
@@ -165,7 +161,7 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
         if (!mIsFinished) {
             if (isAllLoaderFinished()) {
                 if (mAdPool.isEmpty()) {
-                    notifyAdFailed(CMAdError.NO_FILL_ERROR);
+                    notifyAdFailed(NativeAdError.NO_FILL_ERROR);
                 } else {
                     notifyAdLoaded();
                 }

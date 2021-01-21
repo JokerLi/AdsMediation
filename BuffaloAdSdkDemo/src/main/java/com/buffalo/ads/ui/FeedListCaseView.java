@@ -12,12 +12,7 @@ import com.buffalo.ads.R;
 import com.buffalo.adsdk.nativead.FeedListAdManager;
 import com.buffalo.baseapi.ads.INativeAd;
 
-/**
- * Created by chenhao on 16/11/21.
- */
-
 public class FeedListCaseView extends RelativeLayout implements ListAdsAdapter.IFeedAdFetch {
-
     private static final String LIST_POSID = "1094100";
     private Context mContext;
     private View mRootView;
@@ -61,7 +56,7 @@ public class FeedListCaseView extends RelativeLayout implements ListAdsAdapter.I
 
             @Override
             public void onAdClick(INativeAd ad) {
-                if(mAdapterListener != null){
+                if (mAdapterListener != null) {
                     mAdapterListener.onAdClicked(ad);
                 }
 
@@ -72,7 +67,7 @@ public class FeedListCaseView extends RelativeLayout implements ListAdsAdapter.I
 
     @Override
     public INativeAd getAd() {
-        if(mFeedListAdManager != null){
+        if (mFeedListAdManager != null) {
             return mFeedListAdManager.getAd();
         }
         return null;
@@ -82,7 +77,7 @@ public class FeedListCaseView extends RelativeLayout implements ListAdsAdapter.I
         mFeedListAdManager = null;
     }
 
-    public void setAdapterListener(ShowCasePagerAdapter listener){
+    public void setAdapterListener(ShowCasePagerAdapter listener) {
         this.mAdapterListener = listener;
     }
 

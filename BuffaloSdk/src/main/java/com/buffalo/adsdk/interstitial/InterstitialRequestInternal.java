@@ -2,20 +2,18 @@ package com.buffalo.adsdk.interstitial;
 
 import android.content.Context;
 
-import com.buffalo.adsdk.CMAdError;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.nativead.NativeAdManagerInternal;
 import com.buffalo.baseapi.ads.INativeAdLoader;
 import com.buffalo.utils.Logger;
 import com.buffalo.baseapi.ads.INativeAd;
 
-/**
- * Created by chenhao on 2016/1/8.
- */
 public class InterstitialRequestInternal extends NativeAdManagerInternal {
 
 
     private INativeAd mCachedAd;
+
     public InterstitialRequestInternal(Context context, String posId) {
         super(context, posId);
     }
@@ -24,7 +22,7 @@ public class InterstitialRequestInternal extends NativeAdManagerInternal {
     @Override
     public void loadAd() {
         Logger.i(TAG, mPositionId + " loadAd");
-        if(mCachedAd != null && !mCachedAd.hasExpired()){
+        if (mCachedAd != null && !mCachedAd.hasExpired()) {
             notifyAdLoaded();
             return;
         }
@@ -83,12 +81,12 @@ public class InterstitialRequestInternal extends NativeAdManagerInternal {
         }
 
         if (isAllLoaderFinished()) {
-            notifyAdFailed(CMAdError.NO_FILL_ERROR);
+            notifyAdFailed(NativeAdError.NO_FILL_ERROR);
         }
     }
 
-    public void showAd(){
-        if(mCachedAd != null){
+    public void showAd() {
+        if (mCachedAd != null) {
             mCachedAd.registerViewForInteraction(null);
             mCachedAd = null;
         }

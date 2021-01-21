@@ -13,9 +13,6 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by i on 2015/7/2.
- */
 public class FaceBookInfomation {
 
     public static String getRawJson(int operation, NativeAd ad) {

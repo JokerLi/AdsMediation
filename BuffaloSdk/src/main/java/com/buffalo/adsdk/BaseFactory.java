@@ -1,25 +1,19 @@
 package com.buffalo.adsdk;
 
-
-
 import android.content.Context;
 import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * Created by shimiaolei on 16/1/2.
- */
-public abstract class CMBaseFactory {
+public abstract class BaseFactory {
 
     public final Map<String, String> mNativeAdLoaderClassMap = new HashMap<>();
-    public final Map<String, NativeAdTemplate.ICMNativeAdViewAdapter> mNativeAdRenderMap = new HashMap<>();
+    public final Map<String, NativeAdTemplate.INativeAdViewAdapter> mNativeAdRenderMap = new HashMap<>();
 
     public abstract void initConfig();
 
-    public CMBaseFactory() {
+    public BaseFactory() {
     }
 
 
@@ -32,15 +26,15 @@ public abstract class CMBaseFactory {
     }
 
 
-    public void addRenderAdapter(String loaderKey, NativeAdTemplate.ICMNativeAdViewAdapter adapter) {
-        if(TextUtils.isEmpty(loaderKey) || adapter == null){
+    public void addRenderAdapter(String loaderKey, NativeAdTemplate.INativeAdViewAdapter adapter) {
+        if (TextUtils.isEmpty(loaderKey) || adapter == null) {
             return;
         }
         mNativeAdRenderMap.put(loaderKey, adapter);
     }
 
-    public NativeAdTemplate.ICMNativeAdViewAdapter getRenderAdapter(String loaderKey){
-        if(TextUtils.isEmpty(loaderKey)){
+    public NativeAdTemplate.INativeAdViewAdapter getRenderAdapter(String loaderKey) {
+        if (TextUtils.isEmpty(loaderKey)) {
             return null;
         }
 
@@ -50,12 +44,12 @@ public abstract class CMBaseFactory {
     public abstract Object createAdLoader(Context context, Object posBean);
 
 
-    public abstract void  doNativeReport(Const.Event event,
-                                         String posid,
-                                         String adTypeName,
-                                         long loadTime,
-                                         String error,
-                                         Map<String,String> extras);
+    public abstract void doNativeReport(Const.Event event,
+                                        String posid,
+                                        String adTypeName,
+                                        long loadTime,
+                                        String error,
+                                        Map<String, String> extras);
 
 
     public abstract void doNetworkingReport(String pos, String source, String error);

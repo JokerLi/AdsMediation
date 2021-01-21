@@ -16,7 +16,7 @@ import com.buffalo.ads.utils.LocaleConfig;
 import com.buffalo.ads.utils.VolleyUtil;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.BitmapListener;
-import com.buffalo.adsdk.CMAdManagerFactory;
+import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.ImageDownloadListener;
 import com.buffalo.adsdk.utils.ReportProxy;
@@ -58,7 +58,7 @@ public class MyApplication extends Application {
             //初始化聚合sdk
             // 开启本地的配置文件模式
             //TODO:默认配置
-            CMAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default.udconf"), false);
+            NativeAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default.udconf"), false);
             //第一个参数：Context
             //第三个参数：产品的渠道ID
 
@@ -67,7 +67,7 @@ public class MyApplication extends Application {
             AdManager.addLoaderClass(Const.KEY_GDT, "com.buffalo.adsdk.adapter.GDTNativeAdapter");
             AdManager.addLoaderClass(Const.KEY_BD, "com.buffalo.adsdk.adapter.BaiduNativeAdapter");
         } else {
-            CMAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default_en.udconf"), true);
+            NativeAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default_en.udconf"), true);
 
             //初始化聚合sdk
             //第一个参数：Context
@@ -91,7 +91,7 @@ public class MyApplication extends Application {
         AdViewConfigHelper.setRenderAdapter();
 
         //banner , interstitialad ,vast video
-        CMAdManagerFactory.setImageDownloadListener(new MyImageLoadListener());
+        NativeAdManagerFactory.setImageDownloadListener(new MyImageLoadListener());
         initReport();
 
         AdManager.enableLog();
@@ -138,7 +138,7 @@ public class MyApplication extends Application {
 
     private void initReport() {
 
-        CMAdManagerFactory.setReportProxy(new ReportProxy() {
+        NativeAdManagerFactory.setReportProxy(new ReportProxy() {
             @Override
             public void doNativeReport(Const.Event event, Map<String, String> extras) {
                 Log.e("MyApplication", "brands doNativeReport : event = " + event + extras.toString());

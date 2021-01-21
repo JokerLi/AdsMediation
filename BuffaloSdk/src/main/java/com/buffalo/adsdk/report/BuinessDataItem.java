@@ -4,11 +4,6 @@ import android.text.TextUtils;
 
 import org.json.JSONObject;
 
-/**
- * Created by $lzb on 2015/10/23.
- */
-// -----------数据定义-----------------
-
 public class BuinessDataItem {
     private String mPkgName;
     private int mSug;
@@ -21,8 +16,9 @@ public class BuinessDataItem {
     private int mPlaytime;
     private int mEvent;
     private boolean mIsTestMode = false;
+
     public BuinessDataItem(String pkgName, int res, String des, int duration, int playtime, int event) {
-        if(!TextUtils.isEmpty(pkgName)){
+        if (!TextUtils.isEmpty(pkgName)) {
             mPkgName = pkgName.replace("&", "_");
         }
         mSug = -1;
@@ -38,7 +34,7 @@ public class BuinessDataItem {
         mRawJson = rawJson;
     }
 
-    public void setTestMode(boolean isTestMode){
+    public void setTestMode(boolean isTestMode) {
         mIsTestMode = isTestMode;
     }
 
@@ -49,20 +45,20 @@ public class BuinessDataItem {
             jsonObj.put("pkg", mPkgName);
             jsonObj.put("sug", mSug);
             jsonObj.put("res", mRes);
-            jsonObj.put("des", TextUtils.isEmpty(mDes)?"":mDes);
-            if (!TextUtils.isEmpty(mPlacementId)){
+            jsonObj.put("des", TextUtils.isEmpty(mDes) ? "" : mDes);
+            if (!TextUtils.isEmpty(mPlacementId)) {
                 jsonObj.put("fbpos", mPlacementId);
             }
-            if(!TextUtils.isEmpty(mRawJson)){
+            if (!TextUtils.isEmpty(mRawJson)) {
                 jsonObj.put("fbmeta", mRawJson);
             }
-            if(mIsTestMode) {
+            if (mIsTestMode) {
                 jsonObj.put("fbmess", "1");
             }
-            if(mSeq > 0) {
+            if (mSeq > 0) {
                 jsonObj.put("seq", mSeq);
             }
-            if(mDuration > 0) {
+            if (mDuration > 0) {
                 jsonObj.put("duration", mDuration);
                 jsonObj.put("playtime", mPlaytime);
                 jsonObj.put("event", mEvent);

@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.base.BaseNativeAd;
-import com.buffalo.baseapi.ads.IVideoAdapter;
 import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.adsdk.utils.DownloadCheckDialog;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAd.ImpressionListener;
+import com.buffalo.baseapi.ads.IVideoAdapter;
 import com.buffalo.utils.Logger;
 import com.buffalo.utils.UniReport;
 import com.buffalo.utils.ViewShowReporter;
@@ -22,9 +22,6 @@ import com.buffalo.utils.ViewShowReporter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by shimiaolei on 15/12/31.
- */
 public class NativeAd extends BaseNativeAd implements
         View.OnClickListener, View.OnTouchListener, ImpressionListener, INativeAd.IAdOnClickListener, Comparable<NativeAd> {
 
@@ -53,7 +50,7 @@ public class NativeAd extends BaseNativeAd implements
     /**
      * 设置此广告是复用
      */
-    public void setReUseAd(){
+    public void setReUseAd() {
         this.mHasReportCallBackImpression = false;
         this.mHasReportUserImpression = false;
         this.mHasReportInsertImpression = false;
@@ -68,30 +65,30 @@ public class NativeAd extends BaseNativeAd implements
         mAd = ad;
         mAdapterAdClickListener = adClickListener;
         mRegisterTimes = 0;
-        if (extras.containsKey(KEY_CACHE_TIME)){
+        if (extras.containsKey(KEY_CACHE_TIME)) {
             mAd.setCacheTime((Long) extras.get(KEY_CACHE_TIME));
             setCacheTime((Long) extras.get(KEY_CACHE_TIME));
         }
-        if (extras.containsKey(KEY_JUHE_POSID)){
+        if (extras.containsKey(KEY_JUHE_POSID)) {
             setJuhePosid((String) extras.get(KEY_JUHE_POSID));
         }
-        if (extras.containsKey(KEY_RCV_REPORT_RES)){
+        if (extras.containsKey(KEY_RCV_REPORT_RES)) {
             setRcvReportRes((Integer) extras.get(KEY_RCV_REPORT_RES));
         }
 //        if(extras.containsKey(KEY_PEG_REPORT_RES)){
 //            setPegReportRes((Integer) extras.get(KEY_PEG_REPORT_RES));
 //        }
-        if (extras.containsKey(KEY_REPORT_PKGNAME)){
+        if (extras.containsKey(KEY_REPORT_PKGNAME)) {
             setReportPkgName((String) extras.get(KEY_REPORT_PKGNAME));
         }
-        if (extras.containsKey(KEY_PLACEMENT_ID)){
+        if (extras.containsKey(KEY_PLACEMENT_ID)) {
             setPlacementId((String) extras.get(KEY_PLACEMENT_ID));
         }
-        if(extras.containsKey(KEY_AD_TYPE_NAME)){
-            mAdTypeName = (String)extras.get(KEY_AD_TYPE_NAME);
+        if (extras.containsKey(KEY_AD_TYPE_NAME)) {
+            mAdTypeName = (String) extras.get(KEY_AD_TYPE_NAME);
         }
-        if(extras.containsKey(KEY_IS_ORIONAD)){
-            mIsOrionAd = (boolean)extras.get(KEY_IS_ORIONAD);
+        if (extras.containsKey(KEY_IS_ORIONAD)) {
+            mIsOrionAd = (boolean) extras.get(KEY_IS_ORIONAD);
         }
 
         setTitle(ad.getAdTitle());
@@ -132,10 +129,10 @@ public class NativeAd extends BaseNativeAd implements
     @Override
     public String getAdTypeName() {
 
-        return !TextUtils.isEmpty(mAdTypeName)? mAdTypeName : mAd.getAdTypeName();
+        return !TextUtils.isEmpty(mAdTypeName) ? mAdTypeName : mAd.getAdTypeName();
     }
 
-    public void setAdPriorityIndex(int mAdPriorityIndex){
+    public void setAdPriorityIndex(int mAdPriorityIndex) {
         this.mAdPriorityIndex = mAdPriorityIndex;
     }
 
@@ -161,7 +158,7 @@ public class NativeAd extends BaseNativeAd implements
 
     @Override
     public String getRawString(int operation) {
-        if(mAd != null){
+        if (mAd != null) {
             return mAd.getRawString(operation);
         }
         return "";
@@ -178,7 +175,7 @@ public class NativeAd extends BaseNativeAd implements
 //            mAd.registerViewForInteraction_withExtraReportParams(view, reportParam);
 //            mAd.setAdOnClickListener(this);
 //        }
-        if ( !mAd.registerViewForInteraction(view) ) {
+        if (!mAd.registerViewForInteraction(view)) {
             mAdView = view;
             setListener(view, this, this);
         } else {
@@ -193,7 +190,7 @@ public class NativeAd extends BaseNativeAd implements
                 mPlacementId, isNativeAd(), rawString, mIsOrionAd);
         mHasReportInsertImpression = true;
 
-        if(mReportmodel == null){
+        if (mReportmodel == null) {
             mReportmodel = new ViewShowReporter.Model(mReportPkgName, mPosid, mRcvReportRes, mPegReportRes
                     , getExtraReportParams(), mPlacementId, rawString, mIsOrionAd, this);
         }
@@ -244,9 +241,9 @@ public class NativeAd extends BaseNativeAd implements
 
     @Override
     public void handleDetailClick() {
-        if(null == mAdClickDelegate || mAdClickDelegate.handleClick(true)){
+        if (null == mAdClickDelegate || mAdClickDelegate.handleClick(true)) {
             mAd.handleDetailClick();
-        }else{
+        } else {
             //表示点击详情页行为外部已经处理完毕，不需要内部处理
             Logger.e("ClickDelegate", "handClickDetail has execute out of sdk");
         }
@@ -263,9 +260,9 @@ public class NativeAd extends BaseNativeAd implements
     @Override
     public void onClick(View view) {
         boolean isNeedExecuteClick = (null == mAdClickDelegate || mAdClickDelegate.handleClick(false));
-        if(isNeedExecuteClick){
+        if (isNeedExecuteClick) {
             boolean checkDownload = AdManager.sIsCnVersion && mAd.isDownLoadApp();
-            if(checkDownload){
+            if (checkDownload) {
                 DownloadCheckDialog.showDialog(mContext, new DownloadCheckDialog.DownloadCheckListener() {
 
                     @Override
@@ -281,9 +278,9 @@ public class NativeAd extends BaseNativeAd implements
             } else {
                 handleClick();
             }
-        }else{
+        } else {
             //表示点击行为外部已经处理完毕，不需要内部处理
-            Logger.e("ClickDelegate","handClick has execute out of sdk");
+            Logger.e("ClickDelegate", "handClick has execute out of sdk");
         }
     }
 
@@ -317,7 +314,7 @@ public class NativeAd extends BaseNativeAd implements
         return mAd.createDetailPage(this);
     }
 
-    private void recordImpression(){
+    private void recordImpression() {
         Map<String, String> extraReportParams = addDupReportExtra(false, mHasReportCallBackImpression, getExtraReportParams());
 
         //picks 和fb上报需要Object字段
@@ -325,56 +322,57 @@ public class NativeAd extends BaseNativeAd implements
         UniReport.report(ReportFactory.VIEW, mReportPkgName, mPosid, mRcvReportRes, extraReportParams,
                 mPlacementId, isNativeAd(), rawString, mIsOrionAd);
 
-        if(mImpressionListener != null){
+        if (mImpressionListener != null) {
             mImpressionListener.onLoggingImpression();
         }
         mHasReportCallBackImpression = true;
     }
 
-    public Map<String, String> addDupReportExtra(boolean isClick, boolean isReported, Map<String, String> extraReportParams){
+    public Map<String, String> addDupReportExtra(boolean isClick, boolean isReported, Map<String, String> extraReportParams) {
         String dupState = ReportFactory.EXTRA_VALUE_NEW;
 
-        if(!isClick && (mRegisterTimes > 1)){
+        if (!isClick && (mRegisterTimes > 1)) {
             dupState = ReportFactory.EXTRA_VALUE_REUSED;
         }
 
-        if(extraReportParams == null){
+        if (extraReportParams == null) {
             extraReportParams = new HashMap<String, String>();
         }
         extraReportParams.put(ReportFactory.EXTRA_KEY_DUPLICATE, dupState);
         return extraReportParams;
     }
 
-    public void setJuhePosid(@NonNull String posid){
+    public void setJuhePosid(@NonNull String posid) {
         mPosid = posid;
     }
 
-//    //For report
-    public void setRcvReportRes(@Nullable int res){
+    //    //For report
+    public void setRcvReportRes(@Nullable int res) {
         this.mRcvReportRes = res;
     }
 
-    public void setPegReportRes(@Nullable int res){
+    public void setPegReportRes(@Nullable int res) {
         this.mPegReportRes = res;
     }
 
-    public void setReportPkgName(@Nullable String pkgName){
+    public void setReportPkgName(@Nullable String pkgName) {
         this.mReportPkgName = pkgName;
     }
-    public void setPlacementId(@Nullable String placementId){
+
+    public void setPlacementId(@Nullable String placementId) {
         this.mPlacementId = placementId;
     }
 
 
-    public void setListener(View view,View.OnClickListener onClickListener,@Nullable View.OnTouchListener touchListener){
-        if(view == null){
+    public void setListener(View view, View.OnClickListener onClickListener, @Nullable View.OnTouchListener touchListener) {
+        if (view == null) {
             return;
         }
         view.setOnClickListener(onClickListener);
         view.setOnTouchListener(touchListener);
-        if(view instanceof ViewGroup){
+        if (view instanceof ViewGroup) {
             ViewGroup vp = (ViewGroup) view;
-            for(int i = 0; i < vp.getChildCount(); i++){
+            for (int i = 0; i < vp.getChildCount(); i++) {
                 View childView = vp.getChildAt(i);
                 setListener(childView, onClickListener, touchListener);
             }
@@ -383,7 +381,7 @@ public class NativeAd extends BaseNativeAd implements
 
     @Override
     public boolean isNativeAd() {
-        if(mAd != null){
+        if (mAd != null) {
             return mAd.isNativeAd();
         }
         return false;
@@ -391,7 +389,7 @@ public class NativeAd extends BaseNativeAd implements
 
     @Override
     public boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup) {
-        if(mAd != null){
+        if (mAd != null) {
             // Fix：video adapter 无点击回调,不能上报rcv点击
             mAd.setAdOnClickListener(this);
             return mAd.registerViewForInteraction_withListView(adapter, listView, viewGroup);
@@ -402,28 +400,28 @@ public class NativeAd extends BaseNativeAd implements
 
     @Override
     public void onResume() {
-        if(mAd != null){
+        if (mAd != null) {
             mAd.onResume();
         }
     }
 
     @Override
     public void onPause() {
-        if(mAd != null){
+        if (mAd != null) {
             mAd.onPause();
         }
     }
 
     @Override
     public void onDestroy() {
-        if(mAd != null){
+        if (mAd != null) {
             mAd.onDestroy();
         }
     }
 
     @Override
     public int compareTo(NativeAd another) {
-        if(null != another){
+        if (null != another) {
             return getAdPriorityIndex() - another.getAdPriorityIndex();
         }
         return 0;

@@ -12,9 +12,6 @@ import com.cmcm.utils.Logger;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 
-/**
- * Created by cm on  2015/11/30 16:58.
- */
 public class GDTSplashAdapter extends SplashBaseAdapter {
 
     private static final java.lang.String TAG = "SplashAdManager";
@@ -51,13 +48,13 @@ public class GDTSplashAdapter extends SplashBaseAdapter {
         this.mContext = activity;
         this.adsParent = container;
         this.mOnSplashAdapterResultListener = onSplashAdapterResultListener;
-        if(activity != null && adsParent != null && !TextUtils.isEmpty(mTencentAppId) && !TextUtils.isEmpty(mTencentPosId)){
+        if (activity != null && adsParent != null && !TextUtils.isEmpty(mTencentAppId) && !TextUtils.isEmpty(mTencentPosId)) {
             Logger.i(TAG, "gdt load splash ad,and appid = " + mTencentAppId + ",and posid = " + mTencentPosId);
             mSplashAD = new SplashAD(activity, adsParent, mTencentAppId, mTencentPosId, new MyGDTListener());
             //TODO:注释掉请求上报
 //            doLoadReport(getAdType());
-        }else{
-            if(null != mOnSplashAdapterResultListener) {
+        } else {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_GDT, CMAdError.ERROR_CONFIG);
 //                doLoadFailReport(getAdType(), CMAdError.ERROR_CONFIG);
             }
@@ -82,7 +79,7 @@ public class GDTSplashAdapter extends SplashBaseAdapter {
         public void onADDismissed() {
             Logger.i(TAG, "gdt load splash ad,and onADDismissed");
             reportImpression();
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdDismissed(Const.KEY_GDT);
             }
         }
@@ -90,7 +87,7 @@ public class GDTSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onNoAD(int errorCode) {
             Logger.i(TAG, "gdt load splash ad,and onNoAD");
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_GDT, String.valueOf(errorCode));
             }
 //            doLoadFailReport(getAdType(), String.valueOf(errorCode));
@@ -99,7 +96,7 @@ public class GDTSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onADPresent() {
             Logger.i(TAG, "gdt load splash ad,and onADPresent");
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdPresent(Const.KEY_GDT);
             }
 //            doLoadSuccReport(getAdType());

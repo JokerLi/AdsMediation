@@ -37,7 +37,7 @@
         android:textColor="@android:color/darker_gray" />
 
 
-    <com.buffalo.adsdk.view.CMMediaView
+    <com.buffalo.adsdk.view.NativeMediaView
         android:id="@+id/native_main_image"
         android:layout_width="match_parent"
         android:layout_height="180dp"

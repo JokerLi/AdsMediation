@@ -18,16 +18,13 @@ import com.flurry.android.ads.FlurryAdNativeListener;
 
 import java.util.Map;
 
-/**
- * Created by chenhao on 15/12/1.
- */
 public class YahooNativeAdapter extends NativeloaderAdapter {
 
     @Override
     public void loadNativeAd(@NonNull Context context,
                              @NonNull Map<String, Object> extras) {
 
-        if(!extrasAreValid(extras)){
+        if (!extrasAreValid(extras)) {
             notifyNativeAdFailed(String.valueOf(CMAdError.PARAMS_ERROR));
             return;
         }
@@ -37,9 +34,9 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
 
     @Override
     public boolean extrasAreValid(Map<String, Object> extras) {
-        if(extras != null && extras.containsKey(CMNativeAd.KEY_PLACEMENT_ID)){
+        if (extras != null && extras.containsKey(CMNativeAd.KEY_PLACEMENT_ID)) {
             String object = (String) extras.get(CMNativeAd.KEY_PLACEMENT_ID);
-            if(!TextUtils.isEmpty(object)) {
+            if (!TextUtils.isEmpty(object)) {
                 String params[] = object.split(";");
                 //yahoo 必须要ApiKey和AdSpace
                 return params != null && params.length > 1;
@@ -49,16 +46,16 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
     }
 
     @Override
-    public int getReportRes(int type,String adTypeName) {
+    public int getReportRes(int type, String adTypeName) {
         return Const.res.yahoo;
     }
 
 
     @Override
     public String getReportPkgName(String adTypeName) {
-        if(adTypeName.equals(Const.KEY_YH)) {
+        if (adTypeName.equals(Const.KEY_YH)) {
             return Const.pkgName.yahoo;
-        }else {
+        } else {
             return String.format("%s.%s", Const.pkgName.yahoo, adTypeName);
         }
     }
@@ -81,7 +78,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
         private static final String SUMMARY = "summary";
         private static final String APP_RATING = "appRating";
         private static final String AD_ASSET_CATEGORY = "appCategory";
-        private static final String AD_ASSET_SOURCE ="source";
+        private static final String AD_ASSET_SOURCE = "source";
 
         private Map<String, Object> mExtras;
         private Context mContext;
@@ -99,10 +96,10 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
         }
 
         public void loadAd() {
-           if(mExtras.containsKey(KEY_PLACEMENT_ID)) {
-               String placementid = (String) mExtras.get(KEY_PLACEMENT_ID);
-               initParameters(placementid);
-           }
+            if (mExtras.containsKey(KEY_PLACEMENT_ID)) {
+                String placementid = (String) mExtras.get(KEY_PLACEMENT_ID);
+                initParameters(placementid);
+            }
             //Init Yahoo SDK
             FlurryInit.init(mContext, mApiKey);
             mFlurryAdNative = new FlurryAdNative(mContext, mAdSpace);
@@ -111,7 +108,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
         }
 
         private void initParameters(String params) {
-            try{
+            try {
                 mPlacementId = params;
                 if (!TextUtils.isEmpty(params) && params.contains(";")) {
                     String[] ids = params.split(";");
@@ -120,7 +117,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
                         mAdSpace = ids[1];
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.getMessage();
             }
         }
@@ -133,10 +130,10 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
         @Override
         public boolean registerViewForInteraction(View view) {
             mHasRegistView = true;
-            if(view == null){
+            if (view == null) {
                 return false;
             }
-            if(null != mFlurryAdNative){
+            if (null != mFlurryAdNative) {
                 mFlurryAdNative.setLogControl(true);
                 mFlurryAdNative.logImpression();
             }
@@ -146,7 +143,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
 
         @Override
         public void unregisterView() {
-            if(null != mFlurryAdNative && mHasRegistView) {
+            if (null != mFlurryAdNative && mHasRegistView) {
                 mFlurryAdNative.setLogControl(false);
                 mFlurryAdNative.destroy();
             }
@@ -159,7 +156,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
 
         @Override
         public void handleClick() {
-            if(null != mFlurryAdNative){
+            if (null != mFlurryAdNative) {
                 mFlurryAdNative.logClick();
             }
         }
@@ -239,7 +236,7 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
             setIsDownloadApp(category != null && !TextUtils.isEmpty(category.getValue()));
 
             FlurryAdNativeAsset adSource = flurryAdNative.getAsset(AD_ASSET_SOURCE);
-            if(adSource!= null){
+            if (adSource != null) {
                 setSource(adSource.getValue());
             }
 

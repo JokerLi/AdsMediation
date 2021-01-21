@@ -7,18 +7,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.buffalo.adsdk.nativead.NativeAdManager;
-import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 import com.buffalo.ads.R;
+import com.buffalo.adsdk.nativead.NativeAdManager;
 import com.buffalo.baseapi.ads.INativeAd;
-
-/**
- * Created by chenhao on 16/11/21.
- */
+import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
 public class NativeAdCaseView extends RelativeLayout implements View.OnClickListener {
     private static final String NATIVE_POSID = "1094101";
-    private Context mContext ;
+    private Context mContext;
     private NativeAdManager mNativeAdManager;
     private RelativeLayout mNativeContainer;
     private View mRootView;
@@ -39,7 +35,7 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
 
     }
 
-    private void initView(){
+    private void initView() {
         LayoutInflater layoutIflater = LayoutInflater.from(mContext);
         mRootView = layoutIflater.inflate(R.layout.view_native_ad_show_case, null);
         addView(mRootView);
@@ -55,7 +51,7 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
             @Override
             public void adLoaded() {
                 INativeAd ad = mNativeAdManager.getAd();
-                if(ad == null){
+                if (ad == null) {
                     return;
                 }
                 View adView = AdViewHelper.createAdView(mContext, ad);
@@ -69,14 +65,14 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
 
             @Override
             public void adFailedToLoad(int errorcode) {
-                Toast.makeText(mContext, "Native Ad adFailedToLoad errorcode:"+errorcode,
+                Toast.makeText(mContext, "Native Ad adFailedToLoad errorcode:" + errorcode,
                         Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void adClicked(INativeAd nativeAd) {
                 Toast.makeText(mContext, "Native Ad adClicked ", Toast.LENGTH_SHORT).show();
-                if(mAdapterListener != null){
+                if (mAdapterListener != null) {
                     mAdapterListener.onAdClicked(nativeAd);
                 }
             }
@@ -85,22 +81,22 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
 
 
     private void loadNativeAd() {
-        if(mNativeAdManager != null) {
+        if (mNativeAdManager != null) {
             mNativeAdManager.loadAd();
         }
     }
 
-    private void preloadNativeAd(){
-        if(mNativeAdManager != null){
+    private void preloadNativeAd() {
+        if (mNativeAdManager != null) {
             mNativeAdManager.preloadAd();
         }
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btn_preload){
+        if (view.getId() == R.id.btn_preload) {
             preloadNativeAd();
-        }else if(view.getId() == R.id.btn_load){
+        } else if (view.getId() == R.id.btn_load) {
             loadNativeAd();
         }
     }
@@ -111,7 +107,7 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
     }
 
 
-    public void setAdapterListener(AdClickListener listener){
+    public void setAdapterListener(AdClickListener listener) {
         this.mAdapterListener = listener;
     }
 }

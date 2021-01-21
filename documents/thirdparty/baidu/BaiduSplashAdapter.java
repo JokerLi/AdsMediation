@@ -1,7 +1,6 @@
 package com.cmcm.adsdk.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
@@ -12,10 +11,6 @@ import com.cmcm.adsdk.Const;
 import com.cmcm.adsdk.splashad.SplashBaseAdapter;
 import com.cmcm.utils.Logger;
 
-
-/**
- * Created by cm on  2015/11/30 16:58.
- */
 public class BaiduSplashAdapter extends SplashBaseAdapter {
 
     private static final java.lang.String TAG = "SplashAdManager";
@@ -42,13 +37,13 @@ public class BaiduSplashAdapter extends SplashBaseAdapter {
     protected void loadSplashAd(@NonNull Activity context, @NonNull OnSplashAdapterResultListener onSplashAdapterResultListener, @NonNull ViewGroup container) {
         this.adsParent = container;
         this.mOnSplashAdapterResultListener = onSplashAdapterResultListener;
-        if(context != null && adsParent != null && mParamters != null){
+        if (context != null && adsParent != null && mParamters != null) {
             Logger.i(TAG, "baidu load splash ad,and the placeid = " + mParamters);
             mSplashAd = new SplashAd(context, adsParent, new MyBaiduAdListener(), mParamters, AdCanClick);
             //TODO：外部回调
 //            doLoadReport(getAdType());
-        }else{
-            if(null != mOnSplashAdapterResultListener) {
+        } else {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_BD, CMAdError.ERROR_CONFIG);
 //                doLoadFailReport(getAdType(), CMAdError.ERROR_CONFIG);
             }
@@ -74,7 +69,7 @@ public class BaiduSplashAdapter extends SplashBaseAdapter {
         public void onAdPresent() {
             Logger.i(TAG, "baidu load splash ad,and onAdPresent");
             reportImpression();
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdPresent(Const.KEY_BD);
             }
             //TODO:外部埋点
@@ -84,7 +79,7 @@ public class BaiduSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onAdDismissed() {
             Logger.i(TAG, "baidu load splash ad,and onAdDismissed");
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdDismissed(Const.KEY_BD);
             }
         }
@@ -92,7 +87,7 @@ public class BaiduSplashAdapter extends SplashBaseAdapter {
         @Override
         public void onAdFailed(String errorMessage) {
             Logger.i(TAG, "baidu load splash ad,and onAdFailed");
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onAdFailed(Const.KEY_BD, errorMessage);
             }
 //            doLoadFailReport(getAdType(), errorMessage);
@@ -102,7 +97,7 @@ public class BaiduSplashAdapter extends SplashBaseAdapter {
         public void onAdClick() {
             Logger.i(TAG, "baidu load splash ad,and onAdClick");
             reportClick();
-            if(null != mOnSplashAdapterResultListener) {
+            if (null != mOnSplashAdapterResultListener) {
                 mOnSplashAdapterResultListener.onClicked(Const.KEY_BD);
             }
         }

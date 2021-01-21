@@ -8,21 +8,18 @@ import android.widget.RelativeLayout;
 
 import com.buffalo.baseapi.ads.INativeAd;
 
-/**
- * Created by Li Guoqing on 2016/11/15.
- */
-public class CMMediaView extends RelativeLayout {
+public class NativeMediaView extends RelativeLayout {
     private int mAdHashCode = -1;
 
-    public CMMediaView(Context context) {
+    public NativeMediaView(Context context) {
         super(context);
     }
 
-    public CMMediaView(Context context, AttributeSet attrs) {
+    public NativeMediaView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CMMediaView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NativeMediaView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -36,7 +33,7 @@ public class CMMediaView extends RelativeLayout {
         }
 
         mAdHashCode = ad.hashCode();
-        if(view == null){
+        if (view == null) {
             view = createDefaultImageView(ad);
         }
         if (view != null) {

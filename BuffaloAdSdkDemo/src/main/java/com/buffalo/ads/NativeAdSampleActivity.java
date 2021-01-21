@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.CMRequestParams;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.nativead.NativeAd;
 import com.buffalo.adsdk.nativead.NativeAdManager;
 import com.buffalo.ads.R;
@@ -47,13 +47,13 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
     private View mAdView = null;
     //用户记录功能页面的PV的ID，可以自定义
     public static final int PAGE_UNITID = 10001;
-    CMRequestParams params = null;
+    RequestParams params = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_manager);
-        params = new CMRequestParams();
+        params = new RequestParams();
         nativeAdManager = new NativeAdManager(this, mAdPosid);
         nativeAdManager.setRequestParams(params);
         nativeAdContainer = (FrameLayout) findViewById(R.id.big_ad_container);

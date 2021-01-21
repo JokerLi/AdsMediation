@@ -5,9 +5,6 @@ import android.os.StatFs;
 
 import java.io.File;
 
-/**
- * Created by Chu Zongxiang on 2016/5/31.
- */
 public class FileUtil {
 
     public static void removeExpiredFilesInDirectory(File dir, long expireTime) {

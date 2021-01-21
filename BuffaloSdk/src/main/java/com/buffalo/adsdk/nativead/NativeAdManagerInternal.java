@@ -4,36 +4,33 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.BuildConfig;
-import com.buffalo.adsdk.CMAdError;
-import com.buffalo.adsdk.CMRequestParams;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
+import com.buffalo.adsdk.RequestParams;
 import com.buffalo.adsdk.base.INativeReqeustCallBack;
 import com.buffalo.adsdk.config.PosBean;
-import com.buffalo.baseapi.ads.INativeAdLoader;
-import com.buffalo.utils.ThreadHelper;
 import com.buffalo.adsdk.config.RequestConfig;
 import com.buffalo.adsdk.utils.NativeReportUtil;
 import com.buffalo.baseapi.ads.INativeAd;
+import com.buffalo.baseapi.ads.INativeAdLoader;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 import com.buffalo.utils.Logger;
+import com.buffalo.utils.ThreadHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by shimiaolei on 16/1/1.
- */
 public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycleDelegate, INativeAd.IAdOnClickListener {
     protected static String TAG = Const.TAG;
     // AD 优先级保护时间
-    private static final int AD_PRIORITY_PROTECTION_TIME = BuildConfig.DEBUG ? 8*1000 : 8*1000;
+    private static final int AD_PRIORITY_PROTECTION_TIME = BuildConfig.DEBUG ? 8 * 1000 : 8 * 1000;
     public static final int PRELOAD_REQUEST_SIZE = 1;
     public static final int DEFAULT_REQUEST_SIZE = 2;
 
     protected final Context mContext;
     protected final String mPositionId;
-    protected CMRequestParams mRequestParams;
+    protected RequestParams mRequestParams;
 
     private long mLoadStartTime = 0;
     final public int mPicksProtectTime;
@@ -61,7 +58,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
     protected boolean mOptimizeEnabled = true;
     protected boolean mHighPriorityLoaded = false;
-    private long ONE_MINTURE = 1*60*1000;
+    private long ONE_MINTURE = 1 * 60 * 1000;
     private boolean mVideoAdEnable = false;
     private boolean mBannerAdEnable = false;
     private List<String> mDisableTypeList = new ArrayList<String>();
@@ -72,7 +69,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         mContext = context;
         mPositionId = posId;
 
-        mPicksProtectTime =  1000;//Picks protect time
+        mPicksProtectTime = 1000;//Picks protect time
     }
 
     public void setCheckPointNum(int num) {
@@ -98,15 +95,15 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         mCheckPointIntervalTime = time;
     }
 
-    public void setOpenPriority(boolean openPriority){
+    public void setOpenPriority(boolean openPriority) {
         this.mIsOpenPriority = openPriority;
     }
 
-    public void setPreload(boolean isPreload){
+    public void setPreload(boolean isPreload) {
         this.mIsPreload = isPreload;
     }
 
-    public void setRequestParams( CMRequestParams requestParams){
+    public void setRequestParams(RequestParams requestParams) {
         mRequestParams = requestParams;
     }
 
@@ -114,7 +111,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         this.mCallBack = adListener;
     }
 
-    public INativeAdLoaderListener getAdListener(){
+    public INativeAdLoaderListener getAdListener() {
         return this.mCallBack;
     }
 
@@ -122,7 +119,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         Logger.i(Const.TAG, "posid " + mPositionId + " loadAd...");
         mHaveCalledLoad = true;
         if (!mIsFinished) {
-            if((System.currentTimeMillis() - mLoadStartTime) < ONE_MINTURE){
+            if ((System.currentTimeMillis() - mLoadStartTime) < ONE_MINTURE) {
                 Logger.i(Const.TAG, "wait and reuse for last result");
                 NativeReportUtil.doNativeAdFailReport(Const.Event.LOAD_START_FAIL, mPositionId, "the last request is loading", mIsPreload);
                 return;
@@ -142,15 +139,15 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         });
     }
 
-    private void filterDisableConfig(List<PosBean> beans){
-        if(beans == null || beans.isEmpty() || mDisableTypeList.isEmpty()){
+    private void filterDisableConfig(List<PosBean> beans) {
+        if (beans == null || beans.isEmpty() || mDisableTypeList.isEmpty()) {
             return;
         }
         Iterator<PosBean> iterator = beans.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             PosBean posBean = iterator.next();
-            if(posBean != null){
-                if(mDisableTypeList.contains(posBean.getAdName())){
+            if (posBean != null) {
+                if (mDisableTypeList.contains(posBean.getAdName())) {
                     Logger.d(Const.TAG, "ad type:" + posBean.getAdName() + " is disable in posid:" + mPositionId);
                     iterator.remove();
                 }
@@ -171,7 +168,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         return ad;
     }
 
-    private void doGetAdFailReport(){
+    private void doGetAdFailReport() {
         String errorStr;
         if (!mHaveCalledLoad) {
             errorStr = "have not called preload()/load()";
@@ -190,15 +187,15 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         if (beans == null || beans.isEmpty()) {
             //如果配置是空直接回调出去，请求失败
             Logger.e(Const.TAG, "the posid:" + mPositionId + "no config, may be has closed");
-            notifyAdFailed(CMAdError.NO_CONFIG_ERROR);
+            notifyAdFailed(NativeAdError.NO_CONFIG_ERROR);
             return;
         }
         mLoaderMap.enableBanner(mBannerAdEnable);
         mLoaderMap.enableVideo(mVideoAdEnable);
         mLoaderMap.updateLoaders(mContext, beans, this);
-        for(String invalidBeanName:mLoaderMap.mFailedLoaderNames) {
+        for (String invalidBeanName : mLoaderMap.mFailedLoaderNames) {
             boolean removed = removeInvalidBeans(beans, invalidBeanName);
-            Logger.i(Const.TAG, "filter invalid " + invalidBeanName + ",remove:" +  removed);
+            Logger.i(Const.TAG, "filter invalid " + invalidBeanName + ",remove:" + removed);
         }
 
         mHighPriorityLoaded = false;
@@ -213,9 +210,9 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
         boolean removed = false;
         Iterator<PosBean> iterator = beans.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             PosBean posBean = iterator.next();
-            if(posBean != null && name.equalsIgnoreCase(posBean.name)){
+            if (posBean != null && name.equalsIgnoreCase(posBean.name)) {
                 removed = true;
                 iterator.remove();
             }
@@ -231,9 +228,9 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
         boolean adIssued = false;
         int needLoadSize = getLoadAdTypeSize();
-        Logger.i(Const.TAG, "is preload:"+ mIsPreload + " loadsize:"+needLoadSize);
-        for (int i = 0 ; i < needLoadSize ; i++){
-            if ( issueToLoadNext() ) {
+        Logger.i(Const.TAG, "is preload:" + mIsPreload + " loadsize:" + needLoadSize);
+        for (int i = 0; i < needLoadSize; i++) {
+            if (issueToLoadNext()) {
                 adIssued = true;
             }
         }
@@ -269,10 +266,10 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         }
     }
 
-    protected int getAdTypeNameIndex(String adtypeName){
-        for (int i =0; i < mConfigBeans.size();  i++){
+    protected int getAdTypeNameIndex(String adtypeName) {
+        for (int i = 0; i < mConfigBeans.size(); i++) {
             PosBean posBean = mConfigBeans.get(i);
-            if(posBean.getAdName().equalsIgnoreCase(adtypeName)){
+            if (posBean.getAdName().equalsIgnoreCase(adtypeName)) {
                 return i;
             }
         }
@@ -281,10 +278,10 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
     protected int getLoadAdTypeSize() {
         //如果为空直接返回
-        if(mConfigBeans == null|| mConfigBeans.isEmpty()){
+        if (mConfigBeans == null || mConfigBeans.isEmpty()) {
             return 0;
         }
-        if(mIsPreload){
+        if (mIsPreload) {
             return Math.min(mConfigBeans.size(), PRELOAD_REQUEST_SIZE);
         }
 
@@ -299,7 +296,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         }
 
         boolean issued = false;
-        for(int i = 0; i < mConfigBeans.size(); ++ i) {
+        for (int i = 0; i < mConfigBeans.size(); ++i) {
             if (mLoadingStatus.isBeanLoading(i)) {
                 continue;
             }
@@ -318,9 +315,9 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
     private boolean requestBean(int index) {
 
         if (index >= 0 && index < mConfigBeans.size()) {
-            if ( mLoadingStatus.setBeanLoading(index, true) ) {
+            if (mLoadingStatus.setBeanLoading(index, true)) {
                 PosBean posBean = mConfigBeans.get(index);
-                if ( requestBean(posBean) ) {
+                if (requestBean(posBean)) {
                     return true;
                 }
             }
@@ -347,8 +344,8 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
             adLoader.setIsFeed(mIsFeed);
             adLoader.loadAd();
             return true;
-        }else {
-            adFailedToLoad(adName, String.valueOf(CMAdError.NO_AD_TYPE_EROOR));
+        } else {
+            adFailedToLoad(adName, String.valueOf(NativeAdError.NO_AD_TYPE_EROOR));
             return false;
         }
     }
@@ -365,17 +362,17 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         Logger.i(Const.TAG, adTypeName + " load success");
         mRequestLogger.requestEnd(adTypeName, true, null);
         int index = getAdTypeNameIndex(adTypeName);
-        if(checkPreAdIsLoading(index)) {
+        if (checkPreAdIsLoading(index)) {
             mHighPriorityLoaded = true;
         }
-        asyncCheckIfAllFinished("ad loaded:"+adTypeName);
+        asyncCheckIfAllFinished("ad loaded:" + adTypeName);
         asyncIssueNext();
     }
 
 
-    private boolean checkPreAdIsLoading(int index){
-        for(int i = 0; i< index; i++){
-            if(!mLoadingStatus.isBeanLoading(i)){
+    private boolean checkPreAdIsLoading(int index) {
+        for (int i = 0; i < index; i++) {
+            if (!mLoadingStatus.isBeanLoading(i)) {
                 return false;
             }
         }
@@ -408,7 +405,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
             if (!mRequestLogger.checkIfHaveAdLoadFinish() && (mCurrentPointId < mCheckPointNum) &&
                     ((mFirstCheckTime + mCurrentPointId * mCheckPointIntervalTime) < AD_PRIORITY_PROTECTION_TIME)) {
                 asyncIssueNext();
-                mCurrentPointId ++;
+                mCurrentPointId++;
                 mCheckPointTimer = new TimeoutTask(mAsyncCheckPointRunnable, "CheckPointTimer");
                 mCheckPointTimer.start(mCheckPointIntervalTime);
             } else {
@@ -465,10 +462,10 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         }
 
         //先判断是否有超级强量
-        if(mIsOpenPriority) {
+        if (mIsOpenPriority) {
             NativeAdLoader picksLoader = mLoaderMap.getAdLoader(Const.KEY_CM);
             //如果开起来超级抢量，有超级抢量请求成功了直接回调成功
-            if(picksLoader != null && picksLoader.isLoaded() && picksLoader.firstAdisPriority()){
+            if (picksLoader != null && picksLoader.isLoaded() && picksLoader.firstAdisPriority()) {
                 Logger.i(Const.TAG, "has open priority and priority ad load success");
                 notifyAdLoaded();
                 return;
@@ -495,7 +492,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
         if (!mIsFinished) {
             if (isAllLoaderFinished()) {
-                notifyAdFailed(CMAdError.NO_FILL_ERROR);
+                notifyAdFailed(NativeAdError.NO_FILL_ERROR);
             }
         }
     }
@@ -504,7 +501,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
     protected boolean isAllLoaderFinished() {
         boolean allLoaderFinished = true;
 
-        if ( mLoadingStatus.getWaitingBeansNumber() == 0 ) {
+        if (mLoadingStatus.getWaitingBeansNumber() == 0) {
             for (PosBean posBean : mConfigBeans) {
                 String adTypeName = posBean.getAdName();
                 NativeAdLoader loader = mLoaderMap.getAdLoader(adTypeName);
@@ -566,7 +563,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         ThreadHelper.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mCallBack != null){
+                if (mCallBack != null) {
                     //移除吐出去的广告
                     //removeAdFromPool(ad);
                     if (loaded) {
@@ -588,7 +585,7 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
             return mAdList;
 
         //优先吐出超级强量
-        if(mIsOpenPriority) {
+        if (mIsOpenPriority) {
             List<INativeAd> picksPropertyAds = getPicksPropertyAds(num);
             if (picksPropertyAds != null && !picksPropertyAds.isEmpty()) {
                 mAdList.addAll(picksPropertyAds);
@@ -616,11 +613,11 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
             }
         }
 
-        for(INativeAd ad : mAdList) {
+        for (INativeAd ad : mAdList) {
             NativeAd nativeAd = (NativeAd) ad;
             nativeAd.setReUseAd();
         }
-        return  mAdList;
+        return mAdList;
     }
 
     private List<INativeAd> getPicksPropertyAds(int num) {
@@ -628,17 +625,17 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
         if (picksLoader != null) {
             return picksLoader.getPriorityAdList(num);
         }
-        return  null;
+        return null;
     }
 
     @Override
     public void onPause() {
-        if(mConfigBeans == null || mConfigBeans.isEmpty()){
+        if (mConfigBeans == null || mConfigBeans.isEmpty()) {
             return;
         }
-        for(PosBean posBean : mConfigBeans){
+        for (PosBean posBean : mConfigBeans) {
             NativeAdLoader loader = mLoaderMap.getAdLoader(posBean.name);
-            if(loader != null){
+            if (loader != null) {
                 loader.onPause();
             }
         }
@@ -646,12 +643,12 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
     @Override
     public void onResume() {
-        if(mConfigBeans == null || mConfigBeans.isEmpty()){
+        if (mConfigBeans == null || mConfigBeans.isEmpty()) {
             return;
         }
-        for(PosBean posBean : mConfigBeans){
+        for (PosBean posBean : mConfigBeans) {
             NativeAdLoader loader = mLoaderMap.getAdLoader(posBean.name);
-            if(loader != null){
+            if (loader != null) {
                 loader.onResume();
             }
         }
@@ -659,35 +656,35 @@ public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycl
 
     @Override
     public void onDestroy() {
-        if(mConfigBeans == null || mConfigBeans.isEmpty()){
+        if (mConfigBeans == null || mConfigBeans.isEmpty()) {
             return;
         }
-        for(PosBean posBean : mConfigBeans){
+        for (PosBean posBean : mConfigBeans) {
             NativeAdLoader loader = mLoaderMap.getAdLoader(posBean.name);
-            if(loader != null){
+            if (loader != null) {
                 loader.onDestroy();
             }
         }
     }
 
 
-    public void enableVideoAd(){
+    public void enableVideoAd() {
         mVideoAdEnable = true;
     }
 
-    public void enableBannerAd(){
+    public void enableBannerAd() {
         mBannerAdEnable = true;
     }
 
 
     public void setDisableAdType(List<String> adTypes) {
-        if(adTypes == null){
+        if (adTypes == null) {
             return;
         }
         mDisableTypeList.addAll(adTypes);
     }
 
-    public void setIsFeed(){
+    public void setIsFeed() {
         mIsFeed = true;
     }
 

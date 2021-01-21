@@ -1,8 +1,5 @@
 package com.buffalo.baseapi.ads;
 
-/**
- * Created by chenhao on 2016/1/26.
- */
 public interface INativeAdLoaderListener {
     void adLoaded();
 

@@ -8,18 +8,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 
-import com.buffalo.ads.R;
 import com.buffalo.adsdk.nativead.FeedListAdManager;
 import com.buffalo.baseapi.ads.INativeAd;
 
-
-
-/**
- * Created by liuluchao on 2015/8/26.
- */
 public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFeedAdFetch {
     private static String TAG = ListAdSimpleActivity.class.getSimpleName();
-    private String POSID = BuildConfig.IS_CN_VERSION ? "1096100": "1094100";
+    private String POSID = BuildConfig.IS_CN_VERSION ? "1096100" : "1094100";
     private ListView mListNativeAd;
     private FeedListAdManager mFeedListAdManager;
     private ListAdsAdapter mAdapter;
@@ -27,7 +21,8 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
     private CheckBox mCheckBoxThread;
     private Button mLoadAd;
     private boolean mIsLoadInChildThread = false;
-//    private EditText mRequestNum;
+
+    //    private EditText mRequestNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +63,7 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
             @Override
             public void onClick(View v) {
                 if (mIsLoadInChildThread) {
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
 //                            String num = mRequestNum.getText().toString();
@@ -95,7 +90,7 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
 
     @Override
     public INativeAd getAd() {
-        if(mFeedListAdManager != null){
+        if (mFeedListAdManager != null) {
             return mFeedListAdManager.getAd();
         }
         return null;

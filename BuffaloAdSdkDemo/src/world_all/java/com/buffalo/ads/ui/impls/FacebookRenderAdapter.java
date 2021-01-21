@@ -12,24 +12,22 @@ import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
 
-/**
- * Created by Li Guoqing on 2016/11/19.
- */
-public class FacebookRenderAdapter implements NativeAdTemplate.ICMNativeAdViewAdapter {
+public class FacebookRenderAdapter implements NativeAdTemplate.INativeAdViewAdapter {
     private Context mContext;
+
     public FacebookRenderAdapter(Context context) {
         mContext = context;
     }
 
     @Override
-    public View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder  viewHolder) {
-        if(ad == null || viewHolder == null){
+    public View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder viewHolder) {
+        if (ad == null || viewHolder == null) {
             return null;
         }
         viewHolder.mMainImageView.setAd(ad, createFacebookMediaView(ad));
-        if(viewHolder.mAdCornerView == null){
+        if (viewHolder.mAdCornerView == null) {
             return createDefaultBrandLogoView(viewHolder, getFacebookBrandLogoView(ad));
-        }else{
+        } else {
             viewHolder.mAdCornerView.removeAllViews();
             viewHolder.mAdCornerView.addView(getFacebookBrandLogoView(ad));
             viewHolder.mAdCornerView.bringToFront();
@@ -64,7 +62,7 @@ public class FacebookRenderAdapter implements NativeAdTemplate.ICMNativeAdViewAd
             return null;
         }
 
-        AdChoicesView choicesView = new AdChoicesView(mContext, (NativeAd)ob, true);
+        AdChoicesView choicesView = new AdChoicesView(mContext, (NativeAd) ob, true);
         return choicesView;
     }
 

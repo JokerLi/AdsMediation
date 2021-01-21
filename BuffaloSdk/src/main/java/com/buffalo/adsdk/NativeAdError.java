@@ -1,10 +1,6 @@
 package com.buffalo.adsdk;
 
-
-/**
- * Created by chenhao on 2015/8/24.
- */
-public class CMAdError {
+public class NativeAdError {
     /*
     Facebook
     public static final int NETWORK_ERROR_CODE = 1000;
@@ -121,7 +117,6 @@ public class CMAdError {
     public static final int BANNER_LOADING = 20003;
     public static final int BANNER_SIZE_ERROR = 20004;
     public static final int BANNER_HTML_ERROR = 20005;
-
 
 
     public static final int VAST_PARAM_ERROR = 30000;

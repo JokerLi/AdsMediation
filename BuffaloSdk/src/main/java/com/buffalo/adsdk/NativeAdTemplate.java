@@ -11,18 +11,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.buffalo.adsdk.view.AdViewRender;
-import com.buffalo.adsdk.view.CMMediaView;
+import com.buffalo.adsdk.view.NativeMediaView;
 import com.buffalo.baseapi.ads.INativeAd;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Li Guoqing on 2016/11/15.
- */
 public class NativeAdTemplate {
-    public interface ICMNativeAdViewAdapter {
+    public interface INativeAdViewAdapter {
         View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder viewHolder);
     }
 
@@ -48,8 +45,8 @@ public class NativeAdTemplate {
     final Map<String, Integer> extras;
     private AdViewRender mRender;
 
-    private NativeAdTemplate(Builder builder){
-        if(checkBuilderIllegal(builder)){
+    private NativeAdTemplate(Builder builder) {
+        if (checkBuilderIllegal(builder)) {
             throwException("input resource id is illegal");
         }
         mLayoutId = builder.mLayoutId;
@@ -65,15 +62,15 @@ public class NativeAdTemplate {
         extras = builder.extras;
     }
 
-    private void throwException(String s){
-        if(TextUtils.isEmpty(s)){
+    private void throwException(String s) {
+        if (TextUtils.isEmpty(s)) {
             return;
         }
         throw new RuntimeException(s);
     }
 
     private boolean checkBuilderIllegal(Builder builder) {
-        if(builder == null){
+        if (builder == null) {
             return true;
         }
         return false;
@@ -87,10 +84,10 @@ public class NativeAdTemplate {
         return mRender.getBindedView(ad);
     }
 
-    public <T extends View> T findViewById(int id){
-        try{
-            return (T)mRender.getMainView().findViewById(id);
-        }catch (Exception e){
+    public <T extends View> T findViewById(int id) {
+        try {
+            return (T) mRender.getMainView().findViewById(id);
+        } catch (Exception e) {
 
         }
         return null;
@@ -108,7 +105,7 @@ public class NativeAdTemplate {
         public TextView mSocialContextView;
         public TextView mCallToActionView;
         public TextView mSponsoredView;
-        public CMMediaView mMainImageView;
+        public NativeMediaView mMainImageView;
         public ImageView mIconImageView;
         public RatingBar mStarRatingView;
         public ViewGroup mAdCornerView;
@@ -141,7 +138,7 @@ public class NativeAdTemplate {
                 mSocialContextView = noExceptionFindView(mLayoutView, mViewBinder.mSocialContextId, TextView.class, "mSocialContextView");
                 mCallToActionView = noExceptionFindView(mLayoutView, mViewBinder.mCallToActionId, TextView.class, "mCallToActionView");
                 mSponsoredView = noExceptionFindView(mLayoutView, mViewBinder.mSponsoredId, TextView.class, "mSponsoredView");
-                mMainImageView = noExceptionFindView(mLayoutView, mViewBinder.mMainImageId, CMMediaView.class, "mMainImageView");
+                mMainImageView = noExceptionFindView(mLayoutView, mViewBinder.mMainImageId, NativeMediaView.class, "mMainImageView");
                 mIconImageView = noExceptionFindView(mLayoutView, mViewBinder.mIconImageId, ImageView.class, "mIconImageView");
                 mStarRatingView = noExceptionFindView(mLayoutView, mViewBinder.mStarRatingId, RatingBar.class, "mStarRatingView");
                 mAdCornerView = noExceptionFindView(mLayoutView, mViewBinder.mAdCornerId, ViewGroup.class, "mAdCornerView");
@@ -157,9 +154,9 @@ public class NativeAdTemplate {
 
             try {
                 View view = layoutView.findViewById(id);
-                if(tClass.isInstance(view)){
+                if (tClass.isInstance(view)) {
                     return (T) layoutView.findViewById(id);
-                }else{
+                } else {
                     return null;
                 }
             } catch (Exception e) {
@@ -169,7 +166,7 @@ public class NativeAdTemplate {
 
     }
 
-    public static class Builder{
+    public static class Builder {
         private final int mLayoutId;
         private int mTitleId;
         private int mTextId;
