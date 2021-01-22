@@ -164,7 +164,7 @@ public class RequestConfig {
 
         final long startConfigRequestTime = System.currentTimeMillis();
         mIsLoading = true;
-        String url = AdManager.sIsCnVersion ? Const.CONFIG_URL_CN : Const.CONFIG_URL;
+        String url = Const.CONFIG_URL;
         String param = buildParams(mMid);
         Networking.get(url, param, new Networking.HttpListener() {
             @Override
@@ -323,7 +323,6 @@ public class RequestConfig {
         sb.append("&androidid=" + Commons.getAndroidId());
         sb.append("&cver=" + Commons.getAppVersionCode(AdManager.getContext()));
         sb.append("&lan=" + Commons.getCountry(AdManager.getContext()) + "_" + Commons.getLanguage(AdManager.getContext()));
-        // FIXME: 2016/7/12
         sb.append("&v=" + "22");
         sb.append("&sdkv=" + Const.VERSION);
         return sb.toString();

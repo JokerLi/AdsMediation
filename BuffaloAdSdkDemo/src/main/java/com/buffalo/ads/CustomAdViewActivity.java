@@ -56,9 +56,6 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
         ((CheckBox) findViewById(R.id.btn_open_priority)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (nativeAdManager != null) {
-                    nativeAdManager.setOpenPriority(isChecked);
-                }
             }
         });
 //        adapter = new VideoAdapter(this);

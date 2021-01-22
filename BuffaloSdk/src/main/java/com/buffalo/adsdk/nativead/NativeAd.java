@@ -1,17 +1,16 @@
 package com.buffalo.adsdk.nativead;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.buffalo.adsdk.AdManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.report.ReportFactory;
-import com.buffalo.adsdk.utils.DownloadCheckDialog;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAd.ImpressionListener;
 import com.buffalo.baseapi.ads.IVideoAdapter;
@@ -42,7 +41,6 @@ public class NativeAd extends BaseNativeAd implements
     private String mReportPkgName;
     private String mPlacementId;
     private String mAdTypeName;
-    private boolean mIsOrionAd;
     private int mRegisterTimes;
     private ViewShowReporter.Model mReportmodel;
     private int mAdPriorityIndex;
@@ -87,9 +85,6 @@ public class NativeAd extends BaseNativeAd implements
         if (extras.containsKey(KEY_AD_TYPE_NAME)) {
             mAdTypeName = (String) extras.get(KEY_AD_TYPE_NAME);
         }
-        if (extras.containsKey(KEY_IS_ORIONAD)) {
-            mIsOrionAd = (boolean) extras.get(KEY_IS_ORIONAD);
-        }
 
         setTitle(ad.getAdTitle());
         setAdCoverImageUrl(ad.getAdCoverImageUrl());
@@ -100,9 +95,6 @@ public class NativeAd extends BaseNativeAd implements
         setAdStarRate(ad.getAdStarRating());
         setIsDownloadApp(ad.isDownLoadApp());
         setIsPriority(ad.isPriority());
-        setExtPics(ad.getExtPics());
-        // FIXME: 2016/7/12 
-//        setMpaModule(ad.getMpaModule());
         setIsHasDetailPage(ad.isHasDetailPage());
         setSource(ad.getSource());
         setAdTypeId(ad.getTypeId());
@@ -145,12 +137,6 @@ public class NativeAd extends BaseNativeAd implements
         return registerViewForInteraction_withExtraReportParams(view, null);
     }
 
-    // FIXME: 2016/7/12 
-//    @Override
-//    public MpaModule getMpaModule() {
-//        return mAd.getMpaModule();
-//    }
-
     @Override
     public String getSource() {
         return mAd.getSource();
@@ -170,11 +156,6 @@ public class NativeAd extends BaseNativeAd implements
         mExtraReportParams = reportParam;
         mAd.setExtraReportParams(reportParam);
 
-        //如果需要主动添加点击事件会返回false
-//        if(Const.isPicksAd(mAd.getAdTypeName())){
-//            mAd.registerViewForInteraction_withExtraReportParams(view, reportParam);
-//            mAd.setAdOnClickListener(this);
-//        }
         if (!mAd.registerViewForInteraction(view)) {
             mAdView = view;
             setListener(view, this, this);
@@ -184,15 +165,14 @@ public class NativeAd extends BaseNativeAd implements
 
         String rawString = getRawString(1);
 
-        //FIXME 在UniReport中已经屏蔽了此次上报
         UniReport.report(ReportFactory.INSERTVIEW, mReportPkgName, mPosid, mRcvReportRes
                 , addDupReportExtra(false, mHasReportInsertImpression, getExtraReportParams()),
-                mPlacementId, isNativeAd(), rawString, mIsOrionAd);
+                mPlacementId, isNativeAd(), rawString);
         mHasReportInsertImpression = true;
 
         if (mReportmodel == null) {
             mReportmodel = new ViewShowReporter.Model(mReportPkgName, mPosid, mRcvReportRes, mPegReportRes
-                    , getExtraReportParams(), mPlacementId, rawString, mIsOrionAd, this);
+                    , getExtraReportParams(), mPlacementId, rawString, this);
         }
         ViewShowReporter.add(mReportmodel, view);
         return true;
@@ -261,23 +241,7 @@ public class NativeAd extends BaseNativeAd implements
     public void onClick(View view) {
         boolean isNeedExecuteClick = (null == mAdClickDelegate || mAdClickDelegate.handleClick(false));
         if (isNeedExecuteClick) {
-            boolean checkDownload = AdManager.sIsCnVersion && mAd.isDownLoadApp();
-            if (checkDownload) {
-                DownloadCheckDialog.showDialog(mContext, new DownloadCheckDialog.DownloadCheckListener() {
-
-                    @Override
-                    public void handleDownload() {
-                        handleClick();
-                    }
-
-                    @Override
-                    public void cancelDownload() {
-                        //取消下载
-                    }
-                });
-            } else {
-                handleClick();
-            }
+            handleClick();
         } else {
             //表示点击行为外部已经处理完毕，不需要内部处理
             Logger.e("ClickDelegate", "handClick has execute out of sdk");
@@ -317,10 +281,9 @@ public class NativeAd extends BaseNativeAd implements
     private void recordImpression() {
         Map<String, String> extraReportParams = addDupReportExtra(false, mHasReportCallBackImpression, getExtraReportParams());
 
-        //picks 和fb上报需要Object字段
         String rawString = getRawString(1);
         UniReport.report(ReportFactory.VIEW, mReportPkgName, mPosid, mRcvReportRes, extraReportParams,
-                mPlacementId, isNativeAd(), rawString, mIsOrionAd);
+                mPlacementId, isNativeAd(), rawString);
 
         if (mImpressionListener != null) {
             mImpressionListener.onLoggingImpression();

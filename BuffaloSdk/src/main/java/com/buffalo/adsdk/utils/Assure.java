@@ -57,85 +57,101 @@ public class Assure {
     }
 
     public static void checkTrue(boolean value) {
-        if (!value)
+        if (!value) {
             throwMessage("AssureTrue");
+        }
     }
 
     public static void checkFalse(boolean value) {
-        if (value)
+        if (value) {
             throwMessage("AssureFalse");
+        }
     }
 
     public static void checkNull(Object obj) {
-        if (obj != null)
+        if (obj != null) {
             throwMessage("AssureNull");
+        }
     }
 
     public static void checkNotNull(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             throwMessage("AssureNotNull");
+        }
     }
 
     public static void checkNotEqual(int expectNot, int real) {
-        if (expectNot == real)
+        if (expectNot == real) {
             throwMessage("AssureNotEqual");
+        }
     }
 
     public static void checkNotEqual(Object expectNot, Object real) {
-        if (expectNot == real)
+        if (expectNot == real) {
             throwMessage("AssureNotEqual");
+        }
 
         if (expectNot != null && real != null) {
-            if (expectNot.equals(real))
+            if (expectNot.equals(real)) {
                 throwMessage("AssureNotEqual");
+            }
         }
     }
 
     public static void checkEqual(Object expect, Object real) {
-        if (expect != real)
+        if (expect != real) {
             throwMessage("AssureEqual");
+        }
     }
 
     public static void checkEqual(int expect, int real) {
-        if (expect != real)
+        if (expect != real) {
             throwMessage("AssureEqual");
+        }
     }
 
     public static void checkEqual(long expect, long real) {
-        if (expect != real)
+        if (expect != real) {
             throwMessage("AssureEqual");
+        }
     }
 
     public static void checkEqualNoCase(String expect, String real) {
-        if (expect == null && real == null)
+        if (expect == null && real == null) {
             return;
+        }
 
-        if (expect == null || real == null)
+        if (expect == null || real == null) {
             throwMessage("AssureEqual");
+            return;
+        }
 
-        if (!expect.equalsIgnoreCase(real))
+        if (!expect.equalsIgnoreCase(real)) {
             throwMessage("AssureEqual");
+        }
     }
 
     public static void checkNotEmptyString(String webUrl) {
-        if (TextUtils.isEmpty(webUrl))
+        if (TextUtils.isEmpty(webUrl)) {
             throwMessage("AssureNotEmptyString");
+        }
     }
 
     public static <E> void checkNotEmptyCollection(Collection<E> collection) {
-        if (collection == null || collection.isEmpty())
+        if (collection == null || collection.isEmpty()) {
             throwMessage("AssureNotEmptyCollection");
+        }
     }
 
     public static <E> void checkNotEmptyArray(E[] collection) {
-        if (collection == null || collection.length <= 0)
+        if (collection == null || collection.length <= 0) {
             throwMessage("checkNotEmptyArray");
+        }
     }
 
     public static void DCHECK(boolean value) {
-        if (!value) {
-            if (DEBUG)
-                throwMessage("DCHECK ERROR");
+        if (!value && DEBUG) {
+            throwMessage("DCHECK ERROR");
         }
     }
 

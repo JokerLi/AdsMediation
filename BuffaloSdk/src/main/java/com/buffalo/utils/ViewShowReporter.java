@@ -144,19 +144,16 @@ public class ViewShowReporter implements Callable<Boolean> {
         private Map<String, String> extraReportParams;
         private String placementId;
         private String rawString;
-        private boolean isOrionAd;
         private NativeAd ad;
 
         public Model(String pkgName, String posid, int rcvReportRes, int pegReportRes,
-                     Map<String, String> extraReportParams, String placementId, String rawString,
-                     boolean isOrionAd, NativeAd ad) {
+                     Map<String, String> extraReportParams, String placementId, String rawString, NativeAd ad) {
             this.pkgName = pkgName;
             this.posid = posid;
             this.rcvReportRes = rcvReportRes;
             this.extraReportParams = extraReportParams;
             this.placementId = placementId;
             this.rawString = rawString;
-            this.isOrionAd = isOrionAd;
             this.ad = ad;
         }
 
@@ -165,7 +162,7 @@ public class ViewShowReporter implements Callable<Boolean> {
             extraReportParams = ad.addDupReportExtra(false, ad.hasReportUserImpression(), extraReportParams);
             ad.setHasReportUserImpression(true);
             UniReport.report(ReportFactory.USER_IMPRESSION, pkgName, posid, rcvReportRes, extraReportParams,
-                    placementId, ad.isNativeAd(), rawString, isOrionAd);
+                    placementId, ad.isNativeAd(), rawString);
         }
     }
 }

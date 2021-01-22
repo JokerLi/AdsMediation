@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 
 import com.buffalo.adsdk.base.BaseNativeAd;
 
-import java.util.List;
 import java.util.Map;
 
 public interface INativeAd {
@@ -26,111 +25,106 @@ public interface INativeAd {
     /**
      * @return 返回广告类型
      */
-    public String getAdTypeName();
+    String getAdTypeName();
 
     /**
      * @return 返回广告Title
      */
-    public String getAdTitle();
+    String getAdTitle();
 
     /**
      * @return 返回广告背景大图
      */
-    public String getAdCoverImageUrl();
+    String getAdCoverImageUrl();
 
     /**
      * @return 广告Icon的url
      */
-    public String getAdIconUrl();
+    String getAdIconUrl();
 
     /**
      * @return 广告的下载量或网址等小标题信息
      */
-    public String getAdSocialContext();
+    String getAdSocialContext();
 
     /**
      * @return 广告按钮的文案
      */
-    public String getAdCallToAction();
+    String getAdCallToAction();
 
     /**
      * @return 返回广告的详细描述
      */
-    public String getAdBody();
+    String getAdBody();
 
 
     /**
      * @return 返回评分条的值
      */
-    public double getAdStarRating();
+    double getAdStarRating();
 
     /**
      * @param view 将显示广告的View和广告绑定
      */
-    public boolean registerViewForInteraction(View view);
+    boolean registerViewForInteraction(View view);
 
-    public boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam);
+    boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam);
 
     /**
      * 针对视频接口使用
      */
-    public boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup);
+    boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup);
 
     /**
      * 将显示广告的View和广告解除绑定
      */
-    public void unregisterView();
+    void unregisterView();
 
     /**
      * @return 是否过期
      */
-    public boolean hasExpired();
+    boolean hasExpired();
 
     /**
      * @return true 下载类型，false 非下载，null 未知
      */
-    public boolean isDownLoadApp();
+    boolean isDownLoadApp();
 
-    public void setImpressionListener(ImpressionListener impressionListener);
+    void setImpressionListener(ImpressionListener impressionListener);
 
-    public void setAdOnClickListener(IAdOnClickListener adOnClickListener);
+    void setAdOnClickListener(IAdOnClickListener adOnClickListener);
 
-    public IAdOnClickListener getAdOnClickListener();
+    IAdOnClickListener getAdOnClickListener();
 
-    public boolean isNativeAd();
+    boolean isNativeAd();
 
-    public boolean isPriority();
+    boolean isPriority();
 
-    public Object getAdObject();
+    Object getAdObject();
 
     //国内下载
-    public void handleClick();
+    void handleClick();
 
-    public List<String> getExtPics();
+    boolean isHasDetailPage();
 
-    // FIXME: 2016/7/12 liguoqing
-//    public MpaModule getMpaModule();
+    View createDetailPage(INativeAd ad);
 
-    public boolean isHasDetailPage();
+    View createDetailPage();
 
-    public View createDetailPage(INativeAd ad);
+    void handleDetailClick();
 
-    public View createDetailPage();
-
-    public void handleDetailClick();
-
-    public void setAdClickDelegate(BaseNativeAd.IAdClickDelegate l);
+    void setAdClickDelegate(BaseNativeAd.IAdClickDelegate l);
 
 
-    public String getSource();
+    String getSource();
 
     //video
-    public void onPause();
+    void onPause();
 
-    public void onResume();
+    void onResume();
 
-    public void onDestroy();
+    void onDestroy();
 
-    public String getTypeId();//供内容类使用，标示内容的类别
+    String getTypeId();//供内容类使用，标示内容的类别
 
 }

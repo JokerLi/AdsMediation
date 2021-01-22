@@ -60,7 +60,6 @@ public class ConfigResponse {
                 adPos.adType = posListObject.optInt(KEY_AD_TYPE);
                 adPos.placementId = posListObject.optString(KEY_PLACE_ID);
                 JSONArray infoArray = posListObject.getJSONArray(KEY_INFO);
-                // TODO: 2021/1/22 双层循环去掉
                 for (int j = 0; j < infoArray.length(); j++) {
                     JSONObject infoObject = infoArray.getJSONObject(j);
 
@@ -89,7 +88,6 @@ public class ConfigResponse {
 
     @Override
     public String toString() {
-        // TODO: 2021/1/22  这是JSON吗
         if (mAdPosConfigMap.isEmpty()) {
             return "{null}";
         }

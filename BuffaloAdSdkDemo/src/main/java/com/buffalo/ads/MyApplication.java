@@ -59,7 +59,7 @@ public class MyApplication extends Application {
         //初始化聚合sdk
         //第一个参数：Context
         //第二个参数：mid =1005
-        AdManager.applicationInit(this, "10000", false);
+        AdManager.applicationInit(this, "10000");
 
         AdManager.addLoaderClass(Const.KEY_FB, "com.buffalo.ads.adapter.FacebookNativeAdapter");
         AdManager.addLoaderClass(Const.KEY_YH, "com.buffalo.ads.adapter.YahooNativeAdapter");

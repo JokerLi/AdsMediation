@@ -68,10 +68,6 @@
                     android:id="@+id/checkbox_priority"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <EditText
-                android:id="@+id/et_picks_num"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -9,7 +9,6 @@ public class RequestParams {
     public static final String KEY_REPORT_SHOW_IGNORE_VIEW = "report_show_ignore_view";
     public static final String KEY_BANNER_VIEW_SIZE = "key_banner_view_size";
     public static final String KEY_SELECT_ALL_PRIORITYAD = "key_select_all_priority";
-    public static final String KEY_PICKS_LOAD_NUM = "key_picks_load_num";
     public static final String KEY_FILTER_ADMOB_INSTALL_AD = "filer_admob_install_ad";
     public static final String KEY_FILTER_ADMOB_CONTENT_AD = "filer_admob_content_ad";
     public static final String KEY_EXTRA_OBJECT = "key_extra_object";
@@ -83,29 +82,6 @@ public class RequestParams {
             }
         }
         return true;
-    }
-
-
-    /**
-     *
-     */
-    public void setPicksLoadNum(int num) {
-        if (mParams != null) {
-            mParams.put(KEY_PICKS_LOAD_NUM, num);
-        }
-    }
-
-
-    /**
-     * 默认返回0
-     */
-    public int getPicksLoadNum() {
-        if (mParams != null) {
-            if (mParams.containsKey(KEY_PICKS_LOAD_NUM)) {
-                return (Integer) mParams.get(KEY_PICKS_LOAD_NUM);
-            }
-        }
-        return 0;
     }
 
     public void setFilterAdmobInstallAd(boolean filter) {

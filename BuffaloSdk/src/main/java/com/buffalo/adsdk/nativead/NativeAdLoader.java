@@ -4,8 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.BuildConfig;
-import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.adapter.BaseNativeLoaderAdapter;
 import com.buffalo.adsdk.adapter.CustomVideoAdapter;
 import com.buffalo.adsdk.adapter.NativeloaderAdapter;
@@ -13,9 +13,9 @@ import com.buffalo.adsdk.banner.BannerParams;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.adsdk.report.ReportFactory;
-import com.buffalo.utils.ThreadHelper;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Logger;
+import com.buffalo.utils.ThreadHelper;
 import com.buffalo.utils.UniReport;
 
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NativeAdLoader extends BaseNativeLoaderAdapter implements NativeloaderAdapter.NativeAdapterListener, INativeAd.IAdOnClickListener, LifeCycleDelegate{
-    private static  final String TAG = "NativeAdLoader";
+public class NativeAdLoader extends BaseNativeLoaderAdapter implements NativeloaderAdapter.NativeAdapterListener, INativeAd.IAdOnClickListener, LifeCycleDelegate {
+    private static final String TAG = "NativeAdLoader";
 
     final private static int DEFAULT_TRY_NUMBER = 2;
     final private static int DEFAULT_TIMEOUT_TIME = 8 * 1000;
@@ -57,13 +57,12 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         if (!TextUtils.isEmpty(params)) {
             String loaderType = internalLoader.getAdKeyType();
             if (Const.KEY_FB.equals(loaderType)) {
-                // FIXME: 过滤空格等
                 mPlacementIds = params.split(",");
             } else {
                 mPlacementIds = new String[1];
                 mPlacementIds[0] = params;
             }
-            if(mInternalNativeLoader != null && mInternalNativeLoader instanceof CustomVideoAdapter){
+            if (mInternalNativeLoader != null && mInternalNativeLoader instanceof CustomVideoAdapter) {
                 initVideoSDK();//video init sdk to load
             }
 
@@ -73,7 +72,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         mAdPool = new ArrayList<INativeAd>();
     }
 
-    public void setPreload(boolean isPreload){
+    public void setPreload(boolean isPreload) {
         this.mIsPreload = isPreload;
     }
 
@@ -95,9 +94,9 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         load(1);
     }
 
-    private void load(int num){
-        if(mPlacementIds == null || mPlacementIds.length == 0){
-            if(mNativeAdListener == null){
+    private void load(int num) {
+        if (mPlacementIds == null || mPlacementIds.length == 0) {
+            if (mNativeAdListener == null) {
                 return;
             }
             mNativeAdListener.adFailedToLoad(this.getAdTypeName(), NativeAdError.ERROR_CONFIG);
@@ -106,9 +105,9 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
 
         //如果缓存足够就不再去load了
         removeExpiredAds(mAdPool);
-        if(mAdPool.size() >= num){
-            Logger.i(Const.TAG, "adload has cache , cache size :"+ mAdPool.size());
-            if(mNativeAdListener == null){
+        if (mAdPool.size() >= num) {
+            Logger.i(Const.TAG, "adload has cache , cache size :" + mAdPool.size());
+            if (mNativeAdListener == null) {
                 return;
             }
             mNativeAdListener.adLoaded(getAdTypeName());
@@ -121,19 +120,13 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         mLastLoadTime = System.currentTimeMillis();
         mLoadNumber = Math.max(num, mInternalNativeLoader.getDefaultLoadNum());
         //外部可以指定自家广告请求大小，不走默认的十个
-        if(requestParams != null && mInternalNativeLoader.getAdKeyType().equals(Const.KEY_CM)){
-            int setLoadNum = requestParams.getPicksLoadNum();
-            if(setLoadNum > 0) {
-                mLoadNumber = setLoadNum;
-            }
-        }
         mTryNumber = mPlacementIds.length > 1 ? DEFAULT_TRY_NUMBER : 1;
         mLoaded = false;
-        if(mLoaderTimerOutTask == null){
+        if (mLoaderTimerOutTask == null) {
             mLoaderTimerOutTask = new TimeoutTask(mTimeoutRun, "Loader_Timeout");
             mLoaderTimerOutTask.start(DEFAULT_TIMEOUT_TIME);
         }
-        if(requestParams != null){
+        if (requestParams != null) {
             mSelectAllPriorityAd = requestParams.isSelectAllPriorityAd();
         }
         issueNextPlacementId();
@@ -156,7 +149,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         }
     }
 
-    private Map<String, Object> getLoadExtras(int num, String placementId){
+    private Map<String, Object> getLoadExtras(int num, String placementId) {
         Map<String, Object> extras = new HashMap<String, Object>();
         extras.put(BaseNativeAd.KEY_JUHE_POSID, mPositionId);
         extras.put(BaseNativeAd.KEY_PLACEMENT_ID, placementId);
@@ -174,8 +167,8 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         }
         //缓存时间暂时不支持外部设置，到时候云端配置更合适
         extras.put(BaseNativeAd.KEY_CACHE_TIME, defaultCacheTime);
-        if(requestParams != null) {
-            if(requestParams instanceof BannerParams){
+        if (requestParams != null) {
+            if (requestParams instanceof BannerParams) {
                 extras.put(BaseNativeAd.KEY_BANNER_VIEW_SIZE, ((BannerParams) requestParams).getBannerAdSize());
             }
             extras.put(BaseNativeAd.KEY_CHECK_VIEW, !requestParams.getReportShowIgnoreView());
@@ -184,11 +177,10 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
             extras.put(BaseNativeAd.KEY_EXTRA_OBJECT, requestParams.getExtraObject());
             extras.put(BaseNativeAd.KEY_TAB_ID, requestParams.getTabId());
             extras.put(BaseNativeAd.KEY_IS_TOP, requestParams.getIsTop());
-        }else {
+        } else {
             extras.put(BaseNativeAd.KEY_CHECK_VIEW, true);
         }
         extras.put(BaseNativeAd.KEY_IS_FEED, mIsFeed);
-        extras.put(BaseNativeAd.KEY_IS_ORIONAD, isOrionAd());
         return extras;
     }
 
@@ -197,7 +189,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         removeExpiredAds(mAdPool);
 
         INativeAd nativeAd = null;
-        if(!mAdPool.isEmpty()){
+        if (!mAdPool.isEmpty()) {
             nativeAd = mAdPool.remove(0);
         }
         return nativeAd;
@@ -213,20 +205,19 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
     }
 
     /**
-     *
      * @param num 需要的个数
      * @return
      */
-    private List<INativeAd> getPriorityAdList(boolean filterPriority, int num){
+    private List<INativeAd> getPriorityAdList(boolean filterPriority, int num) {
         removeExpiredAds(mAdPool);
         ArrayList<INativeAd> tempList = new ArrayList<INativeAd>();
         int count = mAdPool.size();
         for (int i = 0; i < count; i++) {
             INativeAd ad = mAdPool.get(i);
-            if(filterPriority ){
-                if(ad.isPriority()) {
+            if (filterPriority) {
+                if (ad.isPriority()) {
                     tempList.add(ad);
-                }else if(!mSelectAllPriorityAd){
+                } else if (!mSelectAllPriorityAd) {
                     //如果需要超级强量，碰到没有超级强量的直接跳出循环不再判断下面的，以免打乱顺序。
                     break;
                 }
@@ -234,7 +225,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
                 //如果不特别的过滤超级抢量就直接添加
                 tempList.add(ad);
             }
-            if(tempList.size() >= num){
+            if (tempList.size() >= num) {
                 break;
             }
         }
@@ -247,7 +238,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         mLoaded = true;
         appendAd(nativeAd);
         stopTimeOutTask();
-        if(mNativeAdListener == null){
+        if (mNativeAdListener == null) {
             return;
         }
         mNativeAdListener.adLoaded(getAdTypeName());
@@ -261,7 +252,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         if (mTryNumber <= 0) {
             mLoaded = true;
             stopTimeOutTask();
-            if(mNativeAdListener == null){
+            if (mNativeAdListener == null) {
                 return;
             }
             mNativeAdListener.adFailedToLoad(getAdTypeName(), errorCode);
@@ -284,7 +275,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
 
         appendAd(list);
         stopTimeOutTask();
-        if(mNativeAdListener == null){
+        if (mNativeAdListener == null) {
             return;
         }
         mNativeAdListener.adLoaded(getAdTypeName());
@@ -295,23 +286,23 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
             return;
         }
 
-        for(INativeAd ad : adList) {
+        for (INativeAd ad : adList) {
             appendAd(ad);
         }
     }
 
     void appendAd(INativeAd ad) {
         if (BuildConfig.DEBUG) {
-            Logger.i(Const.TAG, "adload load.end.adloaded(" + getAdTypeName() + ") title:" + (ad != null ? ad.getAdTitle() : "null") );
+            Logger.i(Const.TAG, "adload load.end.adloaded(" + getAdTypeName() + ") title:" + (ad != null ? ad.getAdTitle() : "null"));
         }
         mLocalExtras.put(BaseNativeAd.KEY_AD_TYPE_NAME, getAdTypeName());
-        NativeAd cMNativeAd = new NativeAd(mContext, this, mLocalExtras, (BaseNativeAd)ad);
-        cMNativeAd.setAdPriorityIndex(mAdIndex);
-        mAdPool.add(cMNativeAd);
+        NativeAd nativeAd = new NativeAd(mContext, this, mLocalExtras, (BaseNativeAd) ad);
+        nativeAd.setAdPriorityIndex(mAdIndex);
+        mAdPool.add(nativeAd);
     }
 
-    private void recordClick(INativeAd nativeAd){
-        if(nativeAd == null){
+    private void recordClick(INativeAd nativeAd) {
+        if (nativeAd == null) {
             return;
         }
         Map<String, String> reportParams = null;
@@ -322,33 +313,15 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
             rawString = ad.getRawString(2);
             reportParams = ad.addDupReportExtra(true, ad.hasReportClick(), ad.getExtraReportParams());
             ad.setHasReportClick(true);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
         String placementID = (String) mLocalExtras.get(BaseNativeAd.KEY_PLACEMENT_ID);
         boolean isNativeAd = mInternalNativeLoader.getAdType() == Const.AdType.NATIVE;
         UniReport.report(ReportFactory.CLICK, mInternalNativeLoader.getReportPkgName(getAdTypeName()),
                 mPositionId, mInternalNativeLoader.getReportRes(getAdTypeName()),
-                reportParams, placementID, isNativeAd, rawString, isOrionAd());
+                reportParams, placementID, isNativeAd, rawString);
     }
-
-    public boolean firstAdisPriority(){
-        if(mAdPool.size() > 0){
-            if(mSelectAllPriorityAd){
-                //如果是picks可以抢自己的量，只要返回的数据里面有超级强量return true
-                for(INativeAd ad : mAdPool){
-                    if(ad != null && ad.isPriority()){
-                        return true;
-                    }
-                }
-            }else {
-              INativeAd ad = mAdPool.get(0);
-              return ad != null && ad.isPriority();
-            }
-        }
-        return false;
-    }
-
 
     Runnable mTimeoutRun = new Runnable() {
         @Override
@@ -373,42 +346,38 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
 
     @Override
     public void onPause() {
-        if(mInternalNativeLoader instanceof CustomVideoAdapter){
+        if (mInternalNativeLoader instanceof CustomVideoAdapter) {
             ((CustomVideoAdapter) mInternalNativeLoader).onPause();
         }
     }
 
     @Override
     public void onResume() {
-        if(mInternalNativeLoader instanceof CustomVideoAdapter){
+        if (mInternalNativeLoader instanceof CustomVideoAdapter) {
             ((CustomVideoAdapter) mInternalNativeLoader).onResume();
         }
     }
 
     @Override
     public void onDestroy() {
-        if(mInternalNativeLoader instanceof CustomVideoAdapter){
+        if (mInternalNativeLoader instanceof CustomVideoAdapter) {
             ((CustomVideoAdapter) mInternalNativeLoader).onDestroy();
         }
     }
 
-    public Const.AdType getAdType(){
+    public Const.AdType getAdType() {
         return mInternalNativeLoader.getAdType();
     }
 
 
-    public void initVideoSDK(){
-        if(mInternalNativeLoader instanceof CustomVideoAdapter && (mPlacementIds != null &&  mPlacementIds.length > 0)){
+    public void initVideoSDK() {
+        if (mInternalNativeLoader instanceof CustomVideoAdapter && (mPlacementIds != null && mPlacementIds.length > 0)) {
             ((CustomVideoAdapter) mInternalNativeLoader).initVideoSDK(mContext, getLoadExtras(1, mPlacementIds[0]));
         }
     }
 
-    public void setIsFeed(boolean isFeed){
+    public void setIsFeed(boolean isFeed) {
         mIsFeed = isFeed;
-    }
-
-    private boolean isOrionAd() {
-        return Const.isPicksAd(getAdTypeName());
     }
 
 }

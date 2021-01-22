@@ -75,9 +75,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
         mCheckboxPriority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (nativeAdManager != null) {
-                    nativeAdManager.setOpenPriority(isChecked);
-                }
             }
         });
 

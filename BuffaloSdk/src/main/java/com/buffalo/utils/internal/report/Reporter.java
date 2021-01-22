@@ -6,13 +6,13 @@ import com.buffalo.utils.UniReport;
 import java.util.Map;
 
 public class Reporter {
-    public static void reportClick(String posId, String pkgName, int res, String offerInfo, boolean isOrionAd, String placementId, boolean isNativeAd, Map<String, String> extra) {
+    public static void reportClick(String posId, String pkgName, int res, String offerInfo, String placementId, boolean isNativeAd, Map<String, String> extra) {
         UniReport.report(ReportFactory.CLICK, pkgName, posId, res, extra,
-                placementId, isNativeAd, offerInfo, isOrionAd);
+                placementId, isNativeAd, offerInfo);
     }
 
-    public static void reportCallbackImpression(String posId, String pkgName, int res, String offerInfo, boolean isOrionAd, String placementId, boolean isNativeAd, Map<String, String> extra) {
+    public static void reportCallbackImpression(String posId, String pkgName, int res, String offerInfo, String placementId, boolean isNativeAd, Map<String, String> extra) {
         UniReport.report(ReportFactory.VIEW, pkgName, posId, res, extra,
-                placementId, isNativeAd, offerInfo, isOrionAd);
+                placementId, isNativeAd, offerInfo);
     }
 }

@@ -1,4 +1,4 @@
-package com.buffalo.picks.internal;
+package com.buffalo.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;

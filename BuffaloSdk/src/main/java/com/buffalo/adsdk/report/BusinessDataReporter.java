@@ -3,7 +3,6 @@ package com.buffalo.adsdk.report;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.buffalo.adsdk.AdManager;
 import com.buffalo.utils.Networking;
 
 import java.util.ArrayList;
@@ -39,12 +38,8 @@ public class BusinessDataReporter extends AsyncTask<Void, Void, Void> {
     }
 
     private String getUploadUrl() {
-        if (AdManager.sIsCnVersion) {
-            return CHINA_REPORT_HOST;
-        }
         return WORLD_REPORT_HOST;
     }
-
 
     @Override
     protected Void doInBackground(Void... arg0) {

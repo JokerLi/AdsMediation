@@ -48,12 +48,7 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
 
     @Override
     protected int getLoadAdTypeSize() {
-        if (mIsOpenPriority) {
-            Logger.i(TAG, "is open priority, all load");
-            return mConfigBeans.size();
-        } else {
-            return PRELOAD_REQUEST_SIZE;
-        }
+        return PRELOAD_REQUEST_SIZE;
     }
 
     @Override
@@ -117,23 +112,21 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
     @Override
     public void adLoaded(String adTypeName) {
         super.adLoaded(adTypeName);
-        if (!mIsOpenPriority) {
-            int oldSize = mAdPool.size();
-            INativeAdLoader loader = mLoaderMap.getAdLoader(adTypeName);
-            if (loader != null) {
-                int needAdNum = mExpectedSize - mAdPool.size();
-                if (needAdNum > 0) {
-                    List<INativeAd> tempList = loader.getAdList(needAdNum);
-                    if (tempList != null && !tempList.isEmpty()) {
-                        pushAdsToPool(tempList);
-                    }
+        int oldSize = mAdPool.size();
+        INativeAdLoader loader = mLoaderMap.getAdLoader(adTypeName);
+        if (loader != null) {
+            int needAdNum = mExpectedSize - mAdPool.size();
+            if (needAdNum > 0) {
+                List<INativeAd> tempList = loader.getAdList(needAdNum);
+                if (tempList != null && !tempList.isEmpty()) {
+                    pushAdsToPool(tempList);
                 }
             }
+        }
 
-            Logger.d(Const.TAG, "adLoaded pool size: " + oldSize + " -> " + mAdPool.size() + " expect:" + mExpectedSize);
-            if (oldSize != mAdPool.size()) {
-                notifyLoadProgress();
-            }
+        Logger.d(Const.TAG, "adLoaded pool size: " + oldSize + " -> " + mAdPool.size() + " expect:" + mExpectedSize);
+        if (oldSize != mAdPool.size()) {
+            notifyLoadProgress();
         }
     }
 
@@ -146,14 +139,6 @@ public class NativeAdsManagerInternal extends NativeAdManagerInternal implements
             return;
         }
 
-        if (mIsOpenPriority) {
-            if (isAllLoaderFinished()) {
-                List<INativeAd> list = super.getAdList(mExpectedSize);
-                pushAdsToPool(list);
-            } else {
-                return;
-            }
-        }
         if (mAdPool.size() >= mExpectedSize) {
             notifyAdLoaded();
         }

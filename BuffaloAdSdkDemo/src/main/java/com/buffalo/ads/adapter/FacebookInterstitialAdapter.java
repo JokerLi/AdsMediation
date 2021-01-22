@@ -1,9 +1,10 @@
 package com.buffalo.ads.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.NativeAdError;
@@ -81,8 +82,6 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
 
     @Override
     public void onAdClicked(Ad ad) {
-        // FIXME: 如果这里存在adLoad 多次, 则Click 的Ad 回调会有问题
-        // LATER
         if (mFacebookInterstatialAd != null) {
             mFacebookInterstatialAd.notifyNativeAdClick(mFacebookInterstatialAd);
         }

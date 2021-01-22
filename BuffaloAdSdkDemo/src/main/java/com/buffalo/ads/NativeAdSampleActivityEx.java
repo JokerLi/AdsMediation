@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.adsdk.nativead.NativeAdManagerEx;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
-import com.buffalo.utils.Commons;
 
 import java.util.List;
 
@@ -35,7 +33,6 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
     private String mAdPosid = "1094101";
 
     private View mAdView = null;
-    private EditText etPicksLoadNum;
     //用户记录功能页面的PV的ID，可以自定义
     public static final int PAGE_UNITID = 10001;
     RequestParams params = null;
@@ -44,7 +41,6 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        etPicksLoadNum = (EditText) findViewById(R.id.et_picks_num);
         params = new RequestParams();
         nativeAdManagerEx = new NativeAdManagerEx(this, mAdPosid);
         nativeAdManagerEx.setRequestParams(params);
@@ -58,9 +54,6 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
         mCheckboxPriority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (nativeAdManagerEx != null) {
-                    nativeAdManagerEx.setOpenPriority(isChecked);
-                }
             }
         });
         showInfomation("posId: " + mAdPosid);
@@ -121,11 +114,7 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
     }
 
     private void requestNativeAd(int id) {
-        String inputNum = etPicksLoadNum.getText().toString();
-        if (Commons.isNumeric(inputNum)) {
-            params.setPicksLoadNum(Integer.parseInt(inputNum));
-            nativeAdManagerEx.setRequestParams(params);
-        }
+        nativeAdManagerEx.setRequestParams(params);
 
         if (id == R.id.btn_load) {
             nativeAdManagerEx.loadAd();

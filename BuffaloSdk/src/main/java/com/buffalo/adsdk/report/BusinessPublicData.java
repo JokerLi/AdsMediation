@@ -77,8 +77,6 @@ public class BusinessPublicData {
         return this;
     }
 
-    // ac=50&pos=10&mid=101&aid=c3c4d512f16d9d5c&lan=en_us
-    // FIXME: 2016/7/28
     public String toReportString() {
         StringBuilder sb = new StringBuilder();
         sb.append("ac=" + mAc)
@@ -91,8 +89,6 @@ public class BusinessPublicData {
                 .append("&mnc=" + (TextUtils.isEmpty(mMnc) ? "" : mMnc))
                 .append("&gaid=" + mGaid)
                 .append("&pl=2")
-                // FIXME: 2016/7/28
-                //.append("&v=" + CmMarketHttpClient.PROTOCAL_VERSION)
                 .append("&channelid=" + mChannelid)
                 .append("&lp=" + mLp)
                 .append("&sdkv=" + Const.VERSION)

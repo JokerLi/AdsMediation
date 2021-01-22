@@ -33,7 +33,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
     protected RequestParams mRequestParams;
 
     private long mLoadStartTime = 0;
-    final public int mPicksProtectTime;
 
     protected List<PosBean> mConfigBeans;
     protected volatile boolean mIsFinished = true;
@@ -41,14 +40,12 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
     private INativeAdLoaderListener mCallBack;
 
     protected boolean mIsPreload = false;
-    protected boolean mIsOpenPriority = false;
 
     private int mCheckPointNum = 0;
     private int mCurrentPointId = 0;
     private int mFirstCheckTime = 4000;
     private int mCheckPointIntervalTime = 2000;
 
-    TimeoutTask mPicksProtectionTimer = null;
     TimeoutTask mPriorityProtectionTimer = null;
     TimeoutTask mCheckPointTimer = null;
 
@@ -68,8 +65,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
     public NativeAdManagerInternal(Context context, String posId) {
         mContext = context;
         mPositionId = posId;
-
-        mPicksProtectTime = 1000;//Picks protect time
     }
 
     public void setCheckPointNum(int num) {
@@ -93,10 +88,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
             mCheckPointIntervalTime = 2000;
         }
         mCheckPointIntervalTime = time;
-    }
-
-    public void setOpenPriority(boolean openPriority) {
-        this.mIsOpenPriority = openPriority;
     }
 
     public void setPreload(boolean isPreload) {
@@ -242,20 +233,8 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
             return;
         }
 
-        //超级抢量开启的情况下, 直接加载猎户广告
-        if (mIsOpenPriority) {
-            int index = getAdTypeNameIndex(Const.KEY_CM);
-            if (index != -1 && !mLoadingStatus.isBeanLoading(index)) {
-                requestBean(index);
-            }
-            if (mPicksProtectTime > 0) {
-                mPicksProtectionTimer = new TimeoutTask(mAsyncFinishCheckRunnable, "PicksProtectionTimer");
-                mPicksProtectionTimer.start(mPicksProtectTime);
-            }
-        }
-
         // 如果没有超级抢量, 或者顺序load , 不需要优先级保护
-        if (mIsOpenPriority || needLoadSize > 1) {
+        if (needLoadSize > 1) {
             mPriorityProtectionTimer = new TimeoutTask(mAsyncFinishCheckRunnable, "PriorityProtectionTimer");
             mPriorityProtectionTimer.start(AD_PRIORITY_PROTECTION_TIME);
         }
@@ -313,7 +292,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
     }
 
     private boolean requestBean(int index) {
-
         if (index >= 0 && index < mConfigBeans.size()) {
             if (mLoadingStatus.setBeanLoading(index, true)) {
                 PosBean posBean = mConfigBeans.get(index);
@@ -349,13 +327,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
             return false;
         }
     }
-
-    /*
-        现在优先级控制逻辑：
-         1、Picks中的超级抢量优先回来直接吐出去
-         2、高优先级的先回来直接吐出去(原有逻辑)
-         3、优先级低（不是超级抢量）的先回来，等待高优先级的广告回来，8s内高优先级回来吐高优先级的，没回来就吐低优先级的。
-     */
 
     @Override
     public void adLoaded(final String adTypeName) {
@@ -461,23 +432,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
             return;
         }
 
-        //先判断是否有超级强量
-        if (mIsOpenPriority) {
-            NativeAdLoader picksLoader = mLoaderMap.getAdLoader(Const.KEY_CM);
-            //如果开起来超级抢量，有超级抢量请求成功了直接回调成功
-            if (picksLoader != null && picksLoader.isLoaded() && picksLoader.firstAdisPriority()) {
-                Logger.i(Const.TAG, "has open priority and priority ad load success");
-                notifyAdLoaded();
-                return;
-            }
-            if (picksLoader != null && !picksLoader.isLoaded() && mPicksProtectionTimer != null) {
-                if (!mPicksProtectionTimer.mTimeout) {
-                    Logger.w(Const.TAG, "wait picks loading");
-                    return;
-                }
-            }
-        }
-
         for (PosBean posBean : mConfigBeans) {
             String adTypeName = posBean.getAdName();
             RequestResultLogger.Model resultModel = mRequestLogger.getFinishedItem(adTypeName);
@@ -522,10 +476,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
     }
 
     void stopTimeOutTask() {
-        if (mPicksProtectionTimer != null) {
-            mPicksProtectionTimer.stop();
-            mPicksProtectionTimer = null;
-        }
         if (mPriorityProtectionTimer != null) {
             mPriorityProtectionTimer.stop();
             mPriorityProtectionTimer = null;
@@ -581,15 +531,8 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
         Logger.i(Const.TAG, "getAdList");
 
         List<INativeAd> mAdList = new ArrayList<INativeAd>();
-        if (mConfigBeans == null || mConfigBeans.isEmpty() || mLoaderMap == null)
+        if (mConfigBeans == null || mConfigBeans.isEmpty() || mLoaderMap == null) {
             return mAdList;
-
-        //优先吐出超级强量
-        if (mIsOpenPriority) {
-            List<INativeAd> picksPropertyAds = getPicksPropertyAds(num);
-            if (picksPropertyAds != null && !picksPropertyAds.isEmpty()) {
-                mAdList.addAll(picksPropertyAds);
-            }
         }
 
         if (mAdList.size() < num) {
@@ -618,14 +561,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
             nativeAd.setReUseAd();
         }
         return mAdList;
-    }
-
-    private List<INativeAd> getPicksPropertyAds(int num) {
-        NativeAdLoader picksLoader = mLoaderMap.getAdLoader(Const.KEY_CM);
-        if (picksLoader != null) {
-            return picksLoader.getPriorityAdList(num);
-        }
-        return null;
     }
 
     @Override

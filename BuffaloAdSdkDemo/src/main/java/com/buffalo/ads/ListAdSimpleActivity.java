@@ -22,7 +22,6 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
     private Button mLoadAd;
     private boolean mIsLoadInChildThread = false;
 
-    //    private EditText mRequestNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +30,6 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
     }
 
     private void init() {
-//        mRequestNum = (EditText) findViewById(R.id.et_picks_num);
         mListNativeAd = (ListView) findViewById(R.id.list_lv);
         mAdapter = new ListAdsAdapter(this, this);
         mListNativeAd.setAdapter(mAdapter);
@@ -46,9 +44,6 @@ public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFe
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mFeedListAdManager != null) {
-                    mFeedListAdManager.setOpenPriority(isChecked);
-                }
             }
         });
 

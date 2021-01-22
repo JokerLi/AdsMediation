@@ -14,21 +14,18 @@ import java.util.concurrent.Callable;
 public class NativeAdListManager {
     private NativeAdsManagerInternal mRequest;
     private RequestParams requestParams;
+
     public NativeAdListManager(Context context, String posid, INativeAdListListener listener) {
         mRequest = new NativeAdsManagerInternal(context, posid);
         mRequest.setAdListener(listener);
     }
 
-    public void loadAds(int num){
+    public void loadAds(int num) {
         mRequest.setRequestParams(requestParams);
         mRequest.loadAds(num);
     }
 
-    public void setOpenPriority(boolean openPriority){
-        mRequest.setOpenPriority(openPriority);
-    }
-
-    public List<INativeAd> getAdList(){
+    public List<INativeAd> getAdList() {
         return ThreadHelper.runOnUiThreadBlockingNoException(new Callable<List<INativeAd>>() {
             @Override
             public List<INativeAd> call() throws Exception {
@@ -51,15 +48,15 @@ public class NativeAdListManager {
         return null;
     }
 
-    public String getRequestErrorInfo(){
-        if(mRequest != null){
+    public String getRequestErrorInfo() {
+        if (mRequest != null) {
             return mRequest.mRequestLogger.getRequestErrorInfo();
         }
         return null;
     }
 
 
-    public void setRequestParams(RequestParams params){
+    public void setRequestParams(RequestParams params) {
         this.requestParams = params;
     }
 

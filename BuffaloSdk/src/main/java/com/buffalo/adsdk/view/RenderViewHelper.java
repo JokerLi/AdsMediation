@@ -18,7 +18,6 @@ public class RenderViewHelper {
             return;
         }
 
-        // TODO: 2016/11/15 default image
         imageView.setVisibility(View.VISIBLE);
         ImageDownloadListener listener = NativeAdManagerFactory.getImageDownloadListener();
         if (listener != null) {

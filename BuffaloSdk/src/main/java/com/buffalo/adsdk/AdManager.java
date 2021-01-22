@@ -22,18 +22,16 @@ public abstract class AdManager {
 
     private static boolean sIsDebug = false;
     private static int mPegasusReportViewCheckIntervalMills = 500;
-    public static boolean sIsCnVersion = true;
 
-    public static void applicationInit(Context context, String mid, boolean isCnVersion) {
-        applicationInit(context, mid, isCnVersion, "");
+    public static void applicationInit(Context context, String mid) {
+        applicationInit(context, mid, "");
     }
 
-    public static void applicationInit(final Context context, String mid, boolean isCnVersion, String channelId) {
+    public static void applicationInit(final Context context, String mid, String channelId) {
         //第三个参数是渠道id
         if (TextUtils.isEmpty(mid)) {
             throw new IllegalArgumentException("PublisherID cannot be null or empty");
         }
-        sIsCnVersion = isCnVersion;
         mContext = context;
         mMid = mid;
         sChannelId = channelId;
@@ -41,7 +39,6 @@ public abstract class AdManager {
         BackgroundThread.postOnIOThread(new Runnable() {
             @Override
             public void run() {
-                com.buffalo.picks.internal.ReceiverUtils.regist(mContext);
                 ReceiverUtils.regist(mContext);
                 createFactory();
                 if (sAdFactory != null) {

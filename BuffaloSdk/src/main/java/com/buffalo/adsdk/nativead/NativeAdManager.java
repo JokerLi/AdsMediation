@@ -85,10 +85,6 @@ public class NativeAdManager implements LifeCycleDelegate {
         return null;
     }
 
-    public void setOpenPriority(boolean openPriority) {
-        requestAd.setOpenPriority(openPriority);
-    }
-
     public void enableVideoAd() {
         if (requestAd != null) {
             requestAd.enableVideoAd();

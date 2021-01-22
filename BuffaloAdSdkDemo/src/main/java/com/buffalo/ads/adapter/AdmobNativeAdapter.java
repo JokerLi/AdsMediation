@@ -1,8 +1,10 @@
 package com.buffalo.ads.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.view.View;
 
 import com.buffalo.adsdk.Const;
@@ -57,7 +59,6 @@ public class AdmobNativeAdapter extends NativeloaderAdapter {
         return Const.cacheTime.admob;
     }
 
-    // FIXME: admob 广告的click 监听
     private class AdmobNativeAd extends BaseNativeAd implements
             NativeAppInstallAd.OnAppInstallAdLoadedListener,
             NativeContentAd.OnContentAdLoadedListener {

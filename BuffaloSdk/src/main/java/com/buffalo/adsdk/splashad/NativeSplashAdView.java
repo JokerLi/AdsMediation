@@ -84,7 +84,6 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
     }
 
     public void setShowMills(int showTimeMills) {
-        //TODO judge time save
         mShowMills = showTimeMills;
     }
 

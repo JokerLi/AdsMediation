@@ -1,14 +1,14 @@
 package com.buffalo.adsdk.base;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.IVideoAdapter;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class BaseNativeAd implements INativeAd {
@@ -28,7 +28,6 @@ public abstract class BaseNativeAd implements INativeAd {
     public static final String KEY_EXTRA_OBJECT = "extra_object";
     //banner
     public static final String KEY_BANNER_VIEW_SIZE = "banner_view_size";
-    public static final String KEY_IS_ORIONAD = "is_orion_ad";
     //orion brand tab id for classify
     public static final String KEY_TAB_ID = "key_tab_id";
     public static final String KEY_IS_TOP = "key_is_top";
@@ -58,7 +57,6 @@ public abstract class BaseNativeAd implements INativeAd {
     protected IAdOnClickListener mAdOnClickListener;
     @Nullable
     public OpenDegBrowserListener openDegBrowserListener;  //设置跳转至猎豹浏览器
-    private List<String> mExtPicks;
 
     private String mSource;
     private boolean mIsHasDetailPage = false;
@@ -187,14 +185,6 @@ public abstract class BaseNativeAd implements INativeAd {
         this.mIsPriority = isPriority;
     }
 
-    public void setExtPics(List<String> extPicks) {
-        mExtPicks = extPicks;
-    }
-
-    public List<String> getExtPics() {
-        return mExtPicks;
-    }
-
     public void setCacheTime(long cacheTime) {
         mCacheTime = cacheTime;
     }
@@ -230,14 +220,6 @@ public abstract class BaseNativeAd implements INativeAd {
     public boolean hasExpired() {
         return (System.currentTimeMillis() - mCreateTime) >= mCacheTime;
     }
-
-    // FIXME: 2016/7/12
-/*    public void setMpaModule(MpaModule mpaModule){
-        mMpaModule = mpaModule;
-    }
-    public MpaModule getMpaModule(){
-        return mMpaModule;
-    }*/
 
     public void setSource(String source) {
         mSource = source;

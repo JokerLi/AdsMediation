@@ -43,7 +43,6 @@ public class NativeSplashLoader implements INativeAdLoaderListener {
     }
 
     public INativeAd getAd() {
-        //TODO:judge the ad if avaliable
         INativeAd nativeAd = mNativeAdManager.getAd();
         return nativeAd;
     }

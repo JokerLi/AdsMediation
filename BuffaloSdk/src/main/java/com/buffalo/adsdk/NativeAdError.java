@@ -39,8 +39,6 @@ public class NativeAdError {
             ERROR_CODE_NO_FILL         3 The ad request was successful, but no ad was returned due to lack of ad inventory.
             GENDER_FEMALE              4 Female gender.
 
-    Picks
-
             无
    */
     /*
@@ -99,7 +97,6 @@ public class NativeAdError {
     public static final int NO_AD_TYPE_EROOR = 10005;
     public static final int NETWORK_ERROR = 10006;
     public static final int FREQUENCY_CONTROL = 10007;
-    public static final int PICKS_LOAD_ERROR = 10008;
     public static final int PARAMS_ERROR = 10009;
     public static final int SIZE_ERROR = 10010;
 

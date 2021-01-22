@@ -76,11 +76,6 @@ public class InterstitialAdManager implements INativeAdLoaderListener {
         }
     }
 
-    // FIXME: 2016/7/12
-	/*public void setInterstialOverClickEnable(boolean enable){
-		PicksInterstitialActivity.setOverClickEnable(enable);
-	}*/
-
     public void destroy() {
         interstitialRequest = null;
         mCallBack = null;

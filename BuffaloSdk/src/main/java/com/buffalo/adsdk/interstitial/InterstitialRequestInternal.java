@@ -23,7 +23,6 @@ public class InterstitialRequestInternal extends NativeAdManagerInternal {
             notifyAdLoaded();
             return;
         }
-        mIsOpenPriority = false;
         mIsPreload = true;
         mOptimizeEnabled = false;
         super.loadAd();

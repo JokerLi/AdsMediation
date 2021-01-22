@@ -37,7 +37,7 @@ public class NativeMediaView extends RelativeLayout {
             view = createDefaultImageView(ad);
         }
         if (view != null) {
-            addViewToCMMediaView(view);
+            addViewToMediaView(view);
         }
     }
 
@@ -48,7 +48,7 @@ public class NativeMediaView extends RelativeLayout {
         return imageView;
     }
 
-    private void addViewToCMMediaView(View view) {
+    private void addViewToMediaView(View view) {
         if (view == null) {
             return;
         }

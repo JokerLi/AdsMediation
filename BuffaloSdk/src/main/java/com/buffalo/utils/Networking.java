@@ -7,7 +7,6 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import com.buffalo.adsdk.InternalAdError;
-import com.buffalo.picks.internal.loader.MarketConfig;
 import com.buffalo.utils.internal.ThreadFactoryUtil;
 
 import java.io.BufferedOutputStream;

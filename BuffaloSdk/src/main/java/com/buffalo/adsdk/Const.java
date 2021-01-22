@@ -13,15 +13,12 @@ public final class Const {
     public static final int NET_TIMEOUT = 15 * 1000;
     public static final String KEY_JUHE = "ad";
     public static final String KEY_FB = "fb";
-    public static final String KEY_CM = "cm";
     public static final String KEY_BD = "bd";
     public static final String KEY_GDT = "gdt";
     public static final String KEY_MV = "mv";
-    public static final String KEY_OB = "ob";
     public static final String KEY_AC = "ac";
 
     //banner
-    public static final String KEY_CM_BANNER = "cmb";
     public static final String KEY_MP_BANNER = "mpb";
 
     //for iclick
@@ -50,12 +47,10 @@ public final class Const {
 
     public static final String KEY_LOOPME_VIDEO = "lpv";
     public static final String KEY_VUNGLE_VIDEO = "vgv";
-    public static final String KEY_VAST_VIDEO = "vav";
     public static final String KEY_FACEBOOK_VIDEO = "fbv";
     public static final String KEY_MOPUB_VIDEO = "mpv";
 
 
-    public static final String KEY_CM_INTERSTITIAL = "cmi";
     public static final String KEY_FB_INTERSTITIAL = "fbi";
     public static final String KEY_AB_INTERSTITIAL = "abi";
 
@@ -85,8 +80,6 @@ public final class Const {
         public static final int pega_mopub_h = 6020;
         public static final int pega_mopub_l = 6021;
         public static final int pega_mopub_banner = 6022;
-
-        public static final int pega_picks_interstitial = 6037;
 
         public static final int inmobi = 6033;
         public static final int mv = 6042;
@@ -185,10 +178,5 @@ public final class Const {
         DELETE_AD_FROM_DUPL_AD_CACHE,           //从第三个缓存池删除广告
         DELETE_EXPIRED_AD,                      //删除过期广告
         GET_FEED_AD_NOT_REQUEST_COMPLETE        //触发getAd时，第一次请求没有返回成功
-    }
-
-    public static boolean isPicksAd(String adTypeName) {
-        return KEY_CM.equals(adTypeName) || KEY_VAST_VIDEO.equals(adTypeName)
-                || KEY_CM_BANNER.equals(adTypeName) || KEY_CM_INTERSTITIAL.equals(adTypeName) || KEY_OB.equals(adTypeName);
     }
 }

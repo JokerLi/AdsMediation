@@ -36,7 +36,6 @@ public class BannerAdManagerRequest extends NativeAdManagerInternal {
 
     public void loadAd() {
         Logger.i(TAG, mPositionId + " loadAd");
-        mIsOpenPriority = false;
         mIsPreload = true;
         mOptimizeEnabled = false;
         mSrcNativeAd = null;

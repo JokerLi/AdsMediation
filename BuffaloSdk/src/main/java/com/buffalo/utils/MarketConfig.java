@@ -1,4 +1,4 @@
-package com.buffalo.picks.internal.loader;
+package com.buffalo.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,8 +6,6 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.picks.internal.AdWebViewUtils;
-import com.buffalo.utils.ThreadHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -147,9 +145,6 @@ public class MarketConfig {
 
     public static long getPosIdExpireTime(String posid) {
         // configuable cachetime
-//        PicksConfig config = PicksMob.getInstance().getConfig();
-//        if (config != null && config.enable_debug && config.cache_time > 0)
-//            return config.cache_time * 1000;
         String keyName = posid + POSID_EXPIRE_TIME_NAME;
         long time = getLong(keyName, 0L) * 1000;
         if (time <= 0) {
@@ -317,11 +312,7 @@ public class MarketConfig {
     private static final String WORLD_REQUEST_HOST = "ssdk.adkmob.com";
 
     public static String getHost() {
-        if (AdManager.sIsCnVersion) {
-            return CHINA_REQUEST_HOST;
-        } else {
-            return WORLD_REQUEST_HOST;
-        }
+        return WORLD_REQUEST_HOST;
     }
 
 }

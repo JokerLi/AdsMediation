@@ -396,17 +396,6 @@ public final class Commons {
         return stringBuilder.toString();
     }
 
-    // FIXME: 2016/7/12
-	/*public static int getAdAppShowType(INativeAd ad){
-		if(ad != null){
-			Object adObject = ad.getAdObject();
-			if(adObject instanceof OrionNativeAd){
-				return (((OrionNativeAd) adObject).getRawAd()).getAppShowType();
-			}
-		}
-		return -1;
-	}*/
-
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
@@ -460,29 +449,6 @@ public final class Commons {
         }
         return false;
     }
-
-    // FIXME: 2016/7/12
-	/*public static String getPkgUrl(INativeAd ad){
-		if(ad != null){
-			Object adObject = ad.getAdObject();
-			if(adObject instanceof OrionNativeAd){
-				return (((OrionNativeAd) adObject).getRawAd()).getPkgUrl();
-			}
-		}
-
-		return null;
-	}
-
-	public static String getAdPkg(INativeAd ad){
-		if(ad != null){
-			Object adObject = ad.getAdObject();
-			if(adObject instanceof OrionNativeAd){
-				return (((OrionNativeAd) adObject).getRawAd()).getPkg();
-			}
-		}
-		return null;
-	}*/
-
 
     public static void putValueIntoJson(JSONObject object, String key, String value) throws JSONException {
         if (TextUtils.isEmpty(key) || object == null) {

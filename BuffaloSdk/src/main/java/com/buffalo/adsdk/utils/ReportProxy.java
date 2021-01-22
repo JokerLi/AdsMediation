@@ -16,9 +16,7 @@ public interface ReportProxy {
     String KEY_AD_INDEX = "ad_index";
     String KEY_AD_LOAD_TIMES = "ad_load_times";
 
-
     void doNativeReport(Const.Event event, Map<String, String> extras);
 
-    //TODO:此接口不确定是否有效,想删除
     void doNetworkingReport(Map<String, String> extras);
 }

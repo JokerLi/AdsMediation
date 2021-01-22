@@ -21,7 +21,7 @@ public class AdvertisingIdHelper {
     private String mGAId = "";
     private boolean mTrackFlag = false;
 
-    private static boolean isGpAvailable(Context paramContext){
+    private static boolean isGpAvailable(Context paramContext) {
         try {
             PackageManager packageManager = paramContext.getPackageManager();
             packageManager.getPackageInfo("com.android.vending", 0);
@@ -33,17 +33,17 @@ public class AdvertisingIdHelper {
     }
 
     private static GooglePlayServiceConnection connection(Context paramContext) {
-        if(!isGpAvailable(paramContext)){
+        if (!isGpAvailable(paramContext)) {
             return null;
         }
-        try{
+        try {
             GooglePlayServiceConnection myServiceConnection = new GooglePlayServiceConnection();
             Intent localIntent = new Intent(
                     "com.google.android.gms.ads.identifier.service.START");
             localIntent.setPackage("com.google.android.gms");
             if (paramContext.bindService(localIntent, myServiceConnection, 1))
                 return myServiceConnection;
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             e.printStackTrace();
             return null;
         }
@@ -88,9 +88,9 @@ public class AdvertisingIdHelper {
                 this.kq.transact(2, data, reply, 0);
                 reply.readException();
                 limitAdTracking = 0 != reply.readInt();
-            } catch (SecurityException e){
+            } catch (SecurityException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 reply.recycle();
                 data.recycle();
             }
@@ -131,19 +131,19 @@ public class AdvertisingIdHelper {
 
     public String getGAId() {
 
-        if(!mFetchFinished){
+        if (!mFetchFinished) {
 
-            synchronized (LOCK){
-                if(!mFetchFinished){
-                    if(!mIsCalled){
+            synchronized (LOCK) {
+                if (!mFetchFinished) {
+                    if (!mIsCalled) {
                         mIsCalled = true;
                         asyncGetGAId();
                         startTimer();
                     }
-                    if(!ThreadHelper.runningOnUiThread()){
-                        try{
+                    if (!ThreadHelper.runningOnUiThread()) {
+                        try {
                             LOCK.wait();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -153,7 +153,7 @@ public class AdvertisingIdHelper {
         return mGAId;
     }
 
-    private void startTimer(){
+    private void startTimer() {
         ThreadHelper.postOnUiThreadDelayed(new Runnable() {
             @Override
             public void run() {
@@ -162,13 +162,13 @@ public class AdvertisingIdHelper {
         }, 500L);
     }
 
-    private void doneAndNotify(){
-        try{
-            synchronized (LOCK){
+    private void doneAndNotify() {
+        try {
+            synchronized (LOCK) {
                 mFetchFinished = true;
                 LOCK.notifyAll();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -178,7 +178,7 @@ public class AdvertisingIdHelper {
     }
 
 
-    private void asyncGetGAId(){
+    private void asyncGetGAId() {
 
         new Thread(new Runnable() {
             @Override
@@ -188,7 +188,7 @@ public class AdvertisingIdHelper {
                 Context context = AdManager.getContext();
                 GooglePlayServiceConnection conn = connection(context);
 
-                if(conn == null){
+                if (conn == null) {
                     doneAndNotify();
                     return;
                 }
@@ -200,15 +200,15 @@ public class AdvertisingIdHelper {
 
                     adid = idInterface.getId();
                     track = idInterface.isLimitAdTrackingEnabled(false);
-                }  catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
-                    try{
-                        if(null != conn){
+                } finally {
+                    try {
+                        if (null != conn) {
                             context.unbindService(conn);
                         }
+                    } catch (IllegalArgumentException localIllegalArgumentException2) {
                     }
-                    catch (IllegalArgumentException localIllegalArgumentException2){}
                 }
                 if (!TextUtils.isEmpty(adid)) {
                     mGAId = adid;
@@ -218,14 +218,17 @@ public class AdvertisingIdHelper {
             }
         }).start();
     }
+
     private static AdvertisingIdHelper instance = null;
-    public static AdvertisingIdHelper getInstance(){
-        if(instance == null){
+
+    public static AdvertisingIdHelper getInstance() {
+        if (instance == null) {
             instance = new AdvertisingIdHelper();
         }
         return instance;
 
     }
-    private AdvertisingIdHelper(){
+
+    private AdvertisingIdHelper() {
     }
 }

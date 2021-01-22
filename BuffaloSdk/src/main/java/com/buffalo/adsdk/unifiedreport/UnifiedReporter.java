@@ -101,11 +101,7 @@ public class UnifiedReporter {
     }
 
     private String getReportUrl() {
-        if (!AdManager.sIsCnVersion) {
-            return "http://ud.adkmob.com/r/?";
-        } else {
-            return "http://ud.mobad.ijinshan.com/r/?";
-        }
+        return "http://ud.mobad.ijinshan.com/r/?";
     }
 
     private String getConstantParam() {
