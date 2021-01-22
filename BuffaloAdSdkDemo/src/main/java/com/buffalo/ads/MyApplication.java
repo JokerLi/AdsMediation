@@ -16,9 +16,9 @@ import com.buffalo.ads.utils.LocaleConfig;
 import com.buffalo.ads.utils.VolleyUtil;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.BitmapListener;
-import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.ImageDownloadListener;
+import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.utils.ReportProxy;
 
 import java.util.Map;
@@ -54,40 +54,23 @@ public class MyApplication extends Application {
         AdManager.enableLog();
         //设置是否是内部产品
 
-        if (BuildConfig.IS_CN_VERSION) {
-            //初始化聚合sdk
-            // 开启本地的配置文件模式
-            //TODO:默认配置
-            NativeAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default.udconf"), false);
-            //第一个参数：Context
-            //第三个参数：产品的渠道ID
+        NativeAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default_en.udconf"), true);
 
-            AdManager.applicationInit(this, "1096", BuildConfig.IS_CN_VERSION);
+        //初始化聚合sdk
+        //第一个参数：Context
+        //第二个参数：mid =1005
+        AdManager.applicationInit(this, "10000", false);
 
-            AdManager.addLoaderClass(Const.KEY_GDT, "com.buffalo.adsdk.adapter.GDTNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_BD, "com.buffalo.adsdk.adapter.BaiduNativeAdapter");
-        } else {
-            NativeAdManagerFactory.setDefaultConfig(FileUtils.readStringFromAsset(this, "default_en.udconf"), true);
+        AdManager.addLoaderClass(Const.KEY_FB, "com.buffalo.ads.adapter.FacebookNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_YH, "com.buffalo.ads.adapter.YahooNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_MP, "com.buffalo.ads.adapter.MopubNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_AB, "com.buffalo.ads.adapter.AdmobNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_MP_BANNER, "com.buffalo.ads.adapter.MopubBannerAdapter");
+        AdManager.addLoaderClass(Const.KEY_FB_INTERSTITIAL, "com.buffalo.ads.adapter.FacebookInterstitialAdapter");
+        AdManager.addLoaderClass(Const.KEY_AB_INTERSTITIAL, "com.buffalo.ads.adapter.AdmobInterstitialAdapter");
+        AdManager.addLoaderClass(Const.KEY_MV, "com.buffalo.ads.adapter.MobvistaNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_IM, "com.buffalo.ads.adapter.InmobiNativeAdapter");
 
-            //初始化聚合sdk
-            //第一个参数：Context
-            //第二个参数：mid =1005
-            AdManager.applicationInit(this, "10000", BuildConfig.IS_CN_VERSION);
-
-            AdManager.addLoaderClass(Const.KEY_FB, "com.buffalo.adsdk.adapter.FacebookNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_YH, "com.buffalo.adsdk.adapter.YahooNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_MP, "com.buffalo.adsdk.adapter.MopubNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_AB, "com.buffalo.adsdk.adapter.AdmobNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_CM_BANNER, "com.buffalo.adsdk.adapter.PicksBannerAdapter");
-            AdManager.addLoaderClass(Const.KEY_MP_BANNER, "com.buffalo.adsdk.adapter.MopubBannerAdapter");
-            AdManager.addLoaderClass(Const.KEY_FB_INTERSTITIAL, "com.buffalo.adsdk.adapter.FacebookInterstitialAdapter");
-            AdManager.addLoaderClass(Const.KEY_AB_INTERSTITIAL, "com.buffalo.adsdk.adapter.AdmobInterstitialAdapter");
-            AdManager.addLoaderClass(Const.KEY_MV, "com.buffalo.adsdk.adapter.MobvistaNativeAdapter");
-            AdManager.addLoaderClass(Const.KEY_IM, "com.buffalo.adsdk.adapter.InmobiNativeAdapter");
-        }
-
-        AdManager.addLoaderClass(Const.KEY_CM, "com.buffalo.adsdk.adapter.PicksNativeAdapter");
-        AdManager.addLoaderClass(Const.KEY_CM_INTERSTITIAL, "com.buffalo.adsdk.adapter.PicksInterstatialAdapter");
         AdViewConfigHelper.setRenderAdapter();
 
         //banner , interstitialad ,vast video

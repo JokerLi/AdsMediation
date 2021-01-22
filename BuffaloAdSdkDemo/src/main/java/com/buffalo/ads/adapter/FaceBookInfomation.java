@@ -1,4 +1,4 @@
-package com.buffalo.adsdk.adapter;
+package com.buffalo.ads.adapter;
 
 import android.net.Uri;
 import android.text.TextUtils;

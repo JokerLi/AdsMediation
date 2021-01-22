@@ -2,13 +2,14 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 22
+        minSdkVersion 14
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        flavorDimensions "versionCode"
     }
 
     buildTypes {
@@ -26,22 +27,22 @@ repositories {
 }
 
 dependencies {
-    provided 'com.android.support:support-v4:22.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
-
-task copy_bins() {
-    String verName = getVerName();
-    String outputFolder = getAARDesfolder();
-    copy {
-        from("build/outputs/aar/cmadsdkextension-release.aar")
-        into(outputFolder)
-        include("cmadsdkextension-release.aar")
-        rename("cmadsdkextension-release", "cmadsdk_ext_${verName}")
-    }
-    copy {
-        from("build/outputs/mapping/release")
-        into(outputFolder)
-        include("mapping.txt")
-        rename("mapping", "mapping_${verName}")
-    }
-}
+//
+//task copy_bins() {
+//    String verName = getVerName();
+//    String outputFolder = getAARDesfolder();
+//    copy {
+//        from("build/outputs/aar/cmadsdkextension-release.aar")
+//        into(outputFolder)
+//        include("cmadsdkextension-release.aar")
+//        rename("cmadsdkextension-release", "cmadsdk_ext_${verName}")
+//    }
+//    copy {
+//        from("build/outputs/mapping/release")
+//        into(outputFolder)
+//        include("mapping.txt")
+//        rename("mapping", "mapping_${verName}")
+//    }
+//}

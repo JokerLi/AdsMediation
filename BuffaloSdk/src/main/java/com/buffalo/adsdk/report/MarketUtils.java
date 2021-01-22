@@ -5,14 +5,13 @@ import android.text.TextUtils;
 import java.net.URLEncoder;
 import java.util.Map;
 
-
 public class MarketUtils {
     private static AESUtils mAesUtils;
 
-	public static void reportExtra(String type, String pkg, String posid, int reportRes, Map<String, String> reportParams, String placementID, String rawStr, boolean isTest){
-		String encryRawJson = encryptRawJson(rawStr);
-		ReportFactory.reportNetworkAdLog(type, pkg, reportRes, posid, null, reportParams, placementID, encryRawJson, 0, isTest);
-	}
+    public static void reportExtra(String type, String pkg, String posid, int reportRes, Map<String, String> reportParams, String placementID, String rawStr, boolean isTest) {
+        String encryRawJson = encryptRawJson(rawStr);
+        ReportFactory.reportNetworkAdLog(type, pkg, reportRes, posid, null, reportParams, placementID, encryRawJson, 0, isTest);
+    }
 
     public static String encryptRawJson(String rawJson) {
         String facebookData = "";

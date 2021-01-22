@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import androidx.collection.LruCache;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -84,7 +86,7 @@ public class VolleyUtil {
         sImageLoader.get(imageUrl, preloadImageListener);
     }
 
-    public static class BitmapLruCache extends android.support.v4.util.LruCache<String, Bitmap> implements ImageLoader.ImageCache {
+    public static class BitmapLruCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
         public static int getDefaultLruCacheSize() {
             final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
             final int cacheSize = maxMemory / 8;

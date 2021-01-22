@@ -23,7 +23,7 @@ public class Assure {
             super(msg);
         }
     }
-    
+
     public static void throwMessage(String msg) {
         if (DEBUG) {
             throw new AssureException(msg);
@@ -51,11 +51,11 @@ public class Assure {
     public static void NOTREACHED() {
         throwMessage("NOTREACHED");
     }
-    
+
     public static void NOT_IMPLEMENTED() {
         throwMessage("NOT_IMPLEMENTED");
     }
-    
+
     public static void checkTrue(boolean value) {
         if (!value)
             throwMessage("AssureTrue");
@@ -65,12 +65,12 @@ public class Assure {
         if (value)
             throwMessage("AssureFalse");
     }
-    
+
     public static void checkNull(Object obj) {
         if (obj != null)
             throwMessage("AssureNull");
     }
-    
+
     public static void checkNotNull(Object obj) {
         if (obj == null)
             throwMessage("AssureNotNull");
@@ -131,14 +131,14 @@ public class Assure {
         if (collection == null || collection.length <= 0)
             throwMessage("checkNotEmptyArray");
     }
-    
+
     public static void DCHECK(boolean value) {
         if (!value) {
-        	if (DEBUG)
-        		throwMessage("DCHECK ERROR");
+            if (DEBUG)
+                throwMessage("DCHECK ERROR");
         }
     }
-    
+
     public static void checkRunningOnUIThread() {
         DCHECK(ThreadHelper.runningOnUiThread());
     }

@@ -8,7 +8,7 @@ import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.InternalAdError;
 import com.buffalo.adsdk.utils.NativeReportUtil;
-import com.buffalo.adsdk.utils.PerferenceUtil;
+import com.buffalo.adsdk.utils.PreferenceUtil;
 import com.buffalo.utils.BackgroundThread;
 import com.buffalo.utils.Commons;
 import com.buffalo.utils.Logger;
@@ -261,7 +261,7 @@ public class RequestConfig {
     private ConfigResponse updateToLocal(String obj) {
         if (TextUtils.isEmpty(obj)) {
             Logger.i(TAG, "request server config failed, use last local config");
-            obj = PerferenceUtil.getCacheJsonStr("");
+            obj = PreferenceUtil.getCacheJsonStr("");
         }
         if (mForceDefaultConfig || (TextUtils.isEmpty(obj) && !TextUtils.isEmpty(mDefaultConfig) && !getDefaultConfigUsed())) {
             setDefaultConfigUsed(true);
@@ -274,7 +274,7 @@ public class RequestConfig {
             return null;
         }
         Logger.i(TAG, "save config to shareprefrence:" + obj);
-        PerferenceUtil.saveCacheJsonStr(obj);
+        PreferenceUtil.saveCacheJsonStr(obj);
         ConfigResponse response = ConfigResponse.createFrom(obj);
         Logger.i(TAG, "reponse:" + response);
         return response;
@@ -288,19 +288,19 @@ public class RequestConfig {
     }
 
     public void putConfigLoadedTime(long value) {
-        PerferenceUtil.putLong(KEY_CONFIG_LOADED_TIME, value);
+        PreferenceUtil.putLong(KEY_CONFIG_LOADED_TIME, value);
     }
 
     public long getConfigLoadedTime() {
-        return PerferenceUtil.getLong(KEY_CONFIG_LOADED_TIME, 0);
+        return PreferenceUtil.getLong(KEY_CONFIG_LOADED_TIME, 0);
     }
 
     public boolean getDefaultConfigUsed() {
-        return PerferenceUtil.getBoolean(KEY_DEFAULT_CONFIG, false);
+        return PreferenceUtil.getBoolean(KEY_DEFAULT_CONFIG, false);
     }
 
     public void setDefaultConfigUsed(boolean value) {
-        PerferenceUtil.putBoolean(KEY_DEFAULT_CONFIG, value);
+        PreferenceUtil.putBoolean(KEY_DEFAULT_CONFIG, value);
     }
 
 

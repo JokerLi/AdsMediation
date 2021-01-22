@@ -2,9 +2,13 @@ package com.buffalo.adsdk.interstitial;
 
 
 public interface InterstitialAdCallBack {
-	public void onAdLoadFailed(int errorCode);
-	public void onAdLoaded();
-	public void onAdClicked();
-	public void onAdDisplayed();
-	public void onAdDismissed();
+    void onAdLoadFailed(int errorCode);
+
+    void onAdLoaded();
+
+    void onAdClicked();
+
+    void onAdDisplayed();
+
+    void onAdDismissed();
 }

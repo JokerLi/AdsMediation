@@ -12,13 +12,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.buffalo.ads.ui.AdViewHelper;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.RequestParams;
+import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.nativead.NativeAd;
 import com.buffalo.adsdk.nativead.NativeAdManager;
-import com.buffalo.ads.R;
-import com.buffalo.ads.ui.AdViewHelper;
-import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
@@ -42,7 +41,7 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
     /* 广告 Native大卡样式 */
     private Button loadAdButton;
     CheckBox mCheckboxPriority;
-    private String mAdPosid = BuildConfig.IS_CN_VERSION ? "1096101" : "10000100";
+    private String mAdPosid = "10000100";
 
     private View mAdView = null;
     //用户记录功能页面的PV的ID，可以自定义
@@ -62,15 +61,15 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
         findViewById(R.id.getad).setOnClickListener(this);
         findViewById(R.id.btn_load_seq).setOnClickListener(this);
         findViewById(R.id.btn_load_service).setOnClickListener(this);
-        mReportModeRCV = (CheckBox)findViewById(R.id.report_mode_rcv);
-        mReportModeUNI = (CheckBox)findViewById(R.id.report_mode_uni);
-        mReportExtra = (CheckBox)findViewById(R.id.report_extra);
-        mOfferInsert = (CheckBox)findViewById(R.id.offer_info_insert);
-        mOfferCallback = (CheckBox)findViewById(R.id.offer_info_callback);
-        mOfferClick = (CheckBox)findViewById(R.id.offer_info_click);
+        mReportModeRCV = (CheckBox) findViewById(R.id.report_mode_rcv);
+        mReportModeUNI = (CheckBox) findViewById(R.id.report_mode_uni);
+        mReportExtra = (CheckBox) findViewById(R.id.report_extra);
+        mOfferInsert = (CheckBox) findViewById(R.id.offer_info_insert);
+        mOfferCallback = (CheckBox) findViewById(R.id.offer_info_callback);
+        mOfferClick = (CheckBox) findViewById(R.id.offer_info_click);
 
-        mEditKey = (EditText)findViewById(R.id.edit_text_key);
-        mEditValue = (EditText)findViewById(R.id.edit_text_value);
+        mEditKey = (EditText) findViewById(R.id.edit_text_key);
+        mEditValue = (EditText) findViewById(R.id.edit_text_value);
 
         mCheckboxPriority = (CheckBox) findViewById(R.id.checkbox_priority);
         mCheckboxPriority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -120,7 +119,7 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
                 return;
             }
             Toast.makeText(NativeAdSampleActivity.this,
-                    "Ad index is: " + ((NativeAd)ad).getAdPriorityIndex(), Toast.LENGTH_SHORT).show();
+                    "Ad index is: " + ((NativeAd) ad).getAdPriorityIndex(), Toast.LENGTH_SHORT).show();
 
             //如果只要实现某个类型的广告，需要判断广告类型通过ad.getAdTypeName()
             ad.setAdClickDelegate(new BaseNativeAd.IAdClickDelegate() {
@@ -152,13 +151,13 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
             }
             mAdView = AdViewHelper.createAdView(getApplicationContext(), ad);
             nativeAdContainer.addView(mAdView);
-            if(mIsReportExtra) {
-                Map<String,String> extra = new HashMap<String,String>();
+            if (mIsReportExtra) {
+                Map<String, String> extra = new HashMap<String, String>();
                 String key = mEditKey.getText().toString();
                 String value = mEditValue.getText().toString();
                 extra.put(key, value);
                 ad.registerViewForInteraction_withExtraReportParams(mAdView, extra);
-            }else {
+            } else {
                 ad.registerViewForInteraction(mAdView);
             }
         }
@@ -172,10 +171,10 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
         }
     }
 
-    private void updateConfig(){
-        int offerInsert = mOfferInsert.isChecked()?1:0;
-        int offerCallback = mOfferCallback.isChecked()?2:0;
-        int offerClick = mOfferClick.isChecked()?4:0;
+    private void updateConfig() {
+        int offerInsert = mOfferInsert.isChecked() ? 1 : 0;
+        int offerCallback = mOfferCallback.isChecked() ? 2 : 0;
+        int offerClick = mOfferClick.isChecked() ? 4 : 0;
         int switcher = offerInsert | offerCallback | offerClick;
         mIsReportExtra = mReportExtra.isChecked();
         AdManager.setReportSwitcher(switcher);

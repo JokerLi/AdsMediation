@@ -7,7 +7,7 @@ import com.buffalo.adsdk.BuildConfig;
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.RequestParams;
-import com.buffalo.adsdk.base.INativeReqeustCallBack;
+import com.buffalo.adsdk.base.INativeRequestCallBack;
 import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.adsdk.config.RequestConfig;
 import com.buffalo.adsdk.utils.NativeReportUtil;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class NativeAdManagerInternal implements INativeReqeustCallBack, LifeCycleDelegate, INativeAd.IAdOnClickListener {
+public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycleDelegate, INativeAd.IAdOnClickListener {
     protected static String TAG = Const.TAG;
     // AD 优先级保护时间
     private static final int AD_PRIORITY_PROTECTION_TIME = BuildConfig.DEBUG ? 8 * 1000 : 8 * 1000;

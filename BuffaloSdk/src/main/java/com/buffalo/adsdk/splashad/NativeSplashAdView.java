@@ -146,7 +146,7 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
         }
     }
 
-    public void destory() {
+    public void destroy() {
         if (mMainContainer != null) {
             mMainContainer.removeAllViews();
             mMainContainer = null;

@@ -12,7 +12,7 @@ import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 public class TestService extends Service {
 
     private NativeAdManager nativeAdManager;
-    private String mAdPosid = BuildConfig.IS_CN_VERSION ? "1096101" : "1094101";
+    private String mAdPosid = "1094101";
 
     public TestService() {
     }

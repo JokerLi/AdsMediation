@@ -1,11 +1,12 @@
-package com.buffalo.adsdk.adapter;
+package com.buffalo.ads.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.adapter.NativeloaderAdapter;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.mobvista.msdk.MobVistaConstans;

@@ -10,11 +10,11 @@ import java.util.Map;
 public class NativeReportUtil {
 
     public static void doNativeAdSuccessReport(Const.Event event, String id) {
-       doNativeAdSuccessReport(event, id, 0L);
+        doNativeAdSuccessReport(event, id, 0L);
     }
 
     public static void doNativeAdSuccessReport(Const.Event event, String mid, long time) {
-       doNativeAdSuccessReport(event, mid, null, time, null);
+        doNativeAdSuccessReport(event, mid, null, time, null);
     }
 
     public static void doGetAdFailReport(Const.Event event, String posid, String errorCode) {
@@ -26,7 +26,7 @@ public class NativeReportUtil {
     }
 
     public static void doGetAdReport(Const.Event event, String posid, String adTypeName,
-                                               int adIndex) {
+                                     int adIndex) {
         Map<String, String> data = new HashMap<>();
         data.put(ReportProxy.KEY_AD_INDEX, "" + adIndex);
         doNativeAdReport(event, posid, adTypeName, 0L, null, data);
@@ -55,7 +55,7 @@ public class NativeReportUtil {
     }
 
     private static void doNativeAdReport(Const.Event event, String posid, String adTypeName,
-                                         long time, String error, Map<String, String> extras){
+                                         long time, String error, Map<String, String> extras) {
         BaseFactory factory = AdManager.createFactory();
         if (factory != null) {
             factory.doNativeReport(event, posid, adTypeName, time, error, extras);

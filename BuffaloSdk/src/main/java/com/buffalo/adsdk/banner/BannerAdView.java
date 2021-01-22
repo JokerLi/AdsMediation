@@ -16,8 +16,8 @@ import com.buffalo.utils.Logger;
 import com.buffalo.utils.NetworkUtil;
 
 public class BannerAdView extends FrameLayout {
-    private static final String TAG = "CMAdView";
-    protected String posid;
+    private static final String TAG = "BannerAdView";
+    protected String posId;
     protected BannerAdSize adSize;
     protected BannerAdListener mBannerAdListener;
     private BannerAdManagerRequest managerRequest;
@@ -38,7 +38,7 @@ public class BannerAdView extends FrameLayout {
 
     public BannerAdView(Context context, String posid, BannerAdSize size) {
         super(context);
-        this.posid = posid;
+        this.posId = posid;
         this.adSize = size;
         this.mContext = context;
 
@@ -77,11 +77,11 @@ public class BannerAdView extends FrameLayout {
 
     public void loadAd() {
         Logger.i(TAG, "loadAd");
-        if (mContext != null && !TextUtils.isEmpty(posid) && adSize != null) {
+        if (mContext != null && !TextUtils.isEmpty(posId) && adSize != null) {
             internalLoadAd();
         } else {
             Logger.e(TAG, "params error ,context is null: " + (mContext == null)
-                    + "or posid is empty:" + TextUtils.isEmpty(posid)
+                    + "or posid is empty:" + TextUtils.isEmpty(posId)
                     + "or banner adsize is null:" + (adSize == null));
             notifyFailed(NativeAdError.PARAMS_ERROR);
         }
@@ -97,7 +97,7 @@ public class BannerAdView extends FrameLayout {
         //destroy the last view
         invalidateView();
         if (managerRequest == null) {
-            managerRequest = new BannerAdManagerRequest(mContext, posid, adSize);
+            managerRequest = new BannerAdManagerRequest(mContext, posId, adSize);
         }
         managerRequest.setAdListener(new MyBannerViewLoadListener());
         managerRequest.loadAd();
@@ -188,7 +188,7 @@ public class BannerAdView extends FrameLayout {
     private void setAutorefreshEnabled(boolean enabled) {
         final boolean autorefreshChanged = mAdWasLoaded && (mAutoRefreshEnabled != enabled);
         if (autorefreshChanged) {
-            Logger.d(TAG, "Refresh " + ((enabled) ? "enabled" : "disabled") + " for posid :" + posid);
+            Logger.d(TAG, "Refresh " + ((enabled) ? "enabled" : "disabled") + " for posid :" + posId);
         }
 
         mAutoRefreshEnabled = enabled;
@@ -272,7 +272,7 @@ public class BannerAdView extends FrameLayout {
 
     private void notifyFailed(final int errorCode) {
         if (mBannerAdListener != null) {
-            mBannerAdListener.adFailedToLoad(BannerAdView.this, errorCode);
+            mBannerAdListener.onAdFailed(BannerAdView.this, errorCode);
         }
     }
 

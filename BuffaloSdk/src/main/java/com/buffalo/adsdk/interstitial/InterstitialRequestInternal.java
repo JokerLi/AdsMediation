@@ -10,14 +10,11 @@ import com.buffalo.utils.Logger;
 import com.buffalo.baseapi.ads.INativeAd;
 
 public class InterstitialRequestInternal extends NativeAdManagerInternal {
-
-
     private INativeAd mCachedAd;
 
     public InterstitialRequestInternal(Context context, String posId) {
         super(context, posId);
     }
-
 
     @Override
     public void loadAd() {
@@ -64,7 +61,6 @@ public class InterstitialRequestInternal extends NativeAdManagerInternal {
         }
         super.adLoaded(adTypeName);
     }
-
 
     @Override
     protected void checkIfAllfinished() {

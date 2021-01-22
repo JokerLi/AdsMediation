@@ -10,5 +10,4 @@ public class SplashConst {
     public static int ERROR_LOAD_LISTENER_IS_NULL = 1206;
     public static int ERROR_GET_AD_IMGE_IS_NULL = 1207;
     public static int ERROR_ONLY_CAN_LOAD_ONCE = 1208;
-
 }

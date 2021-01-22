@@ -13,7 +13,6 @@ import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.baseapi.ads.INativeAd;
 
 public class RenderViewHelper {
-
     public static void setImageView(final ImageView imageView, String url) {
         if (imageView == null || TextUtils.isEmpty(url)) {
             return;

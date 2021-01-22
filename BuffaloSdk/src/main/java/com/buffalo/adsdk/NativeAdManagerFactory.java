@@ -16,9 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NativeAdManagerFactory extends BaseFactory {
-
     private static ImageDownloadListener sImageDownloadListener;
     private static ReportProxy sReportProxy;
+
     public NativeAdManagerFactory() {
     }
 
@@ -28,23 +28,22 @@ public class NativeAdManagerFactory extends BaseFactory {
         RequestConfig.getInstance().requestConfig(false);
     }
 
-    public static void setDefaultConfig(String defaultConfig, boolean force){
+    public static void setDefaultConfig(String defaultConfig, boolean force) {
         RequestConfig.getInstance().setDefaultConfig(defaultConfig, force);
     }
 
-
     @Override
     public Object createAdLoader(Context context, Object posBean) {
-        if(!(posBean instanceof  PosBean)){
+        if (!(posBean instanceof PosBean)) {
             return null;
         }
         PosBean bean = (PosBean) posBean;
-        if(posBean == null || TextUtils.isEmpty(bean.name)){
+        if (TextUtils.isEmpty(bean.name)) {
             return null;
         }
         try {
             String str[] = bean.name.split("_");
-            if(str.length == 0){
+            if (str.length == 0) {
                 Logger.i(Const.TAG, "config type:" + bean.name + ",has error");
                 return null;
             }
@@ -55,8 +54,8 @@ public class NativeAdManagerFactory extends BaseFactory {
             String adTypeName = bean.name;
 
             Object nativeloaderAdapter = null;
-            if(mNativeAdLoaderClassMap.containsKey(loaderName)) {
-                Logger.i(Const.TAG, "create NativeAdapter:" + adTypeName + " [ loaderName:" + loaderName + "]" );
+            if (mNativeAdLoaderClassMap.containsKey(loaderName)) {
+                Logger.i(Const.TAG, "create NativeAdapter:" + adTypeName + " [ loaderName:" + loaderName + "]");
                 nativeloaderAdapter = createObject(mNativeAdLoaderClassMap.get(loaderName));
             } else {
                 Logger.w(Const.TAG, "unmatched native adtype:" + adTypeName);
@@ -70,11 +69,11 @@ public class NativeAdManagerFactory extends BaseFactory {
         return null;
     }
 
-    public static void setImageDownloadListener(ImageDownloadListener listener){
+    public static void setImageDownloadListener(ImageDownloadListener listener) {
         sImageDownloadListener = listener;
     }
 
-    public static ImageDownloadListener getImageDownloadListener(){
+    public static ImageDownloadListener getImageDownloadListener() {
         return sImageDownloadListener;
     }
 
@@ -92,17 +91,16 @@ public class NativeAdManagerFactory extends BaseFactory {
         return loader;
     }
 
-    public static void setReportProxy(ReportProxy reportProxy){
+    public static void setReportProxy(ReportProxy reportProxy) {
         sReportProxy = reportProxy;
     }
-
 
 
     //区分native, banner, video埋点，否则不方便查数据
     @Override
     public void doNativeReport(Const.Event event, String posid,
-                               String adTypeName,long loadTime, String error, Map<String,String> extras) {
-        if(sReportProxy != null){
+                               String adTypeName, long loadTime, String error, Map<String, String> extras) {
+        if (sReportProxy != null) {
             Map<String, String> map = createReportMap(posid, adTypeName, loadTime);
             map.put(ReportProxy.KEY_ERROR_CODE, error);
             if (extras != null && extras.size() > 0) {
@@ -113,7 +111,7 @@ public class NativeAdManagerFactory extends BaseFactory {
     }
 
 
-    private Map<String, String> createReportMap(String posid, String adTypeName, long time){
+    private Map<String, String> createReportMap(String posid, String adTypeName, long time) {
         Map<String, String> extras = new HashMap<String, String>();
         extras.put(ReportProxy.KEY_POSID, posid);
         extras.put(ReportProxy.KEY_ADTYPE_NAME, adTypeName);
@@ -123,12 +121,12 @@ public class NativeAdManagerFactory extends BaseFactory {
 
 
     @Override
-    public void doNetworkingReport(String pos, String source, String error){
-        HashMap<String,String> map = new HashMap<String,String>();
+    public void doNetworkingReport(String pos, String source, String error) {
+        HashMap<String, String> map = new HashMap<String, String>();
         map.put("pos", pos);
         map.put("source", source);
         map.put("error", error);
-        if(sReportProxy != null){
+        if (sReportProxy != null) {
             sReportProxy.doNetworkingReport(map);
         }
     }

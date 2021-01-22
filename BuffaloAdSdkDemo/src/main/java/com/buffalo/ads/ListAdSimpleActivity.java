@@ -13,7 +13,7 @@ import com.buffalo.baseapi.ads.INativeAd;
 
 public class ListAdSimpleActivity extends Activity implements ListAdsAdapter.IFeedAdFetch {
     private static String TAG = ListAdSimpleActivity.class.getSimpleName();
-    private String POSID = BuildConfig.IS_CN_VERSION ? "1096100" : "1094100";
+    private String POSID = "1094100";
     private ListView mListNativeAd;
     private FeedListAdManager mFeedListAdManager;
     private ListAdsAdapter mAdapter;

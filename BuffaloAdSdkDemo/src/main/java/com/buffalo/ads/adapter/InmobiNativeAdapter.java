@@ -1,17 +1,18 @@
-package com.buffalo.adsdk.adapter;
+package com.buffalo.ads.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.NativeAdError;
+import com.buffalo.adsdk.adapter.NativeloaderAdapter;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.inmobi.ads.InMobiAdRequestStatus;
 import com.inmobi.ads.InMobiNative;

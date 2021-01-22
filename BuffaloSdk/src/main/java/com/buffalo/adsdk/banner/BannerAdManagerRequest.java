@@ -12,7 +12,6 @@ import com.buffalo.utils.Logger;
 import com.buffalo.baseapi.ads.INativeAd;
 
 public class BannerAdManagerRequest extends NativeAdManagerInternal {
-
     private INativeAd mSrcNativeAd;
 
     public Object getAdObject() {

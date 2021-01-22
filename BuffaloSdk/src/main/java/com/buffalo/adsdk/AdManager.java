@@ -10,14 +10,9 @@ import com.buffalo.utils.Logger;
 import com.buffalo.utils.ReceiverUtils;
 import com.buffalo.utils.gaid.AdvertisingIdHelper;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 public abstract class AdManager {
     private static Context mContext;
     private static String mMid;
-    //全局的开关
-    public static final int DEFAULT_SSPID = -1;
     private static String sChannelId;
     private static BaseFactory sAdFactory = null;
     //控制offer上报开关
@@ -28,7 +23,6 @@ public abstract class AdManager {
     private static boolean sIsDebug = false;
     private static int mPegasusReportViewCheckIntervalMills = 500;
     public static boolean sIsCnVersion = true;
-    private static Map<String, String> mOrionTestAppId = new Hashtable<String, String>();
 
     public static void applicationInit(Context context, String mid, boolean isCnVersion) {
         applicationInit(context, mid, isCnVersion, "");
@@ -44,13 +38,9 @@ public abstract class AdManager {
         mMid = mid;
         sChannelId = channelId;
         AdvertisingIdHelper.getInstance().getGAId();
-        // FIXME: 2016/7/12 
-//        PicksMob.getInstance().init();
         BackgroundThread.postOnIOThread(new Runnable() {
             @Override
             public void run() {
-                // FIXME: 2016/7/12
-//                freshPicksConfig();
                 com.buffalo.picks.internal.ReceiverUtils.regist(mContext);
                 ReceiverUtils.regist(mContext);
                 createFactory();
@@ -62,18 +52,9 @@ public abstract class AdManager {
         });
     }
 
-    //更新配置
-    // FIXME: 2016/7/12 
-    /*private static void freshPicksConfig() {
-        if (MarketConfig.isExpired(MarketConfig.KEY_MARKET_CONFIG, MarketConfig.EXPIRE_FOR_ONE_DAY)) {
-            CmMarketHttpClient.getInstance().freshConfig(getMid());
-        }
-    }*/
-
     public static Context getContext() {
         return mContext;
     }
-
 
     public static String getMid() {
         return mMid;

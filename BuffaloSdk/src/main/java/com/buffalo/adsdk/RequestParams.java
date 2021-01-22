@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestParams {
-
     public static final String KEY_REPORT_SHOW_IGNORE_VIEW = "report_show_ignore_view";
     public static final String KEY_BANNER_VIEW_SIZE = "key_banner_view_size";
     public static final String KEY_SELECT_ALL_PRIORITYAD = "key_select_all_priority";

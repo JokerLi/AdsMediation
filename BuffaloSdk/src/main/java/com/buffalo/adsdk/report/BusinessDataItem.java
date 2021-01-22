@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import org.json.JSONObject;
 
-public class BuinessDataItem {
+public class BusinessDataItem {
     private String mPkgName;
     private int mSug;
     private int mRes;
@@ -17,7 +17,7 @@ public class BuinessDataItem {
     private int mEvent;
     private boolean mIsTestMode = false;
 
-    public BuinessDataItem(String pkgName, int res, String des, int duration, int playtime, int event) {
+    public BusinessDataItem(String pkgName, int res, String des, int duration, int playtime, int event) {
         if (!TextUtils.isEmpty(pkgName)) {
             mPkgName = pkgName.replace("&", "_");
         }

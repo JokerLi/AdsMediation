@@ -1,7 +1,6 @@
 package com.buffalo.adsdk;
 
 public enum InternalAdError {
-
     NETWORK_OTHER_ERROR(200, "network other error"),
     NETWORK_ENCODING_ERROR(201, "network encoding error"),
     NETWORK_PROTOCOL_ERROR(202, "network protocol error"),

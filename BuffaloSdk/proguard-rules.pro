@@ -119,7 +119,7 @@
 -keep class com.buffalo.adsdk.Const$* {*;}
 -keep class com.buffalo.adsdk.NativeAdError {*;}
 -keep class com.buffalo.adsdk.utils.ReportProxy{*;}
-#-keep class com.buffalo.adsdk.utils.PerferenceUtil{*;}
+#-keep class com.buffalo.adsdk.utils.PreferenceUtil{*;}
 
 #utils & don't need to keep
 -keep class com.buffalo.utils.NetworkUtil{*;}

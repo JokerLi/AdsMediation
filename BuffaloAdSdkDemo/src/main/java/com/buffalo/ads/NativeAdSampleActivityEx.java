@@ -12,47 +12,45 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buffalo.ads.ui.AdViewHelper;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.RequestParams;
+import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.config.PosBean;
 import com.buffalo.adsdk.nativead.NativeAdManagerEx;
-import com.buffalo.utils.Commons;
-import com.buffalo.ads.R;
-import com.buffalo.ads.ui.AdViewHelper;
-import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
+import com.buffalo.utils.Commons;
 
 import java.util.List;
 
 
 public class NativeAdSampleActivityEx extends Activity implements OnClickListener {
-
-	/* 广告 Native大卡样式 */
+    /* 广告 Native大卡样式 */
     private NativeAdManagerEx nativeAdManagerEx;
     private FrameLayout nativeAdContainer;
     /* 广告 Native大卡样式 */
     private Button loadAdButton;
     CheckBox mCheckboxPriority;
-	private String mAdPosid = BuildConfig.IS_CN_VERSION ? "1096101": "1094101";
+    private String mAdPosid = "1094101";
 
     private View mAdView = null;
     private EditText etPicksLoadNum;
-	//用户记录功能页面的PV的ID，可以自定义
-	public static  final int PAGE_UNITID = 10001;
+    //用户记录功能页面的PV的ID，可以自定义
+    public static final int PAGE_UNITID = 10001;
     RequestParams params = null;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         etPicksLoadNum = (EditText) findViewById(R.id.et_picks_num);
         params = new RequestParams();
         nativeAdManagerEx = new NativeAdManagerEx(this, mAdPosid);
         nativeAdManagerEx.setRequestParams(params);
-		nativeAdContainer = (FrameLayout) findViewById(R.id.big_ad_container);
-		loadAdButton = (Button) findViewById(R.id.btn_load);
-		loadAdButton.setOnClickListener(this);
+        nativeAdContainer = (FrameLayout) findViewById(R.id.big_ad_container);
+        loadAdButton = (Button) findViewById(R.id.btn_load);
+        loadAdButton.setOnClickListener(this);
         findViewById(R.id.getad).setOnClickListener(this);
         findViewById(R.id.getad_image).setOnClickListener(this);
         findViewById(R.id.btn_load_seq).setOnClickListener(this);
@@ -66,10 +64,10 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
             }
         });
         showInfomation("posId: " + mAdPosid);
-		initNativeAd();
-		//使用此类可以记录功能页面PV，注意：使用前确保聚合是已经初始化的
-		AdManager.reportPV(PAGE_UNITID);
-	}
+        initNativeAd();
+        //使用此类可以记录功能页面PV，注意：使用前确保聚合是已经初始化的
+        AdManager.reportPV(PAGE_UNITID);
+    }
 
     @Override
     protected void onDestroy() {
@@ -77,8 +75,8 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
     }
 
     @Override
-	public void onClick(View v) {
-		switch (v.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.btn_load:
             case R.id.btn_load_seq:
                 requestNativeAd(v.getId());
@@ -95,8 +93,8 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
         }
     }
 
-    private void getAd(boolean forceImage){
-        if(nativeAdManagerEx != null){
+    private void getAd(boolean forceImage) {
+        if (nativeAdManagerEx != null) {
             INativeAd ad = nativeAdManagerEx.getAd(forceImage);
             if (ad == null) {
                 Toast.makeText(NativeAdSampleActivityEx.this,
@@ -124,14 +122,14 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
 
     private void requestNativeAd(int id) {
         String inputNum = etPicksLoadNum.getText().toString();
-        if(Commons.isNumeric(inputNum)){
+        if (Commons.isNumeric(inputNum)) {
             params.setPicksLoadNum(Integer.parseInt(inputNum));
             nativeAdManagerEx.setRequestParams(params);
         }
 
         if (id == R.id.btn_load) {
             nativeAdManagerEx.loadAd();
-        }else {
+        } else {
             nativeAdManagerEx.preloadAd();
         }
     }
@@ -165,9 +163,9 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
 
                 String info = "";
                 if (posbeans != null) {
-                    info += "posbeans: " + posbeans.size()+" ";
+                    info += "posbeans: " + posbeans.size() + " ";
                     for (PosBean posBean : posbeans) {
-                        info +=  posBean.getAdName().toString()+">";
+                        info += posBean.getAdName().toString() + ">";
                     }
                 } else {
                     info = "posbeans: empty";

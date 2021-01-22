@@ -85,8 +85,8 @@ public class RequestUFS {
         mEditor = sSharedPreferences.edit();
     }
 
-    public void requestUFSInfo(){
-        if(!Commons.isMainProcess(mContext)){
+    public void requestUFSInfo() {
+        if (!Commons.isMainProcess(mContext)) {
             Logger.d(TAG, "request error, please request ufs in main process");
             return;
         }
@@ -100,21 +100,21 @@ public class RequestUFS {
     }
 
     private void requestUFSInfoInternal() {
-        if(!AdManager.isRequestUfs()){
+        if (!AdManager.isRequestUfs()) {
             Logger.d(TAG, "request error, please turn on switch");
             return;
         }
 
-        if(!NetworkUtil.isNetworkAvailable(mContext)){
+        if (!NetworkUtil.isNetworkAvailable(mContext)) {
             Logger.d(TAG, "network is unavailable");
             registerConnChangeReveiver();
             return;
         }
 
-        if(TextUtils.isEmpty(mGaid)){
+        if (TextUtils.isEmpty(mGaid)) {
             Logger.d(TAG, "gaid is null, get gaid again");
             mGaid = AdvertisingIdHelper.getInstance().getGAId();
-            if(TextUtils.isEmpty(mGaid)){
+            if (TextUtils.isEmpty(mGaid)) {
                 Logger.d(TAG, "gaid is null, cannot request ufs");
                 return;
             }
@@ -176,7 +176,7 @@ public class RequestUFS {
      */
     private String decryptResult(byte[] result) {
         try {
-            Cipher cipher  = Cipher.getInstance("AES/CBC/NoPadding");
+            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
             SecretKeySpec secretKeySpec = new SecretKeySpec(SDK_SK2.getBytes(), "AES");
             byte[] ivPadding = new byte[16];
             for (int i = 0, len = ivPadding.length; i < len; ++i) {
@@ -207,10 +207,10 @@ public class RequestUFS {
 
 
     /**
-     * @param  'sig=78b557c32da4937278fbafed4222d405 (md5串用16进制小写字母表示)'
+     * @param 'sig=78b557c32da4937278fbafed4222d405 (md5串用16进制小写字母表示)'
      * @return
      */
-    private String generateSigStr(String params){
+    private String generateSigStr(String params) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(params.getBytes(), 0, params.length());
@@ -221,7 +221,6 @@ public class RequestUFS {
         }
         return null;
     }
-
 
 
     private void saveResultInfo(String info) {
@@ -243,54 +242,56 @@ public class RequestUFS {
         }
     }
 
-    public static int getAgeRange(){
-        if(sAge == -1){
+    public static int getAgeRange() {
+        if (sAge == -1) {
             try {
                 sAge = sSharedPreferences.getInt(KEY_AGE, AGE_UNKNOW);
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
         return sAge;
     }
 
-    public static int getGender(){
-        if(sGender == -1){
+    public static int getGender() {
+        if (sGender == -1) {
             try {
                 sGender = sSharedPreferences.getInt(KEY_GENDER, GENDER_UNKNOW);
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
         return sGender;
     }
 
-    private class ConnectionChangeReceiver extends BroadcastReceiver{
+    private class ConnectionChangeReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(NetworkUtil.isNetworkAvailable(mContext)) {
+            if (NetworkUtil.isNetworkAvailable(mContext)) {
                 Logger.d(TAG, "network changed : request again");
                 requestUFSInfo();
             }
         }
     }
 
-    private void unRegisterConnChangeReveiver(){
+    private void unRegisterConnChangeReveiver() {
         try {
-            if(mContext != null && mConnectionChangeReceiver != null){
+            if (mContext != null && mConnectionChangeReceiver != null) {
                 mContext.getApplicationContext().unregisterReceiver(mConnectionChangeReceiver);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
 
-    private void registerConnChangeReveiver(){
+    private void registerConnChangeReveiver() {
         try {
             if (mContext != null) {
                 IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
                 mConnectionChangeReceiver = new ConnectionChangeReceiver();
                 mContext.getApplicationContext().registerReceiver(mConnectionChangeReceiver, filter);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

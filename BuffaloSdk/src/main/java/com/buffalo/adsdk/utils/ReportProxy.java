@@ -21,5 +21,4 @@ public interface ReportProxy {
 
     //TODO:此接口不确定是否有效,想删除
     void doNetworkingReport(Map<String, String> extras);
-
 }

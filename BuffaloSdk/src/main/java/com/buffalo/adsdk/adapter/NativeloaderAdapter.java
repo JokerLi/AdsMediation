@@ -1,7 +1,7 @@
 package com.buffalo.adsdk.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.Const;
@@ -14,8 +14,12 @@ import java.util.Map;
 
 public abstract class NativeloaderAdapter {
     public static final int DEFAULT_LOAD_SIZE = 1;
-    public static final int RES_TYPE_RCV = 0;
-    public static final int RES_TYPE_PEG = 1;
+
+    private static final String AD_LOAD_ADS = "ad_load_ads";
+    private static final String AD_LOAD_AD = "ad_load_ad";
+    private static final String FAILED = "failed";
+
+    private NativeAdapterListener mListener;
 
     public interface NativeAdapterListener {
         void onNativeAdLoaded(INativeAd nativeAd);
@@ -28,20 +32,18 @@ public abstract class NativeloaderAdapter {
     //对Adapter传入的参数进行检查，默认检查方式是placementId不为null
     // 需要特殊检查的复写此方法
     public boolean extrasAreValid(Map<String, Object> extras) {
-        try {
-            if (extras != null && extras.containsKey(BaseNativeAd.KEY_PLACEMENT_ID)) {
-                String object = (String) extras.get(BaseNativeAd.KEY_PLACEMENT_ID);
-                return !TextUtils.isEmpty(object);
-            }
-        } catch (Exception e) {
+        if (extras == null || !extras.containsKey(BaseNativeAd.KEY_PLACEMENT_ID)) {
+            return false;
+        }
 
+        Object stringValue = extras.get(BaseNativeAd.KEY_PLACEMENT_ID);
+        if (stringValue instanceof String) {
+            return !TextUtils.isEmpty((String) stringValue);
         }
         return false;
     }
 
-    public abstract void loadNativeAd(@NonNull final Context context,
-
-                                      @NonNull final Map<String, Object> extras);
+    public abstract void loadNativeAd(@NonNull final Context context, @NonNull final Map<String, Object> extras);
 
     public int getDefaultLoadNum() {
         return DEFAULT_LOAD_SIZE;
@@ -55,28 +57,21 @@ public abstract class NativeloaderAdapter {
 
     public abstract long getDefaultCacheTime();
 
-
-    private NativeAdapterListener mListener;
-
     public void setAdapterListener(NativeAdapterListener listener) {
         mListener = listener;
     }
 
     protected void notifyNativeAdLoaded(final INativeAd nativeAd) {
-        callBack(ADLOAD_AD, nativeAd, null, "");
+        callBack(AD_LOAD_AD, nativeAd, null, "");
     }
 
     protected void notifyNativeAdLoaded(final List<INativeAd> list) {
-        callBack(ADLOAD_ADS, null, list, "");
+        callBack(AD_LOAD_ADS, null, list, "");
     }
 
     protected void notifyNativeAdFailed(final String errorInfo) {
         callBack(FAILED, null, null, errorInfo);
     }
-
-    private final String ADLOAD_ADS = "adload_ads";
-    private final String ADLOAD_AD = "adload_ad";
-    private final String FAILED = "failed";
 
     private void callBack(String type, final INativeAd nativeAd, final List<INativeAd> list, final String errorInfo) {
         ThreadHelper.runOnUiThread(new CallBackRunnable(type, nativeAd, list, errorInfo));
@@ -98,9 +93,9 @@ public abstract class NativeloaderAdapter {
         @Override
         public void run() {
             if (mListener != null) {
-                if (ADLOAD_ADS.equals(type)) {
+                if (AD_LOAD_ADS.equals(type)) {
                     mListener.onNativeAdLoaded(list);
-                } else if (ADLOAD_AD.equals(type)) {
+                } else if (AD_LOAD_AD.equals(type)) {
                     mListener.onNativeAdLoaded(nativeAd);
                 } else if (FAILED.equals(type)) {
                     mListener.onNativeAdFailed(errorInfo);

@@ -6,8 +6,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 
 import com.buffalo.ads.ui.ShowCasePagerAdapter;

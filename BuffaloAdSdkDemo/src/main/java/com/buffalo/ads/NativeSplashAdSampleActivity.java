@@ -17,7 +17,7 @@ import com.buffalo.adsdk.splashad.NativeSplashAd;
 import com.buffalo.adsdk.splashad.NativeSplashAdView;
 
 public class NativeSplashAdSampleActivity extends Activity implements View.OnClickListener {
-    private String mAdPosid = BuildConfig.IS_CN_VERSION ? "1096101": "1094101";
+    private String mAdPosid = "1094101";
     private static final String TAG = "NativeSplashAd";
     private RelativeLayout mContainer;
     private RelativeLayout mSetContainer;
@@ -37,7 +37,7 @@ public class NativeSplashAdSampleActivity extends Activity implements View.OnCli
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_native_splash_ad);
-        setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mSetContainer = (RelativeLayout) findViewById(R.id.native_splash_top);
         mContainer = (RelativeLayout) findViewById(R.id.splash_brand_container);
         mIsSetShowTime = (CheckBox) findViewById(R.id.is_show_time);
@@ -76,30 +76,30 @@ public class NativeSplashAdSampleActivity extends Activity implements View.OnCli
 
                 @Override
                 public void onAdImpression() {
-                    Log.e("SplashBrandActivity","brands splash onAdImpression");
+                    Log.e("SplashBrandActivity", "brands splash onAdImpression");
                 }
 
                 @Override
                 public void onEndAdImpression() {
-                    Log.e("SplashBrandActivity","brands splash onEndAdImpression");
+                    Log.e("SplashBrandActivity", "brands splash onEndAdImpression");
                     jump();
                 }
 
                 @Override
                 public void onClick() {
-                    Log.e("SplashBrandActivity","brands splash onClick");
+                    Log.e("SplashBrandActivity", "brands splash onClick");
                     jump();
                 }
 
                 @Override
                 public void onSkipClick() {
-                    Log.e("SplashBrandActivity","brands splash onSkipClick");
+                    Log.e("SplashBrandActivity", "brands splash onSkipClick");
                     jump();
                 }
 
                 @Override
                 public void onFailed(int resultCode) {
-                    Log.e("SplashBrandActivity","brands splash onFailed resultCode = " + resultCode);
+                    Log.e("SplashBrandActivity", "brands splash onFailed resultCode = " + resultCode);
                     jump();
                 }
             });
@@ -136,7 +136,7 @@ public class NativeSplashAdSampleActivity extends Activity implements View.OnCli
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.btn_splash_load:
                 loadAd();
                 if (mSetContainer != null) {

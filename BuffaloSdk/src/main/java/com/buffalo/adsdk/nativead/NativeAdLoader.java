@@ -176,7 +176,7 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
         extras.put(BaseNativeAd.KEY_CACHE_TIME, defaultCacheTime);
         if(requestParams != null) {
             if(requestParams instanceof BannerParams){
-                extras.put(BaseNativeAd.KEY_BANNER_VIEW_SIZE, ((BannerParams) requestParams).getCMBannerAdSize());
+                extras.put(BaseNativeAd.KEY_BANNER_VIEW_SIZE, ((BannerParams) requestParams).getBannerAdSize());
             }
             extras.put(BaseNativeAd.KEY_CHECK_VIEW, !requestParams.getReportShowIgnoreView());
             extras.put(BaseNativeAd.KEY_FILTER_ADMOB_INSTALL_AD, requestParams.isFilterAdmobInstallAd());

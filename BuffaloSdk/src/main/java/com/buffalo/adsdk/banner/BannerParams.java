@@ -9,7 +9,7 @@ public class BannerParams extends RequestParams {
         }
     }
 
-    public BannerAdSize getCMBannerAdSize() {
+    public BannerAdSize getBannerAdSize() {
         if (mParams != null) {
             Object bannerSize = mParams.get(KEY_BANNER_VIEW_SIZE);
             if (null != bannerSize) {

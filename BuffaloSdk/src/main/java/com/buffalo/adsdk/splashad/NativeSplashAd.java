@@ -8,20 +8,20 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.buffalo.adsdk.NativeAdManagerFactory;
+import com.buffalo.adsdk.BitmapListener;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.NativeAdTemplate;
 import com.buffalo.adsdk.R;
 import com.buffalo.adsdk.view.AdViewRender;
-import com.buffalo.adsdk.BitmapListener;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Logger;
 
 public class NativeSplashAd {
-    private String mPosid;
+    private String mPosId;
     private Context mContext;
     private SplashAdListener mListener;
-    private NativeSplashLoader mAdloader;
+    private NativeSplashLoader mAdLoader;
     private Runnable mTimeOutTask;
     private boolean mIsRequested;
     private boolean mIsTimeOut;
@@ -34,7 +34,7 @@ public class NativeSplashAd {
     private INativeAd mAd;
 
     public NativeSplashAd(Context context, String posid, SplashAdListener listener) {
-        this.mPosid = posid;
+        this.mPosId = posid;
         if (null == context) {
             return;
         }
@@ -55,21 +55,21 @@ public class NativeSplashAd {
         mIsRequested = true;
         startTimeoutTask();
         initLoader();
-        mAdloader.loadAd();
+        mAdLoader.loadAd();
     }
 
     private NativeSplashLoader initLoader() {
-        if (mAdloader == null) {
-            mAdloader = new NativeSplashLoader(mContext, mPosid);
-            mAdloader.setAdListener(new NativeSplashLoader.AdListener() {
+        if (mAdLoader == null) {
+            mAdLoader = new NativeSplashLoader(mContext, mPosId);
+            mAdLoader.setAdListener(new NativeSplashLoader.AdListener() {
                 @Override
                 public void onAdLoaded() {
                     Logger.i(Const.TAG, "native splash ad loaded");
                     Logger.i(Const.TAG, "native splash get ad");
-                    INativeAd tempAd = mAdloader.getAd();
+                    INativeAd tempAd = mAdLoader.getAd();
                     //先get一次ad，如果ad为空或者ad的大图为空则再get一次，因为拉取广告调用的是native的load接口(并发两个)
                     if (tempAd == null || TextUtils.isEmpty(tempAd.getAdCoverImageUrl())) {
-                        tempAd = mAdloader.getAd();
+                        tempAd = mAdLoader.getAd();
                     }
                     if (tempAd == null) {
                         Logger.i(Const.TAG, "native splash get ad is null");
@@ -123,7 +123,7 @@ public class NativeSplashAd {
                 }
             });
         }
-        return mAdloader;
+        return mAdLoader;
     }
 
     private void callbackLoadSuccess(final INativeAd ad) {

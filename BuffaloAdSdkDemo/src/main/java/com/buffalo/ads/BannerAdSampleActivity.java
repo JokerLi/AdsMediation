@@ -9,14 +9,12 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.buffalo.adsdk.banner.BannerAdListener;
 import com.buffalo.adsdk.banner.BannerAdSize;
 import com.buffalo.adsdk.banner.BannerAdView;
-import com.buffalo.adsdk.banner.BannerAdListener;
-
 
 public class BannerAdSampleActivity extends Activity implements BannerAdListener {
-
-    private String mPlacementId = BuildConfig.IS_CN_VERSION ? "": "1094108";
+    private String mPlacementId = "1094108";
 
     private BannerAdView mAdView;
     private RelativeLayout bannerView;
@@ -30,8 +28,8 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
     }
 
     private void initView() {
-        bannerView = (RelativeLayout) findViewById(R.id.banner_view);
-        refresh_time = (EditText) findViewById(R.id.refresh_time);
+        bannerView = findViewById(R.id.banner_view);
+        refresh_time = findViewById(R.id.refresh_time);
         findViewById(R.id.btn_load).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,9 +39,9 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
         findViewById(R.id.btn_destroy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mAdView != null){
+                if (mAdView != null) {
                     mAdView.onDestroy();
-					mAdView = null;
+                    mAdView = null;
                 }
             }
         });
@@ -57,11 +55,11 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
         });
     }
 
-    private void load(){
+    private void load() {
         String time = refresh_time.getText().toString();
-        mAdView =  new BannerAdView(this, mPlacementId, BannerAdSize.BANNER_300_250);
+        mAdView = new BannerAdView(this, mPlacementId, BannerAdSize.BANNER_300_250);
         mAdView.setAdListener(this);
-        if(!TextUtils.isEmpty(time)){
+        if (!TextUtils.isEmpty(time)) {
             mAdView.setBannerAutorefreshTime(Integer.parseInt(time));
         }
         mAdView.loadAd();
@@ -69,15 +67,15 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
 
     @Override
     public void onAdLoaded(BannerAdView adView) {
-        Log.e("TAG", "Activity adLoaded :" + mAdView.hashCode() + ", adView:" +adView.hashCode());
-        Toast.makeText(this, "onAdLoaded : "+ adView.getAdType(), Toast.LENGTH_SHORT).show();
+        Log.e("TAG", "Activity adLoaded :" + mAdView.hashCode() + ", adView:" + adView.hashCode());
+        Toast.makeText(this, "onAdLoaded : " + adView.getAdType(), Toast.LENGTH_SHORT).show();
         bannerView.removeAllViews();
         bannerView.addView(adView);
         mAdView.prepare();
     }
 
     @Override
-    public void adFailedToLoad(BannerAdView adView, int errorCode) {
+    public void onAdFailed(BannerAdView adView, int errorCode) {
         Toast.makeText(this, "adFailedToLoad,and errorCode = " + errorCode, Toast.LENGTH_SHORT).show();
     }
 
@@ -88,7 +86,7 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
 
     @Override
     protected void onDestroy() {
-        if(mAdView != null){
+        if (mAdView != null) {
             mAdView.onDestroy();
         }
         super.onDestroy();

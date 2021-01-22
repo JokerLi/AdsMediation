@@ -1,7 +1,6 @@
 package com.buffalo.ads;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.buffalo.ads.ui.AdViewHelper;
 import com.buffalo.adsdk.banner.BannerAdSize;
 import com.buffalo.adsdk.banner.BannerParams;
 import com.buffalo.adsdk.nativead.NativeAdManager;
-import com.buffalo.ads.R;
-import com.buffalo.ads.ui.AdViewHelper;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
 public class CustomAdViewActivity extends FragmentActivity implements INativeAdLoaderListener, View.OnClickListener {
-    private static final String POSID = BuildConfig.IS_CN_VERSION ? "1096106" : "1094109";
+    private static final String POSID = "1094109";
 
     private NativeAdManager nativeAdManager;
     private INativeAd nativeAd = null;
@@ -43,17 +43,17 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
     private void initView() {
         lv_video_container = (ListView) findViewById(R.id.lv_video_container);
         mAdViewcontainer = (RelativeLayout) findViewById(R.id.rl_ad_container);
-        mSmallViewGroup = (ViewGroup)findViewById(R.id.result_small_vast);
+        mSmallViewGroup = (ViewGroup) findViewById(R.id.result_small_vast);
         findViewById(R.id.btn_load).setOnClickListener(this);
         findViewById(R.id.btn_preload).setOnClickListener(this);
         findViewById(R.id.btn_show).setOnClickListener(this);
-        ((CheckBox)findViewById(R.id.btn_bind_ListView)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((CheckBox) findViewById(R.id.btn_bind_ListView)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isBindListView = isChecked;
             }
         });
-        ((CheckBox)findViewById(R.id.btn_open_priority)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((CheckBox) findViewById(R.id.btn_open_priority)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (nativeAdManager != null) {
@@ -78,7 +78,7 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_load:
                 loadAd(false);
                 break;
@@ -91,8 +91,8 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
         }
     }
 
-    private void initManager(){
-        if(nativeAdManager == null){
+    private void initManager() {
+        if (nativeAdManager == null) {
             nativeAdManager = new NativeAdManager(this, POSID);
         }
         nativeAdManager.enableVideoAd();//do not filter video ad
@@ -102,13 +102,14 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
         nativeAdManager.setRequestParams(mRequestParams);
         nativeAdManager.setNativeAdListener(this);
     }
-    private void loadAd(boolean preLoad){
-        if(nativeAdManager != null){
-            if(preLoad){
-                Log.i("CustomVideoAdapter","video preload");
+
+    private void loadAd(boolean preLoad) {
+        if (nativeAdManager != null) {
+            if (preLoad) {
+                Log.i("CustomVideoAdapter", "video preload");
                 nativeAdManager.preloadAd();
-            }else{
-                Log.i("CustomVideoAdapter","video load");
+            } else {
+                Log.i("CustomVideoAdapter", "video load");
                 nativeAdManager.loadAd();
             }
         }
@@ -116,23 +117,24 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
 
 
     View adView;
-    private void showAd(){
-        if(nativeAdManager != null){
+
+    private void showAd() {
+        if (nativeAdManager != null) {
             INativeAd ad = nativeAdManager.getAd();
-            if(ad == null){
+            if (ad == null) {
                 Toast.makeText(this, "no valid ad", Toast.LENGTH_SHORT).show();
                 return;
             }
             nativeAd = ad;
 //            nativeAd.setVideoAdListener(new MyVideoAdListener());
             adView = AdViewHelper.createAdView(this.getApplicationContext(), nativeAd);
-            if(adView == null || nativeAd == null){
+            if (adView == null || nativeAd == null) {
                 return;
             }
             Toast.makeText(this, "ad show", Toast.LENGTH_SHORT).show();
-            if(isBindListView){
+            if (isBindListView) {
                 showAdViewBindListView(adView);
-            }else{
+            } else {
                 showAdView(adView);
             }
         }
@@ -187,7 +189,7 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
 //
 //    }
 
-    private void showAdView(View view){
+    private void showAdView(View view) {
         lv_video_container.setVisibility(View.GONE);
         mAdViewcontainer.setVisibility(View.VISIBLE);
         mAdViewcontainer.removeAllViews();
@@ -195,7 +197,7 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
         mAdViewcontainer.addView(view);
     }
 
-    private void showAdViewBindListView(View view){
+    private void showAdViewBindListView(View view) {
         mAdViewcontainer.removeAllViews();
         mAdViewcontainer.setVisibility(View.GONE);
         lv_video_container.setVisibility(View.VISIBLE);
@@ -215,10 +217,10 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
     @Override
     protected void onResume() {
         super.onResume();
-        if(nativeAdManager != null){
+        if (nativeAdManager != null) {
             nativeAdManager.onResume();
         }
-        if(nativeAd != null){
+        if (nativeAd != null) {
             nativeAd.onResume();
         }
     }
@@ -226,10 +228,10 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
     @Override
     protected void onPause() {
         super.onPause();
-        if(nativeAdManager != null){
+        if (nativeAdManager != null) {
             nativeAdManager.onPause();
         }
-        if(nativeAd != null){
+        if (nativeAd != null) {
             nativeAd.onPause();
         }
     }
@@ -237,10 +239,10 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(nativeAdManager != null){
+        if (nativeAdManager != null) {
             nativeAdManager.onDestroy();
         }
-        if(nativeAd != null){
+        if (nativeAd != null) {
             nativeAd.onDestroy();
         }
     }
@@ -257,7 +259,7 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
 
     @Override
     public void adClicked(INativeAd nativeAd) {
-        Toast.makeText(this, "ad click, nativead : "+ nativeAd.getAdTitle() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ad click, nativead : " + nativeAd.getAdTitle(), Toast.LENGTH_SHORT).show();
     }
 
 

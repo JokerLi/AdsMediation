@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseFactory {
-
     public final Map<String, String> mNativeAdLoaderClassMap = new HashMap<>();
     public final Map<String, NativeAdTemplate.INativeAdViewAdapter> mNativeAdRenderMap = new HashMap<>();
 
@@ -16,7 +15,6 @@ public abstract class BaseFactory {
     public BaseFactory() {
     }
 
-
     public boolean addLoaderClass(String loaderKey, String loaderClass) {
         if (mNativeAdLoaderClassMap.containsKey(loaderKey))
             return false;
@@ -24,7 +22,6 @@ public abstract class BaseFactory {
         mNativeAdLoaderClassMap.put(loaderKey, loaderClass);
         return true;
     }
-
 
     public void addRenderAdapter(String loaderKey, NativeAdTemplate.INativeAdViewAdapter adapter) {
         if (TextUtils.isEmpty(loaderKey) || adapter == null) {
@@ -50,7 +47,6 @@ public abstract class BaseFactory {
                                         long loadTime,
                                         String error,
                                         Map<String, String> extras);
-
 
     public abstract void doNetworkingReport(String pos, String source, String error);
 

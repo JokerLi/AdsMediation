@@ -9,8 +9,7 @@ import com.buffalo.utils.gaid.AdvertisingIdHelper;
 
 import java.util.Map;
 
-public class BuinessPublicData {
-
+public class BusinessPublicData {
     public static final int AC_REQUEST_AD = 3;
     public static final int AC_VIEW = 50;
     public static final int AC_CLICK = 60;
@@ -47,8 +46,8 @@ public class BuinessPublicData {
     private int mLp = 0;
     private Map<String, String> mReportParam;
 
-    public static BuinessPublicData CREATE(String posid, int ac) {
-        BuinessPublicData data = new BuinessPublicData();
+    public static BusinessPublicData CREATE(String posid, int ac) {
+        BusinessPublicData data = new BusinessPublicData();
         data.mPos = posid;
         data.mMid = Integer.parseInt(AdManager.getMid());
         data.mAc = ac;
@@ -73,7 +72,7 @@ public class BuinessPublicData {
         this.mReportParam = reportParam;
     }
 
-    public BuinessPublicData rf(String rf) {
+    public BusinessPublicData rf(String rf) {
         mRf = rf;
         return this;
     }

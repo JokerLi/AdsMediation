@@ -1,4 +1,4 @@
-package com.buffalo.adsdk.adapter;
+package com.buffalo.ads.adapter;
 
 import com.buffalo.utils.Commons;
 import com.mopub.nativeads.NativeResponse;
