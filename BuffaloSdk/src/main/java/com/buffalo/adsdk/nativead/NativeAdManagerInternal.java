@@ -119,7 +119,6 @@ public class NativeAdManagerInternal implements INativeRequestCallBack, LifeCycl
 
         mIsFinished = false;
         mLoadStartTime = System.currentTimeMillis();
-        RequestConfig.getInstance().setPreload(mIsPreload);
         RequestConfig.getInstance().getBeans(mPositionId, new RequestConfig.ICallBack() {
 
             @Override

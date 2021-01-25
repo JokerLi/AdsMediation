@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "922829425310",
+    "project_id": "mediationdemo-74f14",
+    "storage_bucket": "mediationdemo-74f14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922829425310:android:a58720e51e05773030098f",
+        "android_client_info": {
+          "package_name": "com.buffalo.ads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922829425310-aeg5tsrj7035npg37qb3vukmus1vj4no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHOH_HLlRd2UdW5MWJ0Adc6gU69cQc8BQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922829425310-aeg5tsrj7035npg37qb3vukmus1vj4no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -157,11 +157,6 @@ public class FacebookInterstitialAdapter extends NativeloaderAdapter implements 
             if (mImpressionListener != null)
                 mImpressionListener.onLoggingImpression();
         }
-
-        @Override
-        public String getRawString(int operation) {
-            return FaceBookInfomation.getFacebookInterstitialOfferStringV482(mAd);
-        }
     }
 
 }

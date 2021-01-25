@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -27,7 +26,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
+    compileOnly "com.google.firebase:firebase-core:18.0.0"
+    compileOnly "com.google.firebase:firebase-config:20.0.0"
+    compileOnly 'com.google.firebase:firebase-analytics:18.0.0'
 }
 //
 //task copy_bins() {

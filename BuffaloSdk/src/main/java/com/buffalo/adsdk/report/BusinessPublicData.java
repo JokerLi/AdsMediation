@@ -1,10 +1,6 @@
 package com.buffalo.adsdk.report;
 
-import android.text.TextUtils;
-
 import com.buffalo.adsdk.AdManager;
-import com.buffalo.adsdk.Const;
-import com.buffalo.utils.Commons;
 import com.buffalo.utils.gaid.AdvertisingIdHelper;
 
 import java.util.Map;
@@ -26,82 +22,55 @@ public class BusinessPublicData {
     public static final int VAST_PARSE_END = 111;
     public static final int AC_USER_IMPRESSION = 502;
 
-    private String mPos;
     private int mMid;
-    private int mAc;
-    private String mAid;
-    private String mLan;
+    private String mPos;
+    private int mAction;
     private String mExt = "";
-    /**
-     * 如果为null，不需要最后传出去
-     */
-    private String mRf = null;
-    /**
-     * 等于-1不上报
-     */
-    private String mMcc = "";
     private String mGaid = "";
-    private String mMnc = "";
-    private String mChannelid;
-    private int mLp = 0;
+    private String mPlacementId;
+
     private Map<String, String> mReportParam;
 
-    public static BusinessPublicData CREATE(String posid, int ac) {
+    public static BusinessPublicData CREATE(String posId, String placementId, int action) {
         BusinessPublicData data = new BusinessPublicData();
-        data.mPos = posid;
+        data.mPos = posId;
+        data.mPlacementId = placementId;
         data.mMid = Integer.parseInt(AdManager.getMid());
-        data.mAc = ac;
-        data.mAid = Commons.getAndroidId();
-
-        String language = Commons.getLanguage(AdManager.getContext());
-        String country = Commons.getCountry(AdManager.getContext());
-        data.mLan = String.format("%s_%s", language, country);
-
-        data.mMcc = Commons.getMCC(AdManager.getContext());
+        data.mAction = action;
         data.mGaid = AdvertisingIdHelper.getInstance().getGAId();
-        data.mMnc = Commons.getMNC(AdManager.getContext());
-        data.mChannelid = AdManager.getChannelId();
         return data;
     }
 
-    public void setLpCode(int code) {
-        this.mLp = code;
+    public int getMid() {
+        return mMid;
+    }
+
+    public String getPos() {
+        return mPos;
+    }
+
+    public String getPlacementId() {
+        return mPlacementId;
+    }
+
+    public int getAction() {
+        return mAction;
+    }
+
+    public String getExt() {
+        return mExt;
+    }
+
+    public String getGaid() {
+        return mGaid;
     }
 
     public void setReportParam(Map<String, String> reportParam) {
         this.mReportParam = reportParam;
     }
 
-    public BusinessPublicData rf(String rf) {
-        mRf = rf;
-        return this;
-    }
-
-    public String toReportString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ac=" + mAc)
-                .append("&pos=" + mPos)
-                .append("&mid=" + mMid)
-                .append("&aid=" + mAid)
-                .append("&lan=" + mLan)
-                .append("&ext=" + mExt)
-                .append("&mcc=" + (TextUtils.isEmpty(mMcc) ? "" : mMcc))
-                .append("&mnc=" + (TextUtils.isEmpty(mMnc) ? "" : mMnc))
-                .append("&gaid=" + mGaid)
-                .append("&pl=2")
-                .append("&channelid=" + mChannelid)
-                .append("&lp=" + mLp)
-                .append("&sdkv=" + Const.VERSION)
-                .append("&at=" + System.currentTimeMillis());
-        if (mRf != null) {
-            sb.append("&rf=" + mRf);
-        }
-        if (mReportParam != null && !mReportParam.isEmpty()) {
-            for (String key : mReportParam.keySet()) {
-                sb.append("&").append(key).append("=").append(mReportParam.get(key));
-            }
-        }
-        return sb.toString();
+    public Map<String, String> getReportParam() {
+        return mReportParam;
     }
 }
 

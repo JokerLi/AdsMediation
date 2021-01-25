@@ -3,8 +3,9 @@ package com.buffalo.adsdk;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.buffalo.adsdk.config.RequestUFS;
-import com.buffalo.adsdk.unifiedreport.UnifiedReporter;
+import com.buffalo.adsdk.report.AdReporter;
+import com.buffalo.adsdk.report.BusinessDataReporter;
+import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.utils.BackgroundThread;
 import com.buffalo.utils.Logger;
 import com.buffalo.utils.ReceiverUtils;
@@ -44,7 +45,6 @@ public abstract class AdManager {
                 if (sAdFactory != null) {
                     sAdFactory.initConfig();
                 }
-                RequestUFS.getInstance().requestUFSInfo();
             }
         });
     }
@@ -110,10 +110,7 @@ public abstract class AdManager {
     }
 
     public static void reportPV(int pageId) {
-        try {
-            UnifiedReporter.getInstance().reportShow(pageId);
-        } catch (Exception e) {
-        }
+        AdReporter.report(ReportFactory.PAGE_VIEW, String.valueOf(pageId), null, null);
     }
 
     public static void setRequestUfs(boolean isRequestUfs) {

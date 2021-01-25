@@ -12,11 +12,11 @@ import com.buffalo.adsdk.adapter.NativeloaderAdapter;
 import com.buffalo.adsdk.banner.BannerParams;
 import com.buffalo.adsdk.base.BaseNativeAd;
 import com.buffalo.adsdk.config.PosBean;
+import com.buffalo.adsdk.report.AdReporter;
 import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Logger;
 import com.buffalo.utils.ThreadHelper;
-import com.buffalo.utils.UniReport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -306,21 +306,16 @@ public class NativeAdLoader extends BaseNativeLoaderAdapter implements Nativeloa
             return;
         }
         Map<String, String> reportParams = null;
-        String rawString = "";
         try {
             NativeAd ad = (NativeAd) nativeAd;
             //getRawString for click
-            rawString = ad.getRawString(2);
             reportParams = ad.addDupReportExtra(true, ad.hasReportClick(), ad.getExtraReportParams());
             ad.setHasReportClick(true);
         } catch (Exception e) {
 
         }
         String placementID = (String) mLocalExtras.get(BaseNativeAd.KEY_PLACEMENT_ID);
-        boolean isNativeAd = mInternalNativeLoader.getAdType() == Const.AdType.NATIVE;
-        UniReport.report(ReportFactory.CLICK, mInternalNativeLoader.getReportPkgName(getAdTypeName()),
-                mPositionId, mInternalNativeLoader.getReportRes(getAdTypeName()),
-                reportParams, placementID, isNativeAd, rawString);
+        AdReporter.report(ReportFactory.CLICK, mPositionId, reportParams, placementID);
     }
 
     Runnable mTimeoutRun = new Runnable() {

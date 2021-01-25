@@ -193,5 +193,3 @@
 #common class
 -keep class com.buffalo.adsdk.config.PosBean{*;}
 -keep class com.buffalo.utils.Commons{*;}
-
--keep class com.buffalo.utils.internal.report.Reporter{*;}

@@ -229,10 +229,6 @@ public abstract class BaseNativeAd implements INativeAd {
         return mSource;
     }
 
-    public String getRawString(int operation) {
-        return "";
-    }
-
     public void setIsHasDetailPage(boolean isHasDetailPage) {
         mIsHasDetailPage = isHasDetailPage;
     }

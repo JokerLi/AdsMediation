@@ -1,7 +1,9 @@
 package com.buffalo.ads.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
 import android.view.View;
 
 import com.buffalo.ads.NativeAdBaseContextWrapper;
@@ -169,11 +171,6 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
             if (mImpressionListener != null) {
                 mImpressionListener.onLoggingImpression();
             }
-        }
-
-        @Override
-        public String getRawString(int operation) {
-            return FaceBookInfomation.getRawJson(operation, mNativeAd);
         }
     }
 

@@ -7,6 +7,7 @@ import com.buffalo.utils.BackgroundThread;
 import java.util.Map;
 
 public class ReportFactory {
+    public static final String PAGE_VIEW = "page_view";
     public static final String VIEW = "view";
     public static final String CLICK = "click";
     public static final String INSERTVIEW = "insertview";
@@ -32,76 +33,58 @@ public class ReportFactory {
     public static final String EXTRA_VALUE_DUPLICATE = "2";
     public static final String EXTRA_VALUE_REUSED = "3";
 
-    private static BusinessDataItem toBuinessDataItem(String pkgName, int res) {
-        return toBuinessDataItem(pkgName, res, -1, -1, -1);
-    }
-
-    private static BusinessDataItem toBuinessDataItem(String pkgName, int res, int duration, int playtime, int event) {
-        BusinessDataItem item = new BusinessDataItem(pkgName, res, null, duration, playtime, event);
-        return item;
-    }
-
-    private static BusinessPublicData parsePublicData(String type, String rf, String posid, int ac) {
-        if (TextUtils.isEmpty(rf)) {
-            rf = null;
-        }
+    private static BusinessPublicData parsePublicData(String type, String posid, int ac, String placementId) {
         if (VIEW.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_VIEW).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_VIEW);
         } else if (CLICK.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_CLICK).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_CLICK);
         } else if (DETAIL_CLICK.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.DETAIL_CLICK).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.DETAIL_CLICK);
         } else if (INSTALL_SUCCESS.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_INSTALL).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_INSTALL);
         } else if (DOWN_SUCCESS.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_SUCCESS).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_SUCCESS);
         } else if (CLICK_FAILED.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.FAILED_CLICK).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.FAILED_CLICK);
         } else if (VAST_PLAY.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.VAST_PLAY).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.VAST_PLAY);
         } else if (VAST_CLICK.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.VAST_CLICK).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.VAST_CLICK);
         } else if (MPA_SHOW.equals(type)) {
-            return BusinessPublicData.CREATE(posid, ac).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, ac);
         } else if (MPA_CLICK.equals(type)) {
-            return BusinessPublicData.CREATE(posid, ac).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, ac);
         } else if (VAST_PARSE_START.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.VAST_PARSE_START).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.VAST_PARSE_START);
         } else if (VAST_PARSE_END.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.VAST_PARSE_END).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.VAST_PARSE_END);
         } else if (JUMP_DETAIL_PAGE.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.JUMP_DETAIL).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.JUMP_DETAIL);
         } else if (DETAIL_PAGE_SHOW.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.DETAIL_SHOW).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.DETAIL_SHOW);
         } else if (DETAIL_PAGE_CLOSE.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.CANCEL_CLICK).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.CANCEL_CLICK);
         } else if (REQUEST_AD.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_REQUEST_AD).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_REQUEST_AD);
         } else if (USER_IMPRESSION.equals(type)) {
-            return BusinessPublicData.CREATE(posid, BusinessPublicData.AC_USER_IMPRESSION).rf(rf);
+            return BusinessPublicData.CREATE(posid, placementId, BusinessPublicData.AC_USER_IMPRESSION);
         }
         return null;
     }
 
-    // NOTE: Only used for thirdparty network report to rcv
-    public static void reportNetworkAdLog(String type, String pkg, int reportRes, final String posid, String rf, Map<String, String> extraReportParams, String placementId, String rawJson, int ac, boolean isTest) {
+    public static void reportNetworkAdLog(String type, final String posId, Map<String, String> extraReportParams, String placementId, int action) {
         if (TextUtils.isEmpty(type)) {
             return;
         }
 
-        final BusinessPublicData publicData = parsePublicData(type, rf, posid, ac);
+        final BusinessPublicData publicData = parsePublicData(type, posId, action, placementId);
         if (publicData == null) {
             return;
         }
         publicData.setReportParam(extraReportParams);
-        final BusinessDataItem bdi = toBuinessDataItem(pkg, reportRes);
-        bdi.setExtraBuinessData(placementId, rawJson);
-        if (isTest) {
-            bdi.setTestMode(isTest);
-        }
         try {
             BusinessDataReporter bdr = new BusinessDataReporter();
-            bdr.setData(bdi, publicData);
+            bdr.setData(publicData);
             BackgroundThread.executeAsyncTask(bdr);
         } catch (Throwable e) {
         }

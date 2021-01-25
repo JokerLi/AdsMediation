@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.nativead.NativeAd;
+import com.buffalo.adsdk.report.AdReporter;
 import com.buffalo.adsdk.report.ReportFactory;
 
 import java.lang.ref.WeakReference;
@@ -137,23 +138,16 @@ public class ViewShowReporter implements Callable<Boolean> {
     }
 
     public static class Model {
-        private String pkgName;
         private String posid;
-        private int rcvReportRes;
-        private int pegReportRes;
         private Map<String, String> extraReportParams;
         private String placementId;
-        private String rawString;
         private NativeAd ad;
 
-        public Model(String pkgName, String posid, int rcvReportRes, int pegReportRes,
-                     Map<String, String> extraReportParams, String placementId, String rawString, NativeAd ad) {
-            this.pkgName = pkgName;
+        public Model(String posid,
+                     Map<String, String> extraReportParams, String placementId, NativeAd ad) {
             this.posid = posid;
-            this.rcvReportRes = rcvReportRes;
             this.extraReportParams = extraReportParams;
             this.placementId = placementId;
-            this.rawString = rawString;
             this.ad = ad;
         }
 
@@ -161,8 +155,8 @@ public class ViewShowReporter implements Callable<Boolean> {
             Logger.i(TAG, "report title = " + ad.getAdTitle());
             extraReportParams = ad.addDupReportExtra(false, ad.hasReportUserImpression(), extraReportParams);
             ad.setHasReportUserImpression(true);
-            UniReport.report(ReportFactory.USER_IMPRESSION, pkgName, posid, rcvReportRes, extraReportParams,
-                    placementId, ad.isNativeAd(), rawString);
+            AdReporter.report(ReportFactory.USER_IMPRESSION, posid, extraReportParams,
+                    placementId);
         }
     }
 }

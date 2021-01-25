@@ -200,11 +200,6 @@ public class YahooNativeAdapter extends NativeloaderAdapter {
             notifyNativeAdFailed(String.valueOf(i));
         }
 
-        @Override
-        public String getRawString(int operation) {
-            return YahooInfomation.getYahooNativeOfferJsonV112(operation, mPlacementId, mFlurryAdNative);
-        }
-
         private void setUpData(@NonNull FlurryAdNative flurryAdNative) {
             FlurryAdNativeAsset adTitle = flurryAdNative.getAsset(AD_TITLE);
             if (adTitle != null) {

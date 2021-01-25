@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.buffalo.ads"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 29
         flavorDimensions "versionCode"
     }
@@ -49,10 +49,12 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation files('libs/volley.jar')
     implementation fileTree(dir: 'libs/world_all', include: '*.jar')
-    implementation(name: 'play-services-analytics-7.8.0', ext: 'aar')
-    implementation(name: 'play-services-base-7.8.0', ext: 'aar')
-    implementation(name: 'play-services-ads-7.8.0', ext: 'aar')
     implementation(name: 'AudienceNetwork', ext: 'aar')
+    implementation 'com.google.firebase:firebase-ads:19.4.0'
+
+    implementation "com.google.firebase:firebase-core:18.0.0"
+    implementation "com.google.firebase:firebase-config:20.0.0"
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
 }
 
 /**

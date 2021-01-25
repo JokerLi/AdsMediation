@@ -93,7 +93,6 @@ public class ConfigChangeMonitor {
                 }
                 lastMonitorTime = System.currentTimeMillis();
                 RequestConfig.getInstance().requestConfig(true);
-                RequestUFS.getInstance().requestUFSInfo();
             }
         }
     }

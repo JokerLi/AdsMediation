@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.buffalo.adsdk.base.BaseNativeAd;
+import com.buffalo.adsdk.report.AdReporter;
 import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAd.ImpressionListener;
 import com.buffalo.baseapi.ads.IVideoAdapter;
 import com.buffalo.utils.Logger;
-import com.buffalo.utils.UniReport;
 import com.buffalo.utils.ViewShowReporter;
 
 import java.util.HashMap;
@@ -36,9 +36,6 @@ public class NativeAd extends BaseNativeAd implements
     private boolean mHasReportUserImpression;
     private boolean mHasReportInsertImpression;
     private boolean mHasReportClick;
-    private int mRcvReportRes;
-    private int mPegReportRes;
-    private String mReportPkgName;
     private String mPlacementId;
     private String mAdTypeName;
     private int mRegisterTimes;
@@ -70,15 +67,6 @@ public class NativeAd extends BaseNativeAd implements
         if (extras.containsKey(KEY_JUHE_POSID)) {
             setJuhePosid((String) extras.get(KEY_JUHE_POSID));
         }
-        if (extras.containsKey(KEY_RCV_REPORT_RES)) {
-            setRcvReportRes((Integer) extras.get(KEY_RCV_REPORT_RES));
-        }
-//        if(extras.containsKey(KEY_PEG_REPORT_RES)){
-//            setPegReportRes((Integer) extras.get(KEY_PEG_REPORT_RES));
-//        }
-        if (extras.containsKey(KEY_REPORT_PKGNAME)) {
-            setReportPkgName((String) extras.get(KEY_REPORT_PKGNAME));
-        }
         if (extras.containsKey(KEY_PLACEMENT_ID)) {
             setPlacementId((String) extras.get(KEY_PLACEMENT_ID));
         }
@@ -99,18 +87,6 @@ public class NativeAd extends BaseNativeAd implements
         setSource(ad.getSource());
         setAdTypeId(ad.getTypeId());
         mAd.setImpressionListener(this);
-    }
-
-    public int getRcvReportRes() {
-        return mRcvReportRes;
-    }
-
-    public int getPegReportRes() {
-        return mPegReportRes;
-    }
-
-    public String getReportPkgName() {
-        return mReportPkgName;
     }
 
     @Override
@@ -143,14 +119,6 @@ public class NativeAd extends BaseNativeAd implements
     }
 
     @Override
-    public String getRawString(int operation) {
-        if (mAd != null) {
-            return mAd.getRawString(operation);
-        }
-        return "";
-    }
-
-    @Override
     public boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam) {
         mRegisterTimes++;
         mExtraReportParams = reportParam;
@@ -163,16 +131,13 @@ public class NativeAd extends BaseNativeAd implements
             mAd.setAdOnClickListener(this);
         }
 
-        String rawString = getRawString(1);
-
-        UniReport.report(ReportFactory.INSERTVIEW, mReportPkgName, mPosid, mRcvReportRes
+        AdReporter.report(ReportFactory.INSERTVIEW, mPosid
                 , addDupReportExtra(false, mHasReportInsertImpression, getExtraReportParams()),
-                mPlacementId, isNativeAd(), rawString);
+                mPlacementId);
         mHasReportInsertImpression = true;
 
         if (mReportmodel == null) {
-            mReportmodel = new ViewShowReporter.Model(mReportPkgName, mPosid, mRcvReportRes, mPegReportRes
-                    , getExtraReportParams(), mPlacementId, rawString, this);
+            mReportmodel = new ViewShowReporter.Model(mPosid, getExtraReportParams(), mPlacementId, this);
         }
         ViewShowReporter.add(mReportmodel, view);
         return true;
@@ -281,9 +246,7 @@ public class NativeAd extends BaseNativeAd implements
     private void recordImpression() {
         Map<String, String> extraReportParams = addDupReportExtra(false, mHasReportCallBackImpression, getExtraReportParams());
 
-        String rawString = getRawString(1);
-        UniReport.report(ReportFactory.VIEW, mReportPkgName, mPosid, mRcvReportRes, extraReportParams,
-                mPlacementId, isNativeAd(), rawString);
+        AdReporter.report(ReportFactory.VIEW, mPosid, extraReportParams, mPlacementId);
 
         if (mImpressionListener != null) {
             mImpressionListener.onLoggingImpression();
@@ -309,23 +272,9 @@ public class NativeAd extends BaseNativeAd implements
         mPosid = posid;
     }
 
-    //    //For report
-    public void setRcvReportRes(@Nullable int res) {
-        this.mRcvReportRes = res;
-    }
-
-    public void setPegReportRes(@Nullable int res) {
-        this.mPegReportRes = res;
-    }
-
-    public void setReportPkgName(@Nullable String pkgName) {
-        this.mReportPkgName = pkgName;
-    }
-
     public void setPlacementId(@Nullable String placementId) {
         this.mPlacementId = placementId;
     }
-
 
     public void setListener(View view, View.OnClickListener onClickListener, @Nullable View.OnTouchListener touchListener) {
         if (view == null) {

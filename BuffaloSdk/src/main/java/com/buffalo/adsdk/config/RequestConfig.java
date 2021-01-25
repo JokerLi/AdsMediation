@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.buffalo.adsdk.AdManager;
+import androidx.annotation.NonNull;
+
 import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.InternalAdError;
 import com.buffalo.adsdk.utils.NativeReportUtil;
@@ -14,12 +15,19 @@ import com.buffalo.utils.Commons;
 import com.buffalo.utils.Logger;
 import com.buffalo.utils.Networking;
 import com.buffalo.utils.ThreadHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+
+import static com.buffalo.adsdk.Const.KEY_REQUEST_CONFIG;
 
 public class RequestConfig {
     private static final String TAG = "RequestConfig";
@@ -37,7 +45,7 @@ public class RequestConfig {
 
     private boolean mConfigLoaded = false;
     private volatile boolean mIsLoading = false;
-    private boolean mIsPreload = false;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     private List<QueueTask> mBackupQueueTask = new ArrayList<>();
     private Map<String, ConfigResponse.AdPosInfo> mConfigMap = new HashMap<>();
@@ -69,6 +77,18 @@ public class RequestConfig {
                 }
             });
         }
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(Executors.newSingleThreadExecutor(),
+                        new OnCompleteListener<Boolean>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Boolean> task) {
+                            }
+                        });
     }
 
     public static RequestConfig getInstance() {
@@ -79,10 +99,6 @@ public class RequestConfig {
     }
 
     private RequestConfig() {
-    }
-
-    public void setPreload(boolean isPreload) {
-        this.mIsPreload = isPreload;
     }
 
     public void setDefaultConfig(String strConfig, boolean force) {
@@ -136,14 +152,7 @@ public class RequestConfig {
             if (adPos != null) {
                 beans = adPos.orders;
             } else {
-                //埋点整个config有，但是该posid没有配的情况
-//                if(mConfigMap.size() > 0) {
-//                    String errorCode = "config ad pos is null.";
-//                    NativeReportUtil.doNativeAdFailReport(Const.Event.GET_CONFIG_NULL, placeId,errorCode, mIsPreload);
-//                    Map<String,String> extraContent = UniReportHelper.getLoadPreloadExtra(ReportFactory.GET_CONFIG_NULL,
-//                            errorCode, "", "", mIsPreload ? ReportFactory.PRELOAD: ReportFactory.LOAD, "", "", "", "");
-//                    UniReport.reportUni(ReportFactory.REQUEST_AD, "", 0, placeId, extraContent, "", "", false);
-//                }
+                NativeReportUtil.doNativeAdSuccessReport(Const.Event.CONFIG_EMPTY, mMid);
             }
             callback.onConfigLoaded(placeId, beans);
         }
@@ -159,14 +168,10 @@ public class RequestConfig {
 
     private void loadFromNetwork() {
         NativeReportUtil.doNativeAdSuccessReport(Const.Event.CONFIG_START, mMid);
-
-//        UniReportHelper.reportConfig(ReportFactory.START);
-
         final long startConfigRequestTime = System.currentTimeMillis();
         mIsLoading = true;
-        String url = Const.CONFIG_URL;
-        String param = buildParams(mMid);
-        Networking.get(url, param, new Networking.HttpListener() {
+
+        Networking.get(mFirebaseRemoteConfig.getString(KEY_REQUEST_CONFIG), new Networking.HttpListener() {
             @Override
             public void onResponse(int responseCode, HashMap<String, String> headers,
                                    InputStream result, String encode, int contentLength) {
@@ -175,17 +180,11 @@ public class RequestConfig {
                     NativeReportUtil.doNativeAdSuccessReport(Const.Event.CONFIG_SUCCESS, mMid,
                             System.currentTimeMillis() - startConfigRequestTime);
 
-//                    UniReportHelper.reportConfig(ReportFactory.SUCCESS,
-//                            System.currentTimeMillis() - startConfigRequestTime + "");
-
                     putConfigLoadedTime(System.currentTimeMillis() / 1000);
                     updateToLocalAsync(obj);
                 } else {
                     NativeReportUtil.doNativeAdFailReport(Const.Event.CONFIG_FAIL, mMid,
                             System.currentTimeMillis() - startConfigRequestTime, "config file is null.");
-
-//                    UniReportHelper.reportConfig(ReportFactory.FAIL, "config file is null.",
-//                            System.currentTimeMillis() - startConfigRequestTime + "");
 
                     Logger.e(TAG, "request config failed...response is invalid");
                     updateToLocalAsync(null);
@@ -196,9 +195,6 @@ public class RequestConfig {
             public void onError(int responseCode, InternalAdError error) {
                 NativeReportUtil.doNativeAdFailReport(Const.Event.CONFIG_FAIL, mMid,
                         System.currentTimeMillis() - startConfigRequestTime, error.getErrorMessage());
-
-//                UniReportHelper.reportConfig(ReportFactory.FAIL, error.getErrorMessage(),
-//                        System.currentTimeMillis() - startConfigRequestTime + "");
 
                 Logger.e(TAG, "request failed..." + error.getErrorMessage());
                 updateToLocalAsync(null);
@@ -280,10 +276,6 @@ public class RequestConfig {
         return response;
     }
 
-//    private boolean shouldTryDefaultConfig() {
-//        return false;
-//    }
-
     public void destroy() {
     }
 
@@ -303,28 +295,4 @@ public class RequestConfig {
         PreferenceUtil.putBoolean(KEY_DEFAULT_CONFIG, value);
     }
 
-
-    /**
-     * action：pos_config固定值，表示哪种服务请求
-     * postype：1--固定值，表示哪种服务请求
-     * mid：媒体ID
-     * posid：广告位ID
-     * cver：sdk的版本
-     * lan: 国家_语言
-     * v: 协议版本号
-     */
-    public static String buildParams(String mid) {
-        //action=pos_config&postype=1&mid=104&posid=&cver=508&lan=en_us&v=13";
-        StringBuilder sb = new StringBuilder();
-        sb.append("action=pos_config");
-        sb.append("&postype=1");
-        sb.append("&mid=" + mid);
-        sb.append("&posid=");
-        sb.append("&androidid=" + Commons.getAndroidId());
-        sb.append("&cver=" + Commons.getAppVersionCode(AdManager.getContext()));
-        sb.append("&lan=" + Commons.getCountry(AdManager.getContext()) + "_" + Commons.getLanguage(AdManager.getContext()));
-        sb.append("&v=" + "22");
-        sb.append("&sdkv=" + Const.VERSION);
-        return sb.toString();
-    }
 }

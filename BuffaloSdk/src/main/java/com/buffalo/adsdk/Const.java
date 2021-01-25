@@ -2,14 +2,10 @@
 package com.buffalo.adsdk;
 
 public final class Const {
-    public static final String TAG = "CMCMADSDK";
+    public static final String KEY_REQUEST_CONFIG = "request_config";
+
+    public static final String TAG = "BuffaloSdk";
     public static final String VERSION = "4.1.0";
-    public static final String HOST_NAME = "unconf.adkmob.com";
-    public static final String HOST_NAME_CN = "unconf.mobad.ijinshan.com";
-    public static final String CONFIG_URL = "https://" + HOST_NAME + "/b/";
-    public static final String CONFIG_URL_CN = "https://" + HOST_NAME_CN + "/b/";
-    public static final String HOST_NAME_UFS = "ufs.adkmob.com";
-    public static final String CONFIG_URL_UFS = "https://" + HOST_NAME_UFS + "/p/";
     public static final int NET_TIMEOUT = 15 * 1000;
     public static final String KEY_JUHE = "ad";
     public static final String KEY_FB = "fb";
@@ -148,7 +144,7 @@ public final class Const {
 
 
     public enum Event {
-        CONFIG_START, CONFIG_SUCCESS, CONFIG_FAIL,
+        CONFIG_START, CONFIG_SUCCESS, CONFIG_FAIL, CONFIG_EMPTY,
         LOAD_START_FAIL,
 
         GET_FEED_AD,                            //触发getAd
@@ -178,5 +174,14 @@ public final class Const {
         DELETE_AD_FROM_DUPL_AD_CACHE,           //从第三个缓存池删除广告
         DELETE_EXPIRED_AD,                      //删除过期广告
         GET_FEED_AD_NOT_REQUEST_COMPLETE        //触发getAd时，第一次请求没有返回成功
+    }
+
+    public static class REPORT_KEY {
+        public static final String KEY_MID = "mid";
+        public static final String KEY_POS = "pos";
+        public static final String KEY_ACTION = "action";
+        public static final String KEY_EXT = "ext";
+        public static final String KEY_GAID = "gaid";
+        public static final String KEY_PLACEMENT_ID = "placementId";
     }
 }

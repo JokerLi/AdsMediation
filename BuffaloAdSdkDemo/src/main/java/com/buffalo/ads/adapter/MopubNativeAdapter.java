@@ -176,11 +176,6 @@ public class MopubNativeAdapter extends NativeloaderAdapter {
         }
 
         @Override
-        public String getRawString(int operation) {
-            return MopubInfomation.getMopubNativeAdOfferJsonV313(operation, mNativeResponse);
-        }
-
-        @Override
         public void onNativeFail(NativeErrorCode nativeErrorCode) {
             //改ErrorCode值为int
             notifyNativeAdFailed(getAdErrorCode(nativeErrorCode) + "");
