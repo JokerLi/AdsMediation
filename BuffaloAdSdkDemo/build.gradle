@@ -56,27 +56,3 @@ dependencies {
     implementation "com.google.firebase:firebase-config:20.0.0"
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
 }
-
-/**
- * 系统打包的默认目录
- */
-//def gAssembleApkPath = ''
-//android.applicationVariants.all { variant ->
-//    if (variant.buildType.name.equals('release')) {
-//        variant.outputs.each { output ->
-//            gAssembleApkPath = output.packageApplication.outputFile.parent
-//            println 'gAssembleApkPath is ' + gAssembleApkPath
-//        }
-//    }
-//}
-
-
-//assembleRelease.doLast {
-//    copy {
-//        from gAssembleApkPath
-//        into getAARDesfolder()
-//        include '*.apk'
-//        exclude '*unaligned*'
-//    }
-//}
-
