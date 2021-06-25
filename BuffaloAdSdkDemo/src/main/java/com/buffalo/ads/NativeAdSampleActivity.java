@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -26,8 +25,6 @@ import java.util.Map;
 
 
 public class NativeAdSampleActivity extends Activity implements OnClickListener {
-    private CheckBox mReportModeRCV;
-    private CheckBox mReportModeUNI;
     private CheckBox mReportExtra;
     private CheckBox mOfferInsert;
     private CheckBox mOfferCallback;
@@ -40,7 +37,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
     private FrameLayout nativeAdContainer;
     /* 广告 Native大卡样式 */
     private Button loadAdButton;
-    CheckBox mCheckboxPriority;
     private String mAdPosid = "10000100";
 
     private View mAdView = null;
@@ -61,8 +57,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
         findViewById(R.id.getad).setOnClickListener(this);
         findViewById(R.id.btn_load_seq).setOnClickListener(this);
         findViewById(R.id.btn_load_service).setOnClickListener(this);
-        mReportModeRCV = (CheckBox) findViewById(R.id.report_mode_rcv);
-        mReportModeUNI = (CheckBox) findViewById(R.id.report_mode_uni);
         mReportExtra = (CheckBox) findViewById(R.id.report_extra);
         mOfferInsert = (CheckBox) findViewById(R.id.offer_info_insert);
         mOfferCallback = (CheckBox) findViewById(R.id.offer_info_callback);
@@ -70,13 +64,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
 
         mEditKey = (EditText) findViewById(R.id.edit_text_key);
         mEditValue = (EditText) findViewById(R.id.edit_text_value);
-
-        mCheckboxPriority = (CheckBox) findViewById(R.id.checkbox_priority);
-        mCheckboxPriority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            }
-        });
 
         initNativeAd();
         //使用此类可以记录功能页面PV，注意：使用前确保聚合是已经初始化的

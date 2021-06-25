@@ -3,17 +3,19 @@ package com.buffalo.ads;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
+import androidx.multidex.MultiDex;
+
 import com.buffalo.ads.ui.AdViewConfigHelper;
 import com.buffalo.ads.utils.FileUtils;
-import com.buffalo.ads.utils.LocaleConfig;
-import com.buffalo.ads.utils.VolleyUtil;
+import com.buffalo.ads.utils.imageloader.GlideImageLoader;
+import com.buffalo.ads.utils.imageloader.glide.ILoadingImgListener;
 import com.buffalo.adsdk.AdManager;
 import com.buffalo.adsdk.BitmapListener;
 import com.buffalo.adsdk.Const;
@@ -24,6 +26,12 @@ import com.buffalo.adsdk.utils.ReportProxy;
 import java.util.Map;
 
 public class MyApplication extends Application {
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 
     @Override
     public void onCreate() {
@@ -49,7 +57,6 @@ public class MyApplication extends Application {
     }
 
     private void initSDK() {
-
         //开启Debug模式，默认不开启不会打印log
         AdManager.enableLog();
         //设置是否是内部产品
@@ -78,7 +85,6 @@ public class MyApplication extends Application {
         initReport();
 
         AdManager.enableLog();
-        LocaleConfig.init();
     }
 
     class MyImageLoadListener implements ImageDownloadListener {
@@ -94,33 +100,34 @@ public class MyApplication extends Application {
                         }
                         return;
                     }
-                    VolleyUtil.loadImage(url, new ImageLoader.ImageListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            if (imageListener != null) {
-                                imageListener.onFailed(volleyError.getMessage());
-                            }
-                        }
 
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            if (imageContainer != null && imageContainer.getBitmap() != null) {
-                                if (imageListener != null) {
-                                    imageListener.onSuccessed(imageContainer.getBitmap());
+                    GlideImageLoader.getInstance().loadImage(MyApplication.this, url,
+                            R.drawable.ic_launcher, new ILoadingImgListener() {
+                                @Override
+                                public void onLoadSuccess(Bitmap resource) {
+                                    if (imageListener != null) {
+                                        imageListener.onSuccessed(resource);
+                                    }
                                 }
-                            }
-                        }
-                    });
+
+                                @Override
+                                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                                    if (imageListener != null) {
+                                        imageListener.onFailed(e.getMessage());
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadStarted(Drawable placeholder) {
+
+                                }
+                            });
                 }
             });
         }
-
     }
 
-    private static final String VAST_TAG = "MyVastReport";
-
     private void initReport() {
-
         NativeAdManagerFactory.setReportProxy(new ReportProxy() {
             @Override
             public void doNativeReport(Const.Event event, Map<String, String> extras) {

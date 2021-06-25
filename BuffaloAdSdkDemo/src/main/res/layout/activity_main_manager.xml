@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -51,23 +50,21 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                >
+                android:layout_weight="2">
+
                 <CheckBox
                     android:id="@+id/report_mode_rcv"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_weight="1"
-                    android:text="rcv上报"
-                    />
+                    android:text="rcv上报" />
 
                 <CheckBox
                     android:id="@+id/report_mode_uni"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_weight="1"
-                    android:text="统一上报"
-                    />
+                    android:text="统一上报" />
             </LinearLayout>
 
         </LinearLayout>
@@ -76,54 +73,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/offer_info_insert"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="插入(offer)"
-                />
+                android:text="插入(offer)" />
 
             <CheckBox
                 android:id="@+id/offer_info_callback"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="回调(offer)"
-                />
+                android:text="回调(offer)" />
 
             <CheckBox
                 android:id="@+id/offer_info_click"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="点击(offer)"
-                />
+                android:text="点击(offer)" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#afafaf"
-            >
+            android:background="#afafaf">
+
             <CheckBox
                 android:id="@+id/report_extra"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="上报extra"
-                />
+                android:text="上报extra" />
+
             <EditText
                 android:id="@+id/edit_text_key"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/edit_text_value"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
 
@@ -141,19 +136,6 @@
                 android:background="@drawable/btn_blue_request"
                 android:text="拿取广告" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkbox_priority"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="超级抢量" />
         </LinearLayout>
     </LinearLayout>
 

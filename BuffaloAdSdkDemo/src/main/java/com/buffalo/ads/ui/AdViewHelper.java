@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.buffalo.ads.R;
-import com.buffalo.adsdk.NativeAdTemplate;
+import com.buffalo.ads.utils.imageloader.GlideImageLoader;
 import com.buffalo.adsdk.Const;
-import com.buffalo.ads.utils.VolleyUtil;
+import com.buffalo.adsdk.NativeAdTemplate;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.google.android.gms.ads.formats.NativeAppInstallAd;
 import com.google.android.gms.ads.formats.NativeAppInstallAdView;
@@ -21,8 +21,9 @@ import com.google.android.gms.ads.formats.NativeContentAdView;
 public class AdViewHelper {
     final protected Context mContext;
     static AdViewHelper sHelper;
+
     public static View createAdView(Context context, INativeAd ad) {
-        if(sHelper == null) {
+        if (sHelper == null) {
             sHelper = new AdViewHelper(context);
         }
 
@@ -33,7 +34,7 @@ public class AdViewHelper {
         mContext = context;
     }
 
-//    public void initAdView(INativeAd ad) {
+    //    public void initAdView(INativeAd ad) {
 //        View mNativeAdView = createAdView(ad);
 //        if (mNativeAd != null) {
 //            mNativeAd.unregisterView();
@@ -45,6 +46,7 @@ public class AdViewHelper {
 //        mNativeAd.registerViewForInteraction(mNativeAdView);
 //    }
     NativeAdTemplate mBinder;
+
     private View createAdViewNew(INativeAd ad) {
         if (ad == null) {
             return null;
@@ -61,6 +63,7 @@ public class AdViewHelper {
         adView = mBinder.getBindedView(ad);
         return adView;
     }
+
     /**
      * NOTE: 接入Admob广告需要注意：如果广告是Admob的广告需要用Admob提供的根布局做广告的布局
      */
@@ -108,7 +111,8 @@ public class AdViewHelper {
         ImageView iconImageView = (ImageView) adView
                 .findViewById(R.id.native_icon_image);
         if (iconUrl != null) {
-            VolleyUtil.loadImage(iconImageView, iconUrl);
+            GlideImageLoader.getInstance().loadImage(mContext, iconUrl,
+                    R.drawable.ic_launcher, iconImageView);
         }
 
         //获取大卡的背景图片的url
@@ -117,10 +121,11 @@ public class AdViewHelper {
             ImageView imageViewMain = (ImageView) adView
                     .findViewById(R.id.native_main_image);
             imageViewMain.setVisibility(View.VISIBLE);
-            VolleyUtil.loadImage(imageViewMain, mainImageUrl);
+            GlideImageLoader.getInstance().loadImage(mContext, mainImageUrl,
+                    R.drawable.bg_default, imageViewMain);
         }
 
-        Log.e("URL", mainImageUrl!=null ? mainImageUrl: "mainImageUrl is null");
+        Log.e("URL", mainImageUrl != null ? mainImageUrl : "mainImageUrl is null");
 
         TextView titleTextView = (TextView) adView.findViewById(R.id.native_title);
         Button bigButton = (Button) adView.findViewById(R.id.native_cta);
@@ -153,7 +158,8 @@ public class AdViewHelper {
         ImageView iconImageView = (ImageView) adView
                 .findViewById(R.id.big_iv_icon);
         if (iconUrl != null) {
-            VolleyUtil.loadImage(iconImageView, iconUrl);
+            GlideImageLoader.getInstance().loadImage(mContext, iconUrl,
+                    R.drawable.ic_launcher, iconImageView);
         }
 
         //获取大卡的背景图片的url
@@ -162,10 +168,11 @@ public class AdViewHelper {
             ImageView imageViewMain = (ImageView) adView
                     .findViewById(R.id.iv_main);
             imageViewMain.setVisibility(View.VISIBLE);
-            VolleyUtil.loadImage(imageViewMain, mainImageUrl);
+            GlideImageLoader.getInstance().loadImage(mContext, mainImageUrl,
+                    R.drawable.bg_default, imageViewMain);
         }
 
-        Log.e("URL", mainImageUrl!=null ? mainImageUrl: "mainImageUrl is null");
+        Log.e("URL", mainImageUrl != null ? mainImageUrl : "mainImageUrl is null");
 
         TextView titleTextView = (TextView) adView.findViewById(R.id.big_main_title);
         Button bigButton = (Button) adView.findViewById(R.id.big_btn_install);
@@ -178,8 +185,8 @@ public class AdViewHelper {
         return adView;
     }
 
-    private void setAdmobContentAdView(NativeContentAdView nativeContentAdView){
-        if(nativeContentAdView == null){
+    private void setAdmobContentAdView(NativeContentAdView nativeContentAdView) {
+        if (nativeContentAdView == null) {
             return;
         }
         nativeContentAdView.setBodyView(nativeContentAdView.findViewById(R.id.iv_main));
@@ -193,8 +200,8 @@ public class AdViewHelper {
         nativeContentAdView.setCallToActionView(nativeContentAdView.findViewById(R.id.big_btn_install));
     }
 
-    private void setAdmobInstallAdView(NativeAppInstallAdView nativeAppInstallAdView){
-        if(nativeAppInstallAdView == null){
+    private void setAdmobInstallAdView(NativeAppInstallAdView nativeAppInstallAdView) {
+        if (nativeAppInstallAdView == null) {
             return;
         }
         nativeAppInstallAdView.setBodyView(nativeAppInstallAdView.findViewById(R.id.iv_main));

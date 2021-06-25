@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buffalo.ads.utils.VolleyUtil;
+import com.buffalo.ads.utils.imageloader.GlideImageLoader;
 import com.buffalo.baseapi.ads.INativeAd;
 
 import java.util.HashMap;
@@ -126,13 +126,15 @@ public class ListAdsAdapter extends BaseAdapter {
             Log.i("Test", "iconUrl:" + iconUrl);
             mImageIcon.setImageResource(R.drawable.default_bg);
             if (!TextUtils.isEmpty(iconUrl)) {
-                VolleyUtil.loadImage(mImageIcon, iconUrl);
+                GlideImageLoader.getInstance().loadImage(mImageIcon.getContext(), iconUrl,
+                        R.drawable.ic_launcher, mImageIcon);
             }
             String coverImageUrl = ad.getAdCoverImageUrl();
             Log.i("Test", "iconUrl:" + coverImageUrl);
             mImageCover.setImageResource(R.drawable.default_bg);
             if (!TextUtils.isEmpty(coverImageUrl)) {
-                VolleyUtil.loadImage(mImageCover, coverImageUrl);
+                GlideImageLoader.getInstance().loadImage(mImageIcon.getContext(), coverImageUrl,
+                        R.drawable.ic_launcher, mImageCover);
             }
             mNativeTitle.setText(ad.getAdTypeName() + " " + ad.getAdTitle());
             mNativeText.setText(ad.getAdBody());

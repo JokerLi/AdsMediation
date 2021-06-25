@@ -55,7 +55,7 @@ public class WelComeActivity extends Activity {
 //        addAdEntry(true, "猎户 - Orion", "", "");
 //        addAdEntry(false, "优先级穿插 - HybridAd List", "CustomAdViewActivity", "");
 
-        addAdEntry(true, "天马 - Pegsa", "", "");
+        addAdEntry(true, "广告列表", "", "");
         addAdEntry(false, "原生广告 - NativeAdManager", "NativeAdSampleActivity", "");
 //        addAdEntry(false, "原生广告 - NativeAdManagerEx", "NativeAdSampleActivityEx", "");
         addAdEntry(false, "原生广告 - NativeAdListManager", "ListAdSimpleActivity", "");

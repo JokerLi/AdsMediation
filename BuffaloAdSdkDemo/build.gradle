@@ -6,9 +6,15 @@ android {
 
     defaultConfig {
         applicationId "com.buffalo.ads"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         flavorDimensions "versionCode"
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets {
@@ -47,7 +53,6 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation files('libs/volley.jar')
     implementation fileTree(dir: 'libs/world_all', include: '*.jar')
     implementation(name: 'AudienceNetwork', ext: 'aar')
     implementation 'com.google.firebase:firebase-ads:19.4.0'
@@ -55,4 +60,17 @@ dependencies {
     implementation "com.google.firebase:firebase-core:18.0.0"
     implementation "com.google.firebase:firebase-config:20.0.0"
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    api "com.android.support:multidex:1.0.3 "
+    api "com.android.support:multidex-instrumentation:1.0.3"
+
+    api "com.github.bumptech.glide:glide:4.11.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.11.0"
+    api "io.reactivex.rxjava2:rxjava:2.2.8"
+    api "io.reactivex.rxjava2:rxandroid:2.1.1"
+    api "com.squareup.okhttp3:okhttp:4.4.0"
+
+    // mopub
+    implementation('com.mopub:mopub-sdk:5.15.0@aar') {
+        transitive = true
+    }
 }
