@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -30,27 +29,12 @@ public class BannerAdSampleActivity extends Activity implements BannerAdListener
     private void initView() {
         bannerView = findViewById(R.id.banner_view);
         refresh_time = findViewById(R.id.refresh_time);
-        findViewById(R.id.btn_load).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                load();
-            }
-        });
-        findViewById(R.id.btn_destroy).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mAdView != null) {
-                    mAdView.onDestroy();
-                    mAdView = null;
-                }
-            }
-        });
-        findViewById(R.id.btn_show).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bannerView.removeAllViews();
-                bannerView.addView(mAdView);
-                mAdView.prepare();
+        findViewById(R.id.btn_load).setOnClickListener(view -> load());
+
+        findViewById(R.id.btn_destroy).setOnClickListener(view -> {
+            if (mAdView != null) {
+                mAdView.onDestroy();
+                mAdView = null;
             }
         });
     }

@@ -59,13 +59,11 @@ public class WelComeActivity extends Activity {
         addAdEntry(false, "原生广告 - NativeAdManager", "NativeAdSampleActivity", "");
 //        addAdEntry(false, "原生广告 - NativeAdManagerEx", "NativeAdSampleActivityEx", "");
         addAdEntry(false, "原生广告 - NativeAdListManager", "ListAdSimpleActivity", "");
-        addAdEntry(false, "插屏广告 - InterstitialAdManager", "InterstitalAdSampleActivity", "");
+//        addAdEntry(false, "插屏广告 - InterstitialAdManager", "InterstitalAdSampleActivity", "");
         addAdEntry(false, "原生开屏广告 - NativeSplashAd", "NativeSplashAdSampleActivity", "");
-        addAdEntry(false, "场景 - 屏保（Activity）", "ScreenSaverEnterActivity", "");
-        addAdEntry(false, "场景 - AppLock(WindowManager)", "WindowManagerSimpleActivity", "");
-//        if(!BuildConfig.IS_CN_VERSION) {
-//            addAdEntry(false, "IAB Banner广告(Mopub/Orion) - IAB Banner", "BannerAdSampleActivity", "");
-//        }
+//        addAdEntry(false, "场景 - 屏保（Activity）", "ScreenSaverEnterActivity", "");
+//        addAdEntry(false, "场景 - AppLock(WindowManager)", "WindowManagerSimpleActivity", "");
+        addAdEntry(false, "Banner广告", "BannerAdSampleActivity", "");
     }
 
     void addAdEntry(boolean groupHeader, String title, String activity, String placementId) {

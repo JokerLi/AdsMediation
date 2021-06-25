@@ -16,6 +16,7 @@ public final class Const {
 
     //banner
     public static final String KEY_MP_BANNER = "mpb";
+    public static final String KEY_AB_BANNER = "abb";
 
     //for iclick
     public static final String KEY_ICLICK = "ic";
@@ -106,6 +107,7 @@ public final class Const {
         public static final String facebook = "com.facebook.ad";
         public static final String mopub = "com.mopub.ad";
         public static final String admob = "com.admob.native";
+        public static final String admob_banner = "com.admob.banner";
         public static final String admob_interstitial = "com.admob.interstitial";
         public static final String yahoo = "com.yahoo.ad";
         public static final String iclick = "com.iclick.ad";

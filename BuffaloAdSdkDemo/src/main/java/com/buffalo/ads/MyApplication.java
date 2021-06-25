@@ -72,6 +72,7 @@ public class MyApplication extends Application {
         AdManager.addLoaderClass(Const.KEY_YH, "com.buffalo.ads.adapter.YahooNativeAdapter");
         AdManager.addLoaderClass(Const.KEY_MP, "com.buffalo.ads.adapter.MopubNativeAdapter");
         AdManager.addLoaderClass(Const.KEY_AB, "com.buffalo.ads.adapter.AdmobNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_AB_BANNER, "com.buffalo.ads.adapter.AdmobBannerAdapter");
         AdManager.addLoaderClass(Const.KEY_MP_BANNER, "com.buffalo.ads.adapter.MopubBannerAdapter");
         AdManager.addLoaderClass(Const.KEY_FB_INTERSTITIAL, "com.buffalo.ads.adapter.FacebookInterstitialAdapter");
         AdManager.addLoaderClass(Const.KEY_AB_INTERSTITIAL, "com.buffalo.ads.adapter.AdmobInterstitialAdapter");

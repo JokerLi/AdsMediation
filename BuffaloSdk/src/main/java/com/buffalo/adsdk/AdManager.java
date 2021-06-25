@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.buffalo.adsdk.report.AdReporter;
-import com.buffalo.adsdk.report.BusinessDataReporter;
 import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.utils.BackgroundThread;
 import com.buffalo.utils.Logger;
@@ -16,8 +15,6 @@ public abstract class AdManager {
     private static String mMid;
     private static String sChannelId;
     private static BaseFactory sAdFactory = null;
-    //控制offer上报开关
-    private static int sReportSwitcher = 0;
     // request ufs
     private static boolean sIsRequestUfs = false;
 
@@ -91,14 +88,6 @@ public abstract class AdManager {
         if (adFactory != null) {
             adFactory.addRenderAdapter(loaderKey, adapter);
         }
-    }
-
-    public static void setReportSwitcher(int reportSwitcher) {
-        sReportSwitcher = reportSwitcher;
-    }
-
-    public static int getReportSwitcher() {
-        return sReportSwitcher;
     }
 
     public static void setDebug() {
