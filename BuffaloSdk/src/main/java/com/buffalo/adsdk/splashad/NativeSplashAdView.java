@@ -79,7 +79,7 @@ public class NativeSplashAdView extends RelativeLayout implements View.OnClickLi
             }
             mMainContainer.setBackgroundResource(R.drawable.bg_native_splash);
             mMainContainer.addView(view, lp);
-            ad.registerViewForInteraction(view);
+            ad.registerViewForInteraction(view, null, null, null);
         }
     }
 

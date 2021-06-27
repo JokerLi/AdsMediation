@@ -1,26 +1,24 @@
 package com.buffalo.ads.adapter;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-
-import android.view.View;
+import androidx.annotation.Nullable;
 
 import com.buffalo.ads.NativeAdBaseContextWrapper;
-import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.Const;
+import com.buffalo.adsdk.NativeAdError;
 import com.buffalo.adsdk.adapter.NativeloaderAdapter;
 import com.buffalo.adsdk.base.BaseNativeAd;
-import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.utils.Commons;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
-import com.facebook.ads.ImpressionListener;
+import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdsManager;
+import com.facebook.ads.NativeAdListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,12 +51,17 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
         }
 
         //"new FacebookNativeAd().loadAd();" method must be invoked in background thread
+//        try {
+//            if (mRequestAdSize > 1) {
+//                new FacebookAdsAdapter().loadNativeAd();
+//            } else {
+//                new FacebookNativeAd().loadAd();
+//            }
+//        } catch (Throwable e) {
+//            notifyNativeAdFailed("facebook load error");
+//        }
         try {
-            if (mRequestAdSize > 1) {
-                new FacebookAdsAdapter().loadNativeAd();
-            } else {
-                new FacebookNativeAd().loadAd();
-            }
+            new FacebookNativeAd().loadAd();
         } catch (Throwable e) {
             notifyNativeAdFailed("facebook load error");
         }
@@ -71,7 +74,7 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
 
     @Override
     public String getReportPkgName(String adTypeName) {
-        return FaceBookInfomation.getFBReportPkg(adTypeName);
+        return "fb.com";
     }
 
     @Override
@@ -84,27 +87,18 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
         return Const.cacheTime.facebook;
     }
 
-    private class FacebookNativeAd extends BaseNativeAd implements AdListener, ImpressionListener {
+    private class FacebookNativeAd extends BaseNativeAd implements NativeAdListener {
         private NativeAd mNativeAd;
 
         public FacebookNativeAd() {
         }
 
-        public FacebookNativeAd(NativeAd nativeAd) {
-            mNativeAd = nativeAd;
-
-            if (mNativeAd != null) {
-                mNativeAd.setAdListener(this);
-                mNativeAd.setImpressionListener(this);
-                updateData();
-            }
-        }
-
         public void loadAd() {
             mNativeAd = new NativeAd(mContext, mPlacementId);
-            mNativeAd.setAdListener(this);
-            mNativeAd.setImpressionListener(this);
-            mNativeAd.loadAd();
+            mNativeAd.loadAd(
+                    mNativeAd.buildLoadAdConfig()
+                            .withAdListener(this)
+                            .build());
         }
 
         @Override
@@ -113,11 +107,19 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
         }
 
         @Override
-        public boolean registerViewForInteraction(View view) {
-            if (view == null) {
+        public boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews) {
+            if (view == null || !(mediaView instanceof MediaView)) {
                 return false;
             }
-            mNativeAd.registerViewForInteraction(view);
+            if (adIconView instanceof MediaView) {
+                MediaView iconMediaView = (MediaView) adIconView;
+                mNativeAd.registerViewForInteraction(view, (MediaView) mediaView, iconMediaView, clickableViews);
+            } else if (adIconView instanceof ImageView) {
+                ImageView iconImageView = (ImageView) adIconView;
+                mNativeAd.registerViewForInteraction(view, (MediaView) mediaView, iconImageView, clickableViews);
+            } else {
+                mNativeAd.registerViewForInteraction(view, (MediaView) mediaView, clickableViews);
+            }
             return true;
         }
 
@@ -152,8 +154,8 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
         }
 
         private void updateData() {
-            setTitle(mNativeAd.getAdTitle());
-            setAdBody(mNativeAd.getAdBody());
+            setTitle(mNativeAd.getAdvertiserName());
+            setAdBody(mNativeAd.getAdBodyText());
             setAdCoverImageUrl(mNativeAd.getAdCoverImage().getUrl());
             setAdIconUrl(mNativeAd.getAdIcon().getUrl());
             setAdCallToAction(mNativeAd.getAdCallToAction());
@@ -172,40 +174,45 @@ public class FacebookNativeAdapter extends NativeloaderAdapter {
                 mImpressionListener.onLoggingImpression();
             }
         }
-    }
-
-    public class FacebookAdsAdapter implements NativeAdsManager.Listener {
-        private NativeAdsManager mNativeAdsMgr;
-
-        public void loadNativeAd() {
-            mNativeAdsMgr = new NativeAdsManager(mContext, mPlacementId, mRequestAdSize);
-            mNativeAdsMgr.setListener(this);
-            mNativeAdsMgr.loadAds();
-        }
 
         @Override
-        public void onAdsLoaded() {
-            int adCount = mNativeAdsMgr.getUniqueNativeAdCount();
-            List<INativeAd> mReusltPool = new ArrayList<INativeAd>();
-            for (int i = 0; i < adCount; i++) {
-                NativeAd fbNativeAd = mNativeAdsMgr.nextNativeAd();
-                if (fbNativeAd == null || !fbNativeAd.isAdLoaded()) {
-                    continue;
-                }
-                mReusltPool.add(new FacebookNativeAd(fbNativeAd));
-            }
+        public void onMediaDownloaded(Ad ad) {
 
-            if (mReusltPool.isEmpty()) {
-                notifyNativeAdFailed("fbAdsManager.onAdsLoaded.no.fill");
-            } else {
-                notifyNativeAdLoaded(mReusltPool);
-            }
         }
-
-        @Override
-        public void onAdError(AdError adError) {
-            notifyNativeAdFailed(adError.getErrorMessage());
-        }
-
     }
+
+//    public class FacebookAdsAdapter implements NativeAdsManager.Listener {
+//        private NativeAdsManager mNativeAdsMgr;
+//
+//        public void loadNativeAd() {
+//            mNativeAdsMgr = new NativeAdsManager(mContext, mPlacementId, mRequestAdSize);
+//            mNativeAdsMgr.setListener(this);
+//            mNativeAdsMgr.loadAds();
+//        }
+//
+//        @Override
+//        public void onAdsLoaded() {
+//            int adCount = mNativeAdsMgr.getUniqueNativeAdCount();
+//            List<INativeAd> mReusltPool = new ArrayList<INativeAd>();
+//            for (int i = 0; i < adCount; i++) {
+//                NativeAd fbNativeAd = mNativeAdsMgr.nextNativeAd();
+//                if (fbNativeAd == null || !fbNativeAd.isAdLoaded()) {
+//                    continue;
+//                }
+//                mReusltPool.add(new FacebookNativeAd(fbNativeAd));
+//            }
+//
+//            if (mReusltPool.isEmpty()) {
+//                notifyNativeAdFailed("fbAdsManager.onAdsLoaded.no.fill");
+//            } else {
+//                notifyNativeAdLoaded(mReusltPool);
+//            }
+//        }
+//
+//        @Override
+//        public void onAdError(AdError adError) {
+//            notifyNativeAdFailed(adError.getErrorMessage());
+//        }
+//
+//    }
 }

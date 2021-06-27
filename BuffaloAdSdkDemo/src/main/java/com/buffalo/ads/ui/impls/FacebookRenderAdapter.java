@@ -8,9 +8,10 @@ import android.widget.RelativeLayout;
 
 import com.buffalo.adsdk.NativeAdTemplate;
 import com.buffalo.baseapi.ads.INativeAd;
-import com.facebook.ads.AdChoicesView;
+import com.facebook.ads.AdOptionsView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdLayout;
 
 public class FacebookRenderAdapter implements NativeAdTemplate.INativeAdViewAdapter {
     private Context mContext;
@@ -21,15 +22,15 @@ public class FacebookRenderAdapter implements NativeAdTemplate.INativeAdViewAdap
 
     @Override
     public View onPostProcessAdView(INativeAd ad, NativeAdTemplate.ViewHolder viewHolder) {
-        if (ad == null || viewHolder == null) {
+        if (ad == null || viewHolder == null || !(viewHolder.mLayoutView instanceof NativeAdLayout)) {
             return null;
         }
         viewHolder.mMainImageView.setAd(ad, createFacebookMediaView(ad));
         if (viewHolder.mAdCornerView == null) {
-            return createDefaultBrandLogoView(viewHolder, getFacebookBrandLogoView(ad));
+            return createDefaultBrandLogoView(viewHolder, getFacebookBrandLogoView(ad, (NativeAdLayout) viewHolder.mLayoutView));
         } else {
             viewHolder.mAdCornerView.removeAllViews();
-            viewHolder.mAdCornerView.addView(getFacebookBrandLogoView(ad));
+            viewHolder.mAdCornerView.addView(getFacebookBrandLogoView(ad, (NativeAdLayout) viewHolder.mLayoutView));
             viewHolder.mAdCornerView.bringToFront();
             return null;
         }
@@ -44,26 +45,21 @@ public class FacebookRenderAdapter implements NativeAdTemplate.INativeAdViewAdap
         if (object == null || !(object instanceof NativeAd)) {
             return null;
         }
-        NativeAd nativeAd = (NativeAd) object;
         MediaView nativeAdMedia = new MediaView(mContext);
-        nativeAdMedia.setAutoplay(true);
-        nativeAdMedia.setNativeAd(nativeAd);
-
         return nativeAdMedia;
     }
 
-    private View getFacebookBrandLogoView(INativeAd ad) {
-        if (ad == null) {
+    private View getFacebookBrandLogoView(INativeAd ad, NativeAdLayout nativeAdLayout) {
+        if (ad == null || nativeAdLayout == null) {
             return null;
         }
 
         Object ob = ad.getAdObject();
-        if (ob == null || !(ob instanceof NativeAd)) {
+        if (!(ob instanceof NativeAd)) {
             return null;
         }
 
-        AdChoicesView choicesView = new AdChoicesView(mContext, (NativeAd) ob, true);
-        return choicesView;
+        return new AdOptionsView(mContext, (NativeAd) ob, nativeAdLayout);
     }
 
     private View createDefaultBrandLogoView(NativeAdTemplate.ViewHolder viewHolder, View brandLogoView) {

@@ -14,11 +14,11 @@ import com.buffalo.adsdk.report.AdReporter;
 import com.buffalo.adsdk.report.ReportFactory;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAd.ImpressionListener;
-import com.buffalo.baseapi.ads.IVideoAdapter;
 import com.buffalo.utils.Logger;
 import com.buffalo.utils.ViewShowReporter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NativeAd extends BaseNativeAd implements
@@ -109,22 +109,14 @@ public class NativeAd extends BaseNativeAd implements
     }
 
     @Override
-    public boolean registerViewForInteraction(View view) {
-        return registerViewForInteraction_withExtraReportParams(view, null);
-    }
-
-    @Override
     public String getSource() {
         return mAd.getSource();
     }
 
     @Override
-    public boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam) {
+    public boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews) {
         mRegisterTimes++;
-        mExtraReportParams = reportParam;
-        mAd.setExtraReportParams(reportParam);
-
-        if (!mAd.registerViewForInteraction(view)) {
+        if (!mAd.registerViewForInteraction(view, mediaView, adIconView, clickableViews)) {
             mAdView = view;
             setListener(view, this, this);
         } else {
@@ -298,17 +290,6 @@ public class NativeAd extends BaseNativeAd implements
         }
         return false;
     }
-
-    @Override
-    public boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup) {
-        if (mAd != null) {
-            // Fix：video adapter 无点击回调,不能上报rcv点击
-            mAd.setAdOnClickListener(this);
-            return mAd.registerViewForInteraction_withListView(adapter, listView, viewGroup);
-        }
-        return false;
-    }
-
 
     @Override
     public void onResume() {

@@ -190,7 +190,7 @@ public class CustomAdViewActivity extends FragmentActivity implements INativeAdL
         lv_video_container.setVisibility(View.GONE);
         mAdViewcontainer.setVisibility(View.VISIBLE);
         mAdViewcontainer.removeAllViews();
-        nativeAd.registerViewForInteraction(view);
+        nativeAd.registerViewForInteraction(view, null, null, null);
         mAdViewcontainer.addView(view);
     }
 

@@ -73,7 +73,7 @@ public class BannerAdManagerRequest extends NativeAdManagerInternal {
 
     public void prepare(View view) {
         if (mSrcNativeAd != null && view != null) {
-            mSrcNativeAd.registerViewForInteraction(view);
+            mSrcNativeAd.registerViewForInteraction(view, null, null, null);
         }
     }
 

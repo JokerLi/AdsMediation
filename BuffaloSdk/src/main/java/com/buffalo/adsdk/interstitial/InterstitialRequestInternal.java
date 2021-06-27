@@ -82,7 +82,7 @@ public class InterstitialRequestInternal extends NativeAdManagerInternal {
 
     public void showAd() {
         if (mCachedAd != null) {
-            mCachedAd.registerViewForInteraction(null);
+            mCachedAd.registerViewForInteraction(null, null, null, null);
             mCachedAd = null;
         }
     }

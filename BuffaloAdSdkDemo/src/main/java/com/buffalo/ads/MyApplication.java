@@ -22,6 +22,8 @@ import com.buffalo.adsdk.Const;
 import com.buffalo.adsdk.ImageDownloadListener;
 import com.buffalo.adsdk.NativeAdManagerFactory;
 import com.buffalo.adsdk.utils.ReportProxy;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AudienceNetworkAds;
 
 import java.util.Map;
 
@@ -72,6 +74,7 @@ public class MyApplication extends Application {
         AdManager.addLoaderClass(Const.KEY_YH, "com.buffalo.ads.adapter.YahooNativeAdapter");
         AdManager.addLoaderClass(Const.KEY_MP, "com.buffalo.ads.adapter.MopubNativeAdapter");
         AdManager.addLoaderClass(Const.KEY_AB, "com.buffalo.ads.adapter.AdmobNativeAdapter");
+        AdManager.addLoaderClass(Const.KEY_FB_BANNER, "com.buffalo.ads.adapter.FacebookBannerAdapter");
         AdManager.addLoaderClass(Const.KEY_AB_BANNER, "com.buffalo.ads.adapter.AdmobBannerAdapter");
         AdManager.addLoaderClass(Const.KEY_MP_BANNER, "com.buffalo.ads.adapter.MopubBannerAdapter");
         AdManager.addLoaderClass(Const.KEY_FB_INTERSTITIAL, "com.buffalo.ads.adapter.FacebookInterstitialAdapter");
@@ -86,6 +89,8 @@ public class MyApplication extends Application {
         initReport();
 
         AdManager.enableLog();
+        AudienceNetworkAds.initialize(this);
+        AdSettings.addTestDevice("0ede068b9e62f9b77e758bf761ca1cee");
     }
 
     class MyImageLoadListener implements ImageDownloadListener {

@@ -20,6 +20,7 @@ import com.google.android.gms.ads.formats.NativeAppInstallAdView;
 import com.google.android.gms.ads.formats.NativeContentAd;
 import com.google.android.gms.ads.formats.NativeContentAdView;
 
+import java.util.List;
 import java.util.Map;
 
 public class AdmobNativeAdapter extends NativeloaderAdapter {
@@ -113,7 +114,7 @@ public class AdmobNativeAdapter extends NativeloaderAdapter {
         }
 
         @Override
-        public boolean registerViewForInteraction(View view) {
+        public boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews) {
             if (view instanceof NativeContentAdView && mNativeAd instanceof NativeContentAd) {
                 ((NativeContentAdView) view).setNativeAd(mNativeAd);
             } else if (view instanceof NativeAppInstallAdView && mNativeAd instanceof NativeAppInstallAd) {

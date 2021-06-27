@@ -1,14 +1,13 @@
 package com.buffalo.adsdk.base;
 
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.buffalo.baseapi.ads.INativeAd;
-import com.buffalo.baseapi.ads.IVideoAdapter;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseNativeAd implements INativeAd {
@@ -207,12 +206,7 @@ public abstract class BaseNativeAd implements INativeAd {
     }
 
     @Override
-    public boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam) {
-        return false;
-    }
-
-    @Override
-    public boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup) {
+    public boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews) {
         return false;
     }
 

@@ -2,6 +2,8 @@ package com.buffalo.ads.adapter;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.util.Log;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.List;
 import java.util.Map;
 
 public class AdmobInterstitialAdapter extends NativeloaderAdapter {
@@ -113,7 +116,7 @@ public class AdmobInterstitialAdapter extends NativeloaderAdapter {
         }
 
         @Override
-        public boolean registerViewForInteraction(View view) {
+        public boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews) {
             if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             }

@@ -1,0 +1,78 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/native_outer_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    >
+    <ImageView android:id="@+id/native_icon_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        />
+
+    <TextView android:id="@+id/native_title"
+        android:layout_toRightOf="@+id/native_icon_image"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold" />
+
+    <TextView android:id="@+id/native_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/native_icon_image"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:textColor="@android:color/darker_gray" />
+
+
+    <com.buffalo.adsdk.view.NativeMediaView
+        android:id="@+id/native_main_image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@null"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/native_text"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="native_main_image"
+        android:scaleType="fitXY"/>
+
+    <Button
+        android:id="@+id/native_cta"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="learn_more"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:paddingBottom="10dp" />
+
+    <ImageView
+        android:id="@+id/native_daa_icon_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="DAA icon image"/>
+
+</RelativeLayout>

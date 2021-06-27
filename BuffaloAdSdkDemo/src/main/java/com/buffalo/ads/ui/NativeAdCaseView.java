@@ -55,7 +55,7 @@ public class NativeAdCaseView extends RelativeLayout implements View.OnClickList
                     return;
                 }
                 View adView = AdViewHelper.createAdView(mContext, ad);
-                ad.registerViewForInteraction(adView);
+                ad.registerViewForInteraction(adView, null, null, null);
                 mNativeContainer.removeAllViews();
                 mNativeContainer.addView(adView);
                 Toast.makeText(mContext, "Native Ad adLoaded ",

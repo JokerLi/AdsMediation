@@ -1,11 +1,12 @@
 package com.buffalo.baseapi.ads;
 
 import android.view.View;
-import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.buffalo.adsdk.base.BaseNativeAd;
 
-import java.util.Map;
+import java.util.List;
 
 public interface INativeAd {
     /**
@@ -64,16 +65,15 @@ public interface INativeAd {
     double getAdStarRating();
 
     /**
-     * @param view 将显示广告的View和广告绑定
+     * 特供facebook
+     *
+     * @param view
+     * @param mediaView
+     * @param adIconView
+     * @param clickableViews
+     * @return
      */
-    boolean registerViewForInteraction(View view);
-
-    boolean registerViewForInteraction_withExtraReportParams(View view, Map<String, String> reportParam);
-
-    /**
-     * 针对视频接口使用
-     */
-    boolean registerViewForInteraction_withListView(IVideoAdapter adapter, View listView, ViewGroup viewGroup);
+    boolean registerViewForInteraction(View view, View mediaView, @Nullable View adIconView, @Nullable List<View> clickableViews);
 
     /**
      * 将显示广告的View和广告解除绑定

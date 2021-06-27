@@ -85,7 +85,7 @@ public class ListAdsAdapter extends BaseAdapter {
                 INativeAd ad = (INativeAd) getItem(position);
                 viewHolder.setNativeAd(ad);
                 ad.unregisterView();
-                ad.registerViewForInteraction(convertView);
+                ad.registerViewForInteraction(convertView, null, null, null);
                 convertView.setTag(viewHolder);
             } else {
                 convertView = mInflater.inflate(R.layout.news_item_layout, null, false);
@@ -103,7 +103,7 @@ public class ListAdsAdapter extends BaseAdapter {
                     INativeAd nativeAd = (INativeAd) getItem(position);
                     nativeViewHolder.setNativeAd(nativeAd);
                     nativeAd.unregisterView();
-                    nativeAd.registerViewForInteraction(convertView);
+                    nativeAd.registerViewForInteraction(convertView, null, null, null);
                     break;
                 case OTHERS_ITEM:
                     NewsViewHolder newsViewHolder = (NewsViewHolder) convertView.getTag();

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -18,15 +16,8 @@ import com.buffalo.adsdk.nativead.NativeAdManager;
 import com.buffalo.baseapi.ads.INativeAd;
 import com.buffalo.baseapi.ads.INativeAdLoaderListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class NativeAdSampleActivity extends Activity implements OnClickListener {
-    private CheckBox mReportExtra;
-    private EditText mEditKey;
-    private EditText mEditValue;
-    private boolean mIsReportExtra = false;
     /* 广告 Native大卡样式 */
     private NativeAdManager nativeAdManager;
     private FrameLayout nativeAdContainer;
@@ -51,10 +42,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
         loadAdButton.setOnClickListener(this);
         findViewById(R.id.getad).setOnClickListener(this);
         findViewById(R.id.btn_load_seq).setOnClickListener(this);
-        mReportExtra = findViewById(R.id.report_extra);
-
-        mEditKey = findViewById(R.id.edit_text_key);
-        mEditValue = findViewById(R.id.edit_text_value);
 
         initNativeAd();
         //使用此类可以记录功能页面PV，注意：使用前确保聚合是已经初始化的
@@ -76,7 +63,6 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
                 requestNativeAd(true);
                 break;
             case R.id.getad:
-                updateConfig();
                 getAd();
                 break;
             default:
@@ -120,20 +106,9 @@ public class NativeAdSampleActivity extends Activity implements OnClickListener 
             }
             mAdView = AdViewHelper.createAdView(getApplicationContext(), ad);
             nativeAdContainer.addView(mAdView);
-            if (mIsReportExtra) {
-                Map<String, String> extra = new HashMap<>();
-                String key = mEditKey.getText().toString();
-                String value = mEditValue.getText().toString();
-                extra.put(key, value);
-                ad.registerViewForInteraction_withExtraReportParams(mAdView, extra);
-            } else {
-                ad.registerViewForInteraction(mAdView);
-            }
-        }
-    }
 
-    private void updateConfig() {
-        mIsReportExtra = mReportExtra.isChecked();
+            ad.registerViewForInteraction(mAdView, null, null, null);
+        }
     }
 
     private void initNativeAd() {

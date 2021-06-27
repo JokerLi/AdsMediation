@@ -15,6 +15,7 @@ public final class Const {
     public static final String KEY_AC = "ac";
 
     //banner
+    public static final String KEY_FB_BANNER = "fbb";
     public static final String KEY_MP_BANNER = "mpb";
     public static final String KEY_AB_BANNER = "abb";
 
@@ -105,6 +106,7 @@ public final class Const {
         public static final String baidu = "com.baidu.ad";
         public static final String gdt = "com.gdt.ad";
         public static final String facebook = "com.facebook.ad";
+        public static final String facebook_banner = "com.facebook.ad.banner";
         public static final String mopub = "com.mopub.ad";
         public static final String admob = "com.admob.native";
         public static final String admob_banner = "com.admob.banner";

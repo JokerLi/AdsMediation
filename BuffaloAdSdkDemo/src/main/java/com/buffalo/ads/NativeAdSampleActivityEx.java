@@ -109,7 +109,7 @@ public class NativeAdSampleActivityEx extends Activity implements OnClickListene
             }
             mAdView = AdViewHelper.createAdView(getApplicationContext(), ad);
             nativeAdContainer.addView(mAdView);
-            ad.registerViewForInteraction(mAdView);
+            ad.registerViewForInteraction(mAdView, null, null, null);
         }
     }
 
